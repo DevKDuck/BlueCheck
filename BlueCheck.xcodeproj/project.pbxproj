@@ -13,6 +13,10 @@
 		8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA99296D2B3F0042248F /* Main.storyboard */; };
 		8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA9C296D2B430042248F /* Assets.xcassets */; };
 		8C23EAA0296D2B430042248F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */; };
+		8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAAF296D46DE0042248F /* GroupListViewController.swift */; };
+		8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAB1296D47130042248F /* MyCheckListViewController.swift */; };
+		8C23EAB5296D485C0042248F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8C23EAB4296D485C0042248F /* SnapKit */; };
+		8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,9 @@
 		8C23EA9C296D2B430042248F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C23EA9F296D2B430042248F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C23EAA1296D2B430042248F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C23EAAF296D46DE0042248F /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
+		8C23EAB1296D47130042248F /* MyCheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListViewController.swift; sourceTree = "<group>"; };
+		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C23EAB5296D485C0042248F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +48,11 @@
 		8C23EA87296D2B3F0042248F = {
 			isa = PBXGroup;
 			children = (
+				8C23EAA7296D3D0C0042248F /* LoadingView */,
+				8C23EAA8296D3D280042248F /* LoginView */,
+				8C23EAAA296D3DD80042248F /* BucketListView */,
+				8C23EAAB296D3E160042248F /* MyCheckListView */,
+				8C23EAAC296D3E260042248F /* GroupCheckListView */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
 			);
@@ -67,6 +80,52 @@
 			path = BlueCheck;
 			sourceTree = "<group>";
 		};
+		8C23EAA7296D3D0C0042248F /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
+		8C23EAA8296D3D280042248F /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAA9296D3D5F0042248F /* JoinMembershipView */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		8C23EAA9296D3D5F0042248F /* JoinMembershipView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = JoinMembershipView;
+			sourceTree = "<group>";
+		};
+		8C23EAAA296D3DD80042248F /* BucketListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */,
+			);
+			path = BucketListView;
+			sourceTree = "<group>";
+		};
+		8C23EAAB296D3E160042248F /* MyCheckListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAB1296D47130042248F /* MyCheckListViewController.swift */,
+			);
+			path = MyCheckListView;
+			sourceTree = "<group>";
+		};
+		8C23EAAC296D3E260042248F /* GroupCheckListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
+			);
+			path = GroupCheckListView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -83,6 +142,9 @@
 			dependencies = (
 			);
 			name = BlueCheck;
+			packageProductDependencies = (
+				8C23EAB4296D485C0042248F /* SnapKit */,
+			);
 			productName = BlueCheck;
 			productReference = 8C23EA90296D2B3F0042248F /* BlueCheck.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +173,9 @@
 				Base,
 			);
 			mainGroup = 8C23EA87296D2B3F0042248F;
+			packageReferences = (
+				8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 8C23EA91296D2B3F0042248F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +204,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */,
+				8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
+				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
 				8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */,
+				8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +364,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -329,7 +397,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -368,6 +436,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8C23EAB4296D485C0042248F /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8C23EA88296D2B3F0042248F /* Project object */;
 }
