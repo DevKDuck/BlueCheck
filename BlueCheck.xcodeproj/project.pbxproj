@@ -48,11 +48,6 @@
 		8C23EA87296D2B3F0042248F = {
 			isa = PBXGroup;
 			children = (
-				8C23EAA7296D3D0C0042248F /* LoadingView */,
-				8C23EAA8296D3D280042248F /* LoginView */,
-				8C23EAAA296D3DD80042248F /* BucketListView */,
-				8C23EAAB296D3E160042248F /* MyCheckListView */,
-				8C23EAAC296D3E260042248F /* GroupCheckListView */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
 			);
@@ -69,6 +64,11 @@
 		8C23EA92296D2B3F0042248F /* BlueCheck */ = {
 			isa = PBXGroup;
 			children = (
+				8C23EAA7296D3D0C0042248F /* LoadingView */,
+				8C23EAA8296D3D280042248F /* LoginView */,
+				8C23EAAA296D3DD80042248F /* BucketListView */,
+				8C23EAAB296D3E160042248F /* MyCheckListView */,
+				8C23EAAC296D3E260042248F /* GroupCheckListView */,
 				8C23EA93296D2B3F0042248F /* AppDelegate.swift */,
 				8C23EA95296D2B3F0042248F /* SceneDelegate.swift */,
 				8C23EA97296D2B3F0042248F /* ViewController.swift */,

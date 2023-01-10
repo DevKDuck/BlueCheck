@@ -23,9 +23,7 @@ class BucketListTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-                
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
             
         ])
