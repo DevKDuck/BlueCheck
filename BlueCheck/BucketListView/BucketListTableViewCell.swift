@@ -9,13 +9,19 @@ import UIKit
 
 class BucketListTableViewCell: UITableViewCell{
     
-    private let label: UILabel = {
-        let label = UILabel()
-        label.text = "버킷리스트1"
+     var label: UILabel = {
+        var label = UILabel()
         label.textColor = UIColor.gray
         return label
     }()
     
+//    private let label: UILabel = {
+//        let label = UILabel()
+//        label.text = "버킷리스트1"
+//        label.textColor = UIColor.gray
+//        return label
+//    }()
+//
     private func setConstraint(){
         contentView.addSubview(label)
         contentView.backgroundColor = .white
