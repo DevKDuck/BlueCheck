@@ -29,6 +29,8 @@ class ViewController: UIViewController {
         return button
     }()
     
+    
+    
     @objc func showAlert(_ sender: UIButton){
         let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
@@ -126,22 +128,55 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         cell.label.textColor = .darkGray
         
         if task.done{
-            cell.accessoryType = .checkmark
+//            cell.accessoryType = .checkmark
+//            cell.tintColor = UIColor.systemBlue
+//            cell.backgroundColor = .white
         }
         else{
-            cell.accessoryType = .none
+//            cell.accessoryType = .none
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var task = self.tasks[indexPath.row]
-        task.done = !task.done
-        self.tasks[indexPath.row] = task
+        let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
+            guard let title = alert.textFields?[0].text else {return}
+            let task = BucketListTasks(title: title, done: false)
+            
+            self?.tasks[indexPath.row] = task   //indexPathrow를 이용해 원래 있던 데이터 변경
+//            self?.tasks.append(task)
+            
+            if self?.tasks[indexPath.row].title == "" {
+                self?.tasks.remove(at: indexPath.row)
+            }
+            
+            self?.tableView.reloadData()
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel){ (cancel) in
+            //취소 눌렀을때
+        }
+        
+        alert.addTextField{ textField in
+            textField.text = self.tasks[indexPath.row].title
+            textField.textColor = .systemBlue
+        }
+        
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        
+        present(alert,animated: true,completion: nil)
+        
         self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     //Row 선택시
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    //cell 의 높이 설정
 }
 
