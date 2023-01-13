@@ -18,6 +18,7 @@
 		8C23EAB5296D485C0042248F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8C23EAB4296D485C0042248F /* SnapKit */; };
 		8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
+		8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		8C23EAB1296D47130042248F /* MyCheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
+		8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				8C23EAB1296D47130042248F /* MyCheckListViewController.swift */,
+				8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */,
 				8C779724296EEFA800E11294 /* BucketListTask.swift */,
 			);
 			path = MyCheckListView;
@@ -211,6 +214,7 @@
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
+				8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */,
 				8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */,
 				8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */,
 			);

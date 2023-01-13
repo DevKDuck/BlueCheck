@@ -13,7 +13,7 @@
         <!--My CheckList-->
         <scene sceneID="qdR-Pa-gtP">
             <objects>
-                <viewController id="iW2-SG-rgZ" customClass="MyCheckListViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyCheckListViewController" id="iW2-SG-rgZ" customClass="MyCheckListViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HcT-d0-EaO">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

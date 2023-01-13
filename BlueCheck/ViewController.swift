@@ -11,7 +11,7 @@ import SnapKit
 class ViewController: UIViewController {
     
     var tableView: UITableView!
-    var tasks =  [BucketListTasks]()
+    var tasks: [String] = ["🔥이 곳에 여러분의 꿈을 적어보아요🔥"]
     
     let topView: UIView = {
        let topview = UIView()
@@ -35,8 +35,9 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
             guard let title = alert.textFields?[0].text else {return}
-            let task = BucketListTasks(title: title, done: false)
-            self?.tasks.append(task)
+//            let task = BucketListTasks(title: title, done: false)
+            self?.tasks.append(title)
+            UserDefaults.standard.set(self?.tasks, forKey: "BucketListTasks UserDefaults")
             self?.tableView.reloadData()
         }
         
@@ -74,7 +75,12 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.register(BucketListTableViewCell.self, forCellReuseIdentifier: "BucketListTableViewCell")
         
+        if let task = UserDefaults.standard.object(forKey: "BucketListTasks UserDefaults") as? [String] {
+            tasks = task
+        }
+        
         setConstraint()
+
         
         //크기와 위치 CGRect를 이용하여 지정, 테이블 뷰의 데이터와 화면변화를 VC에서 처리할 것이기 때문에 self 로 지정
         //register 메서드를 이용하여 재사용할 셀을 등록해줌
@@ -93,8 +99,8 @@ class ViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            topView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 50),
             
@@ -107,9 +113,9 @@ class ViewController: UIViewController {
             topViewCenterLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
             
             tableView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
     }
@@ -123,35 +129,28 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BucketListTableViewCell", for: indexPath) as? BucketListTableViewCell else {return UITableViewCell()}
-        let task = self.tasks[indexPath.row]
-        cell.label.text = task.title
-        cell.label.textColor = .darkGray
         
-        if task.done{
-//            cell.accessoryType = .checkmark
-//            cell.tintColor = UIColor.systemBlue
-//            cell.backgroundColor = .white
-        }
-        else{
-//            cell.accessoryType = .none
-        }
+//        guard let t = UserDefaults.standard.array(forKey: "BucketListTasks UserDefaults") as? [String] else {return cell}
+        
+        cell.label.text = tasks[indexPath.row]
+        cell.label.textColor = .darkGray
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
+        
+        guard let task = UserDefaults.standard.object(forKey: "BucketListTasks UserDefaults") as? [String] else {return}
+        
         let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
             guard let title = alert.textFields?[0].text else {return}
-            let task = BucketListTasks(title: title, done: false)
-            
-            self?.tasks[indexPath.row] = task   //indexPathrow를 이용해 원래 있던 데이터 변경
-//            self?.tasks.append(task)
-            
-            if self?.tasks[indexPath.row].title == "" {
+            self?.tasks[indexPath.row] = title
+
+            if self?.tasks[indexPath.row] == ""{
                 self?.tasks.remove(at: indexPath.row)
             }
-            
+            UserDefaults.standard.set(self?.tasks, forKey: "BucketListTasks UserDefaults")
             self?.tableView.reloadData()
         }
         
@@ -160,7 +159,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         alert.addTextField{ textField in
-            textField.text = self.tasks[indexPath.row].title
+            textField.text = task[indexPath.row]
             textField.textColor = .systemBlue
         }
         
@@ -178,5 +177,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         return 50
     }
     //cell 의 높이 설정
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        self.tasks.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        UserDefaults.standard.set(self.tasks, forKey: "BucketListTasks UserDefaults")
+    }
 }
 
