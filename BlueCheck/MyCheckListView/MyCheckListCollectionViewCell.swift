@@ -8,19 +8,34 @@
 import UIKit
 
 class MyCheckListCollectionViewCell: UICollectionViewCell{
-//
-//    override init(style: UICollectionViewCell.CellStyle, reuseIdentifier: String?) {
-//
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//
-//        setConstraint()
-//    }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
-//
     
+    static let identifier = "MyCheckListCollectionViewCell"
     
-    required init?(coder aDecoder: NSCoder) {
+    private lazy var dayLabel = UILabel()
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    func configureDayLabel(text: String){
+        self.addSubview(dayLabel)
+        self.dayLabel.text = text
+        self.dayLabel.font = .systemFont(ofSize: 12, weight: .bold)
+        self.dayLabel.textColor = .darkGray
         
-        fatalError("init(coder:) has not been implemented")
+        self.dayLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        NSLayoutConstraint.activate([
+            self.dayLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.dayLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+        ])
+    }
+    
+    func setSundayColor(){
+        self.dayLabel.textColor = .systemBlue
     }
 }

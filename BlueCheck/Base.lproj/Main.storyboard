@@ -20,7 +20,7 @@
                         <viewLayoutGuide key="safeArea" id="QLO-tC-uf1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My CheckList" image="plus" catalog="system" id="u5R-aI-zIg"/>
+                    <tabBarItem key="tabBarItem" title="My CheckList" image="checklist" catalog="system" id="u5R-aI-zIg"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7pH-uR-GAi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -85,7 +85,7 @@
     </scenes>
     <resources>
         <image name="basket" catalog="system" width="128" height="108"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="checklist" catalog="system" width="128" height="107"/>
         <image name="rectangle.3.group.bubble.left" catalog="system" width="128" height="110"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
