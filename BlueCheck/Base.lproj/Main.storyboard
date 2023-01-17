@@ -10,6 +10,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--My Check List Setting View Controller-->
+        <scene sceneID="oEL-83-dV0">
+            <objects>
+                <viewController storyboardIdentifier="MyCheckListSettingViewController" id="1an-J4-qbG" customClass="MyCheckListSettingViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="D5h-15-DcK">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="yYO-uM-c3D"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JAX-Ux-2Fi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="992" y="-1400"/>
+        </scene>
         <!--My CheckList-->
         <scene sceneID="qdR-Pa-gtP">
             <objects>

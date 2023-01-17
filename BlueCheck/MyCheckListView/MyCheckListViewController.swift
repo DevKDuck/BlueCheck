@@ -27,6 +27,28 @@ struct CalendarCollectionLayout {
 }
 
 class MyCheckListViewController: UIViewController{
+    var tasks: [String] = ["🔥클릭해서 계획을 세워보세요🔥"]
+    var tasksTime: [String] = ["10:10"]
+    
+    
+    let addTaskButton : UIButton = {
+        let button = UIButton()
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 50)
+        button.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig), for: .normal)
+        button.tintColor = .systemBlue
+        
+        button.addTarget(self, action: #selector(tapAddTaskButton(_:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    @objc func tapAddTaskButton(_ sender: UIButton){
+        guard let goMyCheckListSettingViewController = storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
+        
+        goMyCheckListSettingViewController.addTask = tasks
+        self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
+    }
+    
     
     let preMonthButton : UIButton = {
         let button = UIButton()
@@ -73,6 +95,14 @@ class MyCheckListViewController: UIViewController{
         return collectionView
     }()
     
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(MyCheckListTableViewCell.self, forCellReuseIdentifier: "MyCheckListTableViewCell")
+        tableView.backgroundColor = .white
+        
+        return tableView
+    }()
+    
     //    let calendarDateFormatter = CalendarDateFormatter()
     
     let now = Date()
@@ -83,31 +113,70 @@ class MyCheckListViewController: UIViewController{
     var daysCountInMonth = 0
     var weekdayAdding = 0
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+        self.setCollectionView()
+        //        self.setTableView()
+        
+        self.view.backgroundColor = .white
+        
+        tableView.backgroundColor = .white
+        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+            tasks = task
+        }
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        
+        setConstraints()
+        self.collectionView.reloadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveTestNotification(_noti:)), name:NSNotification.Name("myCheckListSettingViewController"), object: nil)
+        
+    }
+    
+    @objc func didRecieveTestNotification(_noti: Notification) {
+        
+        OperationQueue.main.addOperation{
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    
+    
+    func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
+            return CalendarCollectionLayout().create()
+        }
+    }
+    
+    private func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MyCheckListCollectionViewCell.self, forCellWithReuseIdentifier: "MyCheckListCollectionViewCell")
-
-        self.view.backgroundColor = .white
-
-        setConstraints()
-        
-        self.collectionView.reloadData()
-        
     }
-    func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-            UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-                return CalendarCollectionLayout().create()
-            }
-        }
     
+    //    private func setTableView(){
+    //        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2))
+    //        tableView.backgroundColor = .systemPink
+    //        tableView.dataSource = self
+    //        tableView.delegate = self
+    //        tableView.register(MyCheckListTableViewCell.self, forCellReuseIdentifier: "MyCheckListTableViewCell")
+    //
+    //        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+    //            tasks = task
+    //        }
+    //    }
     
     private func setConstraints() {
         configureYearMonthLabel()
         configureWeekStackView()
         configureCollectionView()
+        configureTableView()
+        configureAddTaskButton()
     }
     
     private func initView() {
@@ -120,24 +189,21 @@ class MyCheckListViewController: UIViewController{
     
     
     private func calculation() {
-        let firstDayOfMonth = cal.date(from: components)
-        let firstWeekday = cal.component(.weekday, from: firstDayOfMonth!)
-        daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth!)!.count
-        weekdayAdding = 2 - firstWeekday
-        
-        print(firstDayOfMonth)
-        print(firstWeekday)
-        print(daysCountInMonth)
-        print(weekdayAdding)
-        
-        self.yearMonthLabel.text = dateFormatter.string(from: firstDayOfMonth!)
-        
-        self.days.removeAll()
-        for day in weekdayAdding...daysCountInMonth {
-            if day < 1 {
-                self.days.append("")
-            } else {
-                self.days.append(String(day))
+        if let firstDayOfMonth = cal.date(from: components){
+            let firstWeekday = cal.component(.weekday, from: firstDayOfMonth)
+            daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth)!.count
+            weekdayAdding = 2 - firstWeekday
+            
+            
+            self.yearMonthLabel.text = dateFormatter.string(from: firstDayOfMonth)
+            
+            self.days.removeAll()
+            for day in weekdayAdding...daysCountInMonth {
+                if day < 1 {
+                    self.days.append("")
+                } else {
+                    self.days.append(String(day))
+                }
             }
         }
         
@@ -150,7 +216,31 @@ class MyCheckListViewController: UIViewController{
             collectionView.topAnchor.constraint(equalTo: self.weekStackView.bottomAnchor,constant: 10),
             collectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.heightAnchor.constraint(equalToConstant: 320)
+            collectionView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3.5 )
+        ])
+    }
+    
+    func configureTableView(){
+        self.view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: self.collectionView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    func configureAddTaskButton(){
+        self.view.addSubview(addTaskButton)
+        self.addTaskButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.addTaskButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            self.addTaskButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            self.addTaskButton.heightAnchor.constraint(equalToConstant: 50),
+            self.addTaskButton.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -160,6 +250,7 @@ class MyCheckListViewController: UIViewController{
         self.view.addSubview(preMonthButton)
         self.view.addSubview(nextMonthButton)
         
+        
         self.yearMonthLabel.textColor = .systemBlue
         self.yearMonthLabel.font = .systemFont(ofSize: 20,weight: .bold)
         self.yearMonthLabel.textAlignment = .center
@@ -167,6 +258,7 @@ class MyCheckListViewController: UIViewController{
         self.yearMonthLabel.translatesAutoresizingMaskIntoConstraints = false
         self.preMonthButton.translatesAutoresizingMaskIntoConstraints = false
         self.nextMonthButton.translatesAutoresizingMaskIntoConstraints = false
+        
         
         NSLayoutConstraint.activate([
             self.yearMonthLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 5),
@@ -184,6 +276,7 @@ class MyCheckListViewController: UIViewController{
             self.nextMonthButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             self.nextMonthButton.heightAnchor.constraint(equalToConstant: 44),
             self.nextMonthButton.widthAnchor.constraint(equalToConstant: 44)
+            
         ])
     }
     
@@ -229,7 +322,34 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell else {return UICollectionViewCell()}
         cell.configureDayLabel(text: days[indexPath.row])
-
+        
         return cell
     }
+}
+
+extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
+                MyCheckListTableViewCell else {return UITableViewCell()}
+        
+        cell.contentLabel.text = tasks[indexPath.row]
+        cell.timeLabel.text = tasksTime[0]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let goMyCheckListSettingViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
+        
+        goMyCheckListSettingViewController.taskIndex = indexPath.row
+        goMyCheckListSettingViewController.addTask = tasks
+        
+        
+        self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
+    }
+    
 }

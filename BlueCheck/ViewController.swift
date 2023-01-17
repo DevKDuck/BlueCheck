@@ -10,6 +10,7 @@ import SnapKit
 
 class ViewController: UIViewController {
     
+    //MARK: 변수 설정 
     var tableView: UITableView!
     var tasks: [String] = ["🔥이 곳에 여러분의 꿈을 적어보아요🔥"]
     
@@ -63,7 +64,9 @@ class ViewController: UIViewController {
         return label
     }()
     
+
     
+    //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +82,7 @@ class ViewController: UIViewController {
             tasks = task
         }
         
+        
         setConstraint()
 
         
@@ -86,6 +90,7 @@ class ViewController: UIViewController {
         //register 메서드를 이용하여 재사용할 셀을 등록해줌
     }
     
+    //MARK: AutoLayout 지정
     private func setConstraint() {
         
         self.view.addSubview(topView)
