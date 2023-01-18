@@ -7,12 +7,13 @@
 
 import UIKit
 
+
+
 class MyCheckListSettingViewController: UIViewController{
     
     var addTask: [String] = []
     var taskIndex = 0
     
-    let myCheckListSettingViewController : Notification.Name = Notification.Name("myCheckListSettingViewController")
     
     let closeButton : UIButton = {
         let button = UIButton()
@@ -73,19 +74,31 @@ class MyCheckListSettingViewController: UIViewController{
         self.dismiss(animated: true)
     }
     
+    
+    
     @objc func completeButtonTaped(_ sender: UIButton){
         //완료 버튼 누를시
-        guard let title = titleTextField.text else {return}
         
+        
+        guard let title = titleTextField.text else {return}
+        //텍스트 필드에 적은 내용
+        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+            addTask = task
+        }
         addTask.append(title)
         
-        UserDefaults.standard.set(title,forKey: "MyCheckListTasks UserDefaults")
+        //addTask 문자열 배열에 저장
+        UserDefaults.standard.set(addTask,forKey: "MyCheckListTasks UserDefaults")
         
-        guard let goVC = storyboard?.instantiateViewController(withIdentifier: "MyCheckListViewController") as? MyCheckListViewController else {return}
+        //MARK: 이곳을 수정해야함
         
-        NotificationCenter.default.post(name: NSNotification.Name(" myCheckListSettingViewController"), object: nil, userInfo: nil)
-
-        self.dismiss(animated: true)
+        let rootView = presentingViewController as? MyCheckListViewController
+        
+        self.presentingViewController?.dismiss(animated: true, completion: {
+            guard let rootView = rootView else {return}
+            
+            print("응 아니야")
+        })
         
     }
     

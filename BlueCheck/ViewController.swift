@@ -14,6 +14,8 @@ class ViewController: UIViewController {
     var tableView: UITableView!
     var tasks: [String] = ["🔥이 곳에 여러분의 꿈을 적어보아요🔥"]
     
+    
+    
     let topView: UIView = {
        let topview = UIView()
         topview.backgroundColor = .white

@@ -31,12 +31,12 @@ class MyCheckListViewController: UIViewController{
     var tasksTime: [String] = ["10:10"]
     
     
+    
     let addTaskButton : UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50)
         button.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig), for: .normal)
         button.tintColor = .systemBlue
-        
         button.addTarget(self, action: #selector(tapAddTaskButton(_:)), for: .touchUpInside)
         
         return button
@@ -45,7 +45,10 @@ class MyCheckListViewController: UIViewController{
     @objc func tapAddTaskButton(_ sender: UIButton){
         guard let goMyCheckListSettingViewController = storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
         
-        goMyCheckListSettingViewController.addTask = tasks
+//        let rootView = presentingViewController
+        
+//        goMyCheckListSettingViewController.rootView = rootView ?? UIViewController()
+        
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
     
@@ -103,6 +106,7 @@ class MyCheckListViewController: UIViewController{
         return tableView
     }()
     
+    
     //    let calendarDateFormatter = CalendarDateFormatter()
     
     let now = Date()
@@ -119,32 +123,20 @@ class MyCheckListViewController: UIViewController{
         self.initView()
         self.setCollectionView()
         //        self.setTableView()
-        
-        self.view.backgroundColor = .white
-        
-        tableView.backgroundColor = .white
+    
         if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
             tasks = task
         }
         
+        self.view.backgroundColor = .white
+        tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         
-        
         setConstraints()
         self.collectionView.reloadData()
-        NotificationCenter.default.addObserver(self, selector: #selector(didRecieveTestNotification(_noti:)), name:NSNotification.Name("myCheckListSettingViewController"), object: nil)
-        
+
     }
-    
-    @objc func didRecieveTestNotification(_noti: Notification) {
-        
-        OperationQueue.main.addOperation{
-            self.tableView.reloadData()
-        }
-    }
-    
-    
     
     
     func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -312,6 +304,7 @@ class MyCheckListViewController: UIViewController{
             }
         }
     }
+    
 }
 
 extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -333,20 +326,24 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
                 MyCheckListTableViewCell else {return UITableViewCell()}
         
-        cell.contentLabel.text = tasks[indexPath.row]
+        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+            cell.contentLabel.text = task[indexPath.row]
+        }
+        
+        
         cell.timeLabel.text = tasksTime[0]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let goMyCheckListSettingViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
-        
-        goMyCheckListSettingViewController.taskIndex = indexPath.row
-        goMyCheckListSettingViewController.addTask = tasks
+//
+//        goMyCheckListSettingViewController.taskIndex = indexPath.row
+//        goMyCheckListSettingViewController.addTask = tasks
         
         
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
