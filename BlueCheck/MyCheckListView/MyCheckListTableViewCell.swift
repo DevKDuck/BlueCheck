@@ -21,6 +21,7 @@ class MyCheckListTableViewCell: UITableViewCell{
         return label
     }()
     
+
     
     private func setConstraint(){
         contentView.addSubview(contentLabel)

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol TableViewCellDelegate: AnyObject{
+    func delegateFunction()
+}
+
 struct CalendarCollectionLayout {
     
     func create() -> NSCollectionLayoutSection? {
@@ -15,7 +19,7 @@ struct CalendarCollectionLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalSize), heightDimension: .fractionalHeight(itemFractionalSize))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(itemFractionalSize))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 3, trailing: 0)
         
@@ -26,10 +30,28 @@ struct CalendarCollectionLayout {
     }
 }
 
-class MyCheckListViewController: UIViewController{
+class MyCheckListViewController: UIViewController, TableViewCellDelegate{
+    
+    
+    func delegateFunction(){
+        getUserDefaultsTasks()
+        self.tableView.reloadData()
+    }
+    
+    
     var tasks: [String] = ["🔥클릭해서 계획을 세워보세요🔥"]
+    var content: [String] = ["내용도 작성해보세요"]
     var tasksTime: [String] = ["10:10"]
     
+    var taskArray = [MyCheckListTask]()
+    
+    let now = Date()
+    var cal = Calendar.current
+    let dateFormatter = DateFormatter()
+    var components = DateComponents()
+    var days: [String] = []
+    var daysCountInMonth = 0
+    var weekdayAdding = 0
     
     
     let addTaskButton : UIButton = {
@@ -44,10 +66,8 @@ class MyCheckListViewController: UIViewController{
     
     @objc func tapAddTaskButton(_ sender: UIButton){
         guard let goMyCheckListSettingViewController = storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
-        
-//        let rootView = presentingViewController
-        
-//        goMyCheckListSettingViewController.rootView = rootView ?? UIViewController()
+        goMyCheckListSettingViewController.delegate = self
+        goMyCheckListSettingViewController.taskAddOrModify = 0 // 추가
         
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
@@ -109,24 +129,15 @@ class MyCheckListViewController: UIViewController{
     
     //    let calendarDateFormatter = CalendarDateFormatter()
     
-    let now = Date()
-    var cal = Calendar.current
-    let dateFormatter = DateFormatter()
-    var components = DateComponents()
-    var days: [String] = []
-    var daysCountInMonth = 0
-    var weekdayAdding = 0
-    
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
         self.setCollectionView()
         //        self.setTableView()
-    
-        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-            tasks = task
-        }
+        
+        getUserDefaultsTasks()
         
         self.view.backgroundColor = .white
         tableView.backgroundColor = .white
@@ -135,7 +146,30 @@ class MyCheckListViewController: UIViewController{
         
         setConstraints()
         self.collectionView.reloadData()
+        
+    }
+    
+    func getUserDefaultsTasks(){
+        
+        let t = MyCheckListTask(title: "제목", content: "내용")
+        
+        let encoder = JSONEncoder()
+        
+        if let encoded = try? encoder.encode(t){
+            UserDefaults.standard.set(encoded, forKey: "M")
+        }
 
+        if let savedData = UserDefaults.standard.object(forKey: "M") as? Data{
+            let decoder = JSONDecoder()
+            if let saveObject = try? decoder.decode(MyCheckListTask.self, from: savedData){
+             print(saveObject)
+            }
+        }
+        
+        
+        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+            tasks = task
+        }
     }
     
     
@@ -315,9 +349,9 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell else {return UICollectionViewCell()}
         cell.configureDayLabel(text: days[indexPath.row])
-        
         return cell
     }
+    
 }
 
 extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
@@ -330,10 +364,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
                 MyCheckListTableViewCell else {return UITableViewCell()}
         
-        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-            cell.contentLabel.text = task[indexPath.row]
-        }
-        
+        cell.contentLabel.text = tasks[indexPath.row]
         
         cell.timeLabel.text = tasksTime[0]
         return cell
@@ -341,11 +372,9 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let goMyCheckListSettingViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
-//
-//        goMyCheckListSettingViewController.taskIndex = indexPath.row
-//        goMyCheckListSettingViewController.addTask = tasks
         
         
+        goMyCheckListSettingViewController.taskAddOrModify = 1 // 수정
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
     

@@ -7,13 +7,15 @@
 
 import UIKit
 
-
-
 class MyCheckListSettingViewController: UIViewController{
     
-    var addTask: [String] = []
-    var taskIndex = 0
+    var titleTask: [String] = []     //제목
+    var contentsTask: [String] = []   //내용
     
+    var taskIndex = 0
+    weak var delegate: TableViewCellDelegate?
+    
+    var taskAddOrModify = 0 // 0이면 추가, 1이면 수정
     
     let closeButton : UIButton = {
         let button = UIButton()
@@ -23,7 +25,7 @@ class MyCheckListSettingViewController: UIViewController{
         
         return button
     }()
-   
+    
     let completeButton : UIButton = {
         let button = UIButton()
         button.setTitle("확인", for: .normal)
@@ -66,7 +68,7 @@ class MyCheckListSettingViewController: UIViewController{
         textField.placeholder = "제목을 작성해보세요"
         textField.backgroundColor = .lightGray
         textField.textColor = .systemBlue
-       
+        
         return textField
     }()
     
@@ -77,38 +79,68 @@ class MyCheckListSettingViewController: UIViewController{
     
     
     @objc func completeButtonTaped(_ sender: UIButton){
-        //완료 버튼 누를시
-        
         
         guard let title = titleTextField.text else {return}
-        //텍스트 필드에 적은 내용
-        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-            addTask = task
+        guard let content = contentTextView.text else {return}
+        
+        if taskAddOrModify == 0{
+            titleTask.append(title)
+            contentsTask.append(content)
+        }//추가
+        else if taskAddOrModify == 1{
+            titleTask[taskIndex] = title
+            contentsTask[taskIndex] = content
         }
-        addTask.append(title)
+
+        UserDefaults.standard.set(titleTask, forKey: "MyCheckListTasks UserDefaults")
+        UserDefaults.standard.set(titleTask, forKey: "MyCheckListContentsTasks UserDefaults")
         
-        //addTask 문자열 배열에 저장
-        UserDefaults.standard.set(addTask,forKey: "MyCheckListTasks UserDefaults")
         
-        //MARK: 이곳을 수정해야함
-        
-        let rootView = presentingViewController as? MyCheckListViewController
-        
-        self.presentingViewController?.dismiss(animated: true, completion: {
-            guard let rootView = rootView else {return}
-            
-            print("응 아니야")
-        })
+        if let reloadData = self.delegate?.delegateFunction(){
+            reloadData
+        }
+        self.presentingViewController?.dismiss(animated: true)
+        //텍스트 필드를 불렀어 그러면 추가할때는 .append를 하는게 맞아 그리고 수정할때는 [taskIndex]만 수정을 하는게 맞아
         
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .white
         setConstraints()
+        setTextField()
+        
     }
+    
+    
+    func setTextField(){
+        //1. 일단 addTask 는 UserDefault를 갖음
+        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+            
+            titleTask = task
+        }
+        
+        if let contentsTaskArray = UserDefaults.standard.object(forKey: "MyCheckListContentsTasks UserDefaults") as? [String]{
+            
+            contentsTask = contentsTaskArray
+        }
+        
+        if taskAddOrModify == 0{
+            
+        } // 추가
+        else if taskAddOrModify == 1{
+            /*
+             1.텍스필드에 전에 있던 내용이 떠야함
+             2.내용도 떠야함
+             
+             */
+            titleTextField.text = titleTask[taskIndex]    // 1
+            contentTextView.text = contentsTask[taskIndex]
+            
+        }// 수정
+    }
+    
     
     private func setConstraints(){
         self.view.addSubview(closeButton)
@@ -132,7 +164,7 @@ class MyCheckListSettingViewController: UIViewController{
             closeButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             closeButton.heightAnchor.constraint(equalToConstant: 35),
             closeButton.widthAnchor.constraint(equalToConstant: 35),
-
+            
             completeButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
             completeButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             completeButton.heightAnchor.constraint(equalToConstant: 35),
@@ -157,6 +189,6 @@ class MyCheckListSettingViewController: UIViewController{
             contentTextView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             contentTextView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3)
             
-            ])
+        ])
     }
 }
