@@ -35,6 +35,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
     func delegateFunction(){
         getUserDefaultsTasks()
+        print(taskArray)
         self.tableView.reloadData()
     }
     
@@ -43,7 +44,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     var content: [String] = ["내용도 작성해보세요"]
     var tasksTime: [String] = ["10:10"]
     
-    var taskArray = [MyCheckListTask]()
+    var taskArray: [MyCheckListTask]?
     
     let now = Date()
     var cal = Calendar.current
@@ -151,25 +152,28 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
     func getUserDefaultsTasks(){
         
-        let t = MyCheckListTask(title: "제목", content: "내용")
-        
-        let encoder = JSONEncoder()
-        
-        if let encoded = try? encoder.encode(t){
-            UserDefaults.standard.set(encoded, forKey: "M")
-        }
-
-        if let savedData = UserDefaults.standard.object(forKey: "M") as? Data{
+//        let MyCheckListTableViewTasks = MyCheckListTask(title: "제목", content: "내용")
+//
+//        let encoder = JSONEncoder()
+//
+//        if let encoded = try? encoder.encode(MyCheckListTableViewTasks){
+//            UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
+//        }
+        print("1")
+        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
+            print("2")
             let decoder = JSONDecoder()
-            if let saveObject = try? decoder.decode(MyCheckListTask.self, from: savedData){
-             print(saveObject)
+            
+            if let saveObject = try? decoder.decode(MyCheckListTaskArray.self, from: savedData){
+                print(saveObject)
+                taskArray = saveObject.myCheckListTaskArray
             }
         }
         
         
-        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-            tasks = task
-        }
+//        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+//            tasks = task
+//        }
     }
     
     
@@ -185,17 +189,6 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         collectionView.register(MyCheckListCollectionViewCell.self, forCellWithReuseIdentifier: "MyCheckListCollectionViewCell")
     }
     
-    //    private func setTableView(){
-    //        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2))
-    //        tableView.backgroundColor = .systemPink
-    //        tableView.dataSource = self
-    //        tableView.delegate = self
-    //        tableView.register(MyCheckListTableViewCell.self, forCellReuseIdentifier: "MyCheckListTableViewCell")
-    //
-    //        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-    //            tasks = task
-    //        }
-    //    }
     
     private func setConstraints() {
         configureYearMonthLabel()
@@ -363,8 +356,10 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
                 MyCheckListTableViewCell else {return UITableViewCell()}
-        
-        cell.contentLabel.text = tasks[indexPath.row]
+        if let taskArray = taskArray {
+            cell.contentLabel.text = taskArray[indexPath.row].title
+        }
+//        cell.contentLabel.text = tasks[indexPath.row]
         
         cell.timeLabel.text = tasksTime[0]
         return cell

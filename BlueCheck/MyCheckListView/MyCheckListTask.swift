@@ -11,3 +11,7 @@ struct MyCheckListTask: Codable{
     var title: String
     var content: String
 }
+
+struct MyCheckListTaskArray: Codable{
+    var myCheckListTaskArray: [MyCheckListTask]
+}

@@ -14,6 +14,7 @@ class MyCheckListSettingViewController: UIViewController{
     
     var taskIndex = 0
     weak var delegate: TableViewCellDelegate?
+    var taskArray: [MyCheckListTask]?
     
     var taskAddOrModify = 0 // 0이면 추가, 1이면 수정
     
@@ -84,17 +85,28 @@ class MyCheckListSettingViewController: UIViewController{
         guard let content = contentTextView.text else {return}
         
         if taskAddOrModify == 0{
-            titleTask.append(title)
-            contentsTask.append(content)
+//            titleTask.append(title)
+//            contentsTask.append(content)
+            taskArray?.append(MyCheckListTask(title: title, content: content))
+            
         }//추가
         else if taskAddOrModify == 1{
-            titleTask[taskIndex] = title
-            contentsTask[taskIndex] = content
+            if var taskArray = taskArray {
+                taskArray[taskIndex] = MyCheckListTask(title: title, content: content)
+            }
+//            titleTask[taskIndex] = title
+//            contentsTask[taskIndex] = content
         }
-
-        UserDefaults.standard.set(titleTask, forKey: "MyCheckListTasks UserDefaults")
-        UserDefaults.standard.set(titleTask, forKey: "MyCheckListContentsTasks UserDefaults")
         
+        let MyCheckListTableViewTasks = taskArray
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(MyCheckListTableViewTasks){
+            UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
+        }
+        
+//        UserDefaults.standard.set(titleTask, forKey: "MyCheckListTasks UserDefaults")
+//        UserDefaults.standard.set(titleTask, forKey: "MyCheckListContentsTasks UserDefaults")
+//
         
         if let reloadData = self.delegate?.delegateFunction(){
             reloadData
@@ -116,14 +128,18 @@ class MyCheckListSettingViewController: UIViewController{
     
     func setTextField(){
         //1. 일단 addTask 는 UserDefault를 갖음
-        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-            
-            titleTask = task
-        }
-        
-        if let contentsTaskArray = UserDefaults.standard.object(forKey: "MyCheckListContentsTasks UserDefaults") as? [String]{
-            
-            contentsTask = contentsTaskArray
+        //        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
+        //            titleTask = task
+        //        }
+        //        if let contentsTaskArray = UserDefaults.standard.object(forKey: "MyCheckListContentsTasks UserDefaults") as? [String]{
+        //
+        //            contentsTask = contentsTaskArray
+        //        }
+        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
+            let decoder = JSONDecoder()
+            if let saveObject = try? decoder.decode([MyCheckListTask].self, from: savedData){
+                taskArray = saveObject
+            }
         }
         
         if taskAddOrModify == 0{
@@ -135,9 +151,10 @@ class MyCheckListSettingViewController: UIViewController{
              2.내용도 떠야함
              
              */
-            titleTextField.text = titleTask[taskIndex]    // 1
-            contentTextView.text = contentsTask[taskIndex]
-            
+            if let taskArray = taskArray{
+                titleTextField.text = taskArray[taskIndex].title   // 1
+                contentTextView.text =  taskArray[taskIndex].content
+            }
         }// 수정
     }
     
