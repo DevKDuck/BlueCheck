@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 protocol TableViewCellDelegate: AnyObject{
     func delegateFunction()
 }
@@ -32,17 +34,10 @@ struct CalendarCollectionLayout {
 
 class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
-    
     func delegateFunction(){
         getUserDefaultsTasks()
-        print(taskArray)
         self.tableView.reloadData()
     }
-    
-    
-    var tasks: [String] = ["🔥클릭해서 계획을 세워보세요🔥"]
-    var content: [String] = ["내용도 작성해보세요"]
-    var tasksTime: [String] = ["10:10"]
     
     var taskArray: [MyCheckListTask]?
     
@@ -128,16 +123,10 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }()
     
     
-    //    let calendarDateFormatter = CalendarDateFormatter()
-    
- 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
         self.setCollectionView()
-        //        self.setTableView()
-        
         getUserDefaultsTasks()
         
         self.view.backgroundColor = .white
@@ -151,29 +140,32 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }
     
     func getUserDefaultsTasks(){
+//        //MARK: 제거
+//        UserDefaults.standard.removeObject(forKey: "MyCheckListTableViewTasks UserDefaults")
         
-//        let MyCheckListTableViewTasks = MyCheckListTask(title: "제목", content: "내용")
-//
-//        let encoder = JSONEncoder()
-//
-//        if let encoded = try? encoder.encode(MyCheckListTableViewTasks){
-//            UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
-//        }
-        print("1")
         if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
-            print("2")
             let decoder = JSONDecoder()
             
-            if let saveObject = try? decoder.decode(MyCheckListTaskArray.self, from: savedData){
-                print(saveObject)
-                taskArray = saveObject.myCheckListTaskArray
+            do{
+                let saveObject = try decoder.decode([MyCheckListTask].self, from: savedData)
+                if saveObject.isEmpty{
+                    //UserDefaults에서 가져온 데이터를 디코딩 했을때 빈 배열일때
+                }
+                else{
+                    taskArray = saveObject
+                }
+            }
+            catch{
+                print(error)
             }
         }
-        
-        
-//        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-//            tasks = task
-//        }
+        else{
+            taskArray = [MyCheckListTask(title: "🔥클릭해서 계획을 세워보세요🔥", content: "계획을 수정해보세요", importance: "중요")]
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(taskArray){
+                UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
+            }
+        }
     }
     
     
@@ -349,7 +341,14 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
 
 extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.count
+        if let cellCount = taskArray?.count{
+            return cellCount
+        }
+        else{
+            print("Table Cell numberOfRowsInSection Error")
+        }
+        
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -358,17 +357,17 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
                 MyCheckListTableViewCell else {return UITableViewCell()}
         if let taskArray = taskArray {
             cell.contentLabel.text = taskArray[indexPath.row].title
+            cell.timeLabel.text = taskArray[indexPath.row].importance
         }
-//        cell.contentLabel.text = tasks[indexPath.row]
         
-        cell.timeLabel.text = tasksTime[0]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let goMyCheckListSettingViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
         
-        
+        goMyCheckListSettingViewController.delegate = self
+        goMyCheckListSettingViewController.taskIndex = indexPath.row
         goMyCheckListSettingViewController.taskAddOrModify = 1 // 수정
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }

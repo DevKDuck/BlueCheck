@@ -9,14 +9,20 @@ import UIKit
 
 class MyCheckListSettingViewController: UIViewController{
     
-    var titleTask: [String] = []     //제목
-    var contentsTask: [String] = []   //내용
     
     var taskIndex = 0
     weak var delegate: TableViewCellDelegate?
     var taskArray: [MyCheckListTask]?
+    var taskImportance: Importance = .normal
     
     var taskAddOrModify = 0 // 0이면 추가, 1이면 수정
+    
+    
+    let segmentedControl: UISegmentedControl = {
+        let control = UISegmentedControl(items: ["매우 중요", "중요", "보통"])
+        control.translatesAutoresizingMaskIntoConstraints = false
+        return control
+    }()
     
     let closeButton : UIButton = {
         let button = UIButton()
@@ -77,25 +83,19 @@ class MyCheckListSettingViewController: UIViewController{
         self.dismiss(animated: true)
     }
     
-    
-    
     @objc func completeButtonTaped(_ sender: UIButton){
         
         guard let title = titleTextField.text else {return}
         guard let content = contentTextView.text else {return}
         
         if taskAddOrModify == 0{
-//            titleTask.append(title)
-//            contentsTask.append(content)
-            taskArray?.append(MyCheckListTask(title: title, content: content))
+            taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue))
             
         }//추가
         else if taskAddOrModify == 1{
-            if var taskArray = taskArray {
-                taskArray[taskIndex] = MyCheckListTask(title: title, content: content)
+            if taskArray != nil {
+                taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)
             }
-//            titleTask[taskIndex] = title
-//            contentsTask[taskIndex] = content
         }
         
         let MyCheckListTableViewTasks = taskArray
@@ -103,10 +103,6 @@ class MyCheckListSettingViewController: UIViewController{
         if let encoded = try? encoder.encode(MyCheckListTableViewTasks){
             UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
         }
-        
-//        UserDefaults.standard.set(titleTask, forKey: "MyCheckListTasks UserDefaults")
-//        UserDefaults.standard.set(titleTask, forKey: "MyCheckListContentsTasks UserDefaults")
-//
         
         if let reloadData = self.delegate?.delegateFunction(){
             reloadData
@@ -120,39 +116,55 @@ class MyCheckListSettingViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        guard let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data else {return}
+        let decoder = JSONDecoder()
+        if let saveObject = try? decoder.decode([MyCheckListTask].self, from: savedData){
+            taskArray = saveObject
+        }
+        segementControlConfigure()
         setConstraints()
         setTextField()
         
+        
+    }
+    
+    func segementControlConfigure(){
+        self.segmentedControl.addTarget(self, action: #selector(didChangeImportance(segment: )), for: .valueChanged)
+        
+        switch taskArray?[taskIndex].importance{
+        case "매우 중요":
+            self.segmentedControl.selectedSegmentIndex = 0
+        case "중요":
+            self.segmentedControl.selectedSegmentIndex = 1
+        case "보통":
+            self.segmentedControl.selectedSegmentIndex = 2
+        default:
+            break
+        }
+        self.didChangeImportance(segment: self.segmentedControl)
+    }
+    
+    @objc func didChangeImportance(segment: UISegmentedControl){
+        switch segment.selectedSegmentIndex{
+        case 0:
+            taskImportance = .veryImportant
+        case 1:
+            taskImportance = .important
+        case 2:
+            taskImportance = .normal
+        default:
+            taskImportance = .important
+        }
     }
     
     
     func setTextField(){
-        //1. 일단 addTask 는 UserDefault를 갖음
-        //        if let task = UserDefaults.standard.object(forKey: "MyCheckListTasks UserDefaults") as? [String]{
-        //            titleTask = task
-        //        }
-        //        if let contentsTaskArray = UserDefaults.standard.object(forKey: "MyCheckListContentsTasks UserDefaults") as? [String]{
-        //
-        //            contentsTask = contentsTaskArray
-        //        }
-        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
-            let decoder = JSONDecoder()
-            if let saveObject = try? decoder.decode([MyCheckListTask].self, from: savedData){
-                taskArray = saveObject
-            }
-        }
-        
         if taskAddOrModify == 0{
             
         } // 추가
         else if taskAddOrModify == 1{
-            /*
-             1.텍스필드에 전에 있던 내용이 떠야함
-             2.내용도 떠야함
-             
-             */
             if let taskArray = taskArray{
-                titleTextField.text = taskArray[taskIndex].title   // 1
+                titleTextField.text = taskArray[taskIndex].title
                 contentTextView.text =  taskArray[taskIndex].content
             }
         }// 수정
@@ -166,6 +178,7 @@ class MyCheckListSettingViewController: UIViewController{
         self.view.addSubview(titleTextField)
         self.view.addSubview(contentLabel)
         self.view.addSubview(contentTextView)
+        self.view.addSubview(segmentedControl)
         
         
         closeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -187,8 +200,13 @@ class MyCheckListSettingViewController: UIViewController{
             completeButton.heightAnchor.constraint(equalToConstant: 35),
             completeButton.widthAnchor.constraint(equalToConstant: 35),
             
+            segmentedControl.topAnchor.constraint(equalTo: self.closeButton.bottomAnchor, constant: 20),
+            segmentedControl.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            segmentedControl.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            segmentedControl.heightAnchor.constraint(equalToConstant: 44),
             
-            titleLabel.topAnchor.constraint(equalTo: self.closeButton.bottomAnchor, constant: 20),
+            
+            titleLabel.topAnchor.constraint(equalTo: self.segmentedControl.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             
             
@@ -205,7 +223,6 @@ class MyCheckListSettingViewController: UIViewController{
             contentTextView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
             contentTextView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             contentTextView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3)
-            
         ])
     }
 }
