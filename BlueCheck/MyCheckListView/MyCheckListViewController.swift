@@ -8,7 +8,6 @@
 import UIKit
 
 
-
 protocol TableViewCellDelegate: AnyObject{
     func delegateFunction()
 }
@@ -16,9 +15,9 @@ protocol TableViewCellDelegate: AnyObject{
 struct CalendarCollectionLayout {
     
     func create() -> NSCollectionLayoutSection? {
-        let itemFractionalSize: CGFloat = 1 / 7
+        let itemFractionalSize: CGFloat = 1.0 / 7.0
         
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalSize), heightDimension: .fractionalHeight(itemFractionalSize))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalSize), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/6))
@@ -32,7 +31,7 @@ struct CalendarCollectionLayout {
     }
 }
 
-class MyCheckListViewController: UIViewController, TableViewCellDelegate{
+class MyCheckListViewController: UIViewController, TableViewCellDelegate {
     
     func delegateFunction(){
         getUserDefaultsTasks()
@@ -50,7 +49,12 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     var weekdayAdding = 0
     
     
-    let addTaskButton : UIButton = {
+    
+    //MARK: 전송할 componentsData
+    var componentsData = DateComponents()
+    var todayKEY: String = ""
+    
+    lazy var addTaskButton : UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50)
         button.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig), for: .normal)
@@ -69,7 +73,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }
     
     
-    let preMonthButton : UIButton = {
+    lazy var preMonthButton : UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "arrow.backward.circle.fill"), for: .normal)
         button.tintColor = .systemBlue
@@ -77,7 +81,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         return button
     }()
     
-    let nextMonthButton : UIButton = {
+    lazy var nextMonthButton : UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "arrowshape.turn.up.right.circle.fill"), for: .normal)
         button.tintColor = .systemBlue
@@ -88,12 +92,17 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
     @objc func tapPreMonthButton(_ sender: UIButton){
         components.month = components.month! - 1
+        //MARK: components 기본 전송
+        componentsData = components
+        
         self.calculation()
         self.collectionView.reloadData()
     }
     
     @objc func tapNextMonthButton(_ sender: UIButton){
         components.month = components.month! + 1
+        //MARK: components 기본 전송
+        componentsData = components
         self.calculation()
         self.collectionView.reloadData()
     }
@@ -123,6 +132,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }()
     
     
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
@@ -135,7 +145,8 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         tableView.delegate = self
         
         setConstraints()
-        self.collectionView.reloadData()
+        
+//        self.collectionView.reloadData()
         
     }
     
@@ -179,6 +190,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MyCheckListCollectionViewCell.self, forCellWithReuseIdentifier: "MyCheckListCollectionViewCell")
+        
     }
     
     
@@ -194,7 +206,15 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         dateFormatter.dateFormat = "yyyy년 MM월"
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)
+        
+        //MARK: 오늘
+//        todayKEY = ("\(components.year!)년 \(components.month!)월 \(cal.component(.day, from: now))일")
+        todayKEY = ("\(cal.component(.day, from: now))")
+        
         components.day = 1
+        
+        //MARK: components 기본 전송
+        componentsData = components
         self.calculation()
     }
     
@@ -333,10 +353,17 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell else {return UICollectionViewCell()}
+        
+        //MARK: components 전송
+        cell.components = componentsData
         cell.configureDayLabel(text: days[indexPath.row])
+        
         return cell
     }
     
+    
+
+
 }
 
 extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{

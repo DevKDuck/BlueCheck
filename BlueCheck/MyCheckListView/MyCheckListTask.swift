@@ -19,3 +19,5 @@ enum Importance: String{
     case important = "중요"
     case normal = "보통"
 }
+
+

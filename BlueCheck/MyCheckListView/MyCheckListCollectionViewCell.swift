@@ -11,7 +11,14 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     static let identifier = "MyCheckListCollectionViewCell"
     
-    private lazy var dayLabel = UILabel()
+    //MARK: components 전달받음
+    var components = DateComponents()
+    lazy var objectKey: String = "\(components.year!)년 \(components.month!)월 \(dayLabel.text!)일"
+    
+    
+    //MARK: 여기
+    //private 작성했었음
+     lazy var dayLabel = UILabel()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -19,6 +26,22 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+    }
+    
+    override var isSelected: Bool{
+        willSet{
+            if newValue{
+                self.backgroundColor = .systemBlue
+                dayLabel.textColor = .white
+                
+                print(objectKey)
+                
+            }
+            else{
+                self.backgroundColor = .clear
+                dayLabel.textColor = .darkGray
+            }
+        }
     }
     
     

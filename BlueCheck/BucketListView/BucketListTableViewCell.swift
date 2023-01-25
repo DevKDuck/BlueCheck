@@ -26,7 +26,7 @@ class BucketListTableViewCell: UITableViewCell{
     //    }()
     var checkOrNoCheck = true
     
-    var checkButton: UIButton = {
+    lazy var checkButton: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(systemName: "squareshape"), for: .normal)
         button.addTarget(self, action: #selector(pressCheckButton(_:)), for: .touchUpInside)

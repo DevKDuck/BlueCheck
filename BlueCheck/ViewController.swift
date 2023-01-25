@@ -20,7 +20,7 @@ class ViewController: UIViewController {
        return topview
    }()
     
-    let addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
 //        button.setTitle("+", for: .normal)
 //        button.setTitleColor(.systemBlue, for: .normal)

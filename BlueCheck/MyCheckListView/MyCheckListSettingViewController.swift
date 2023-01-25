@@ -24,7 +24,7 @@ class MyCheckListSettingViewController: UIViewController{
         return control
     }()
     
-    let closeButton : UIButton = {
+    lazy var closeButton : UIButton = {
         let button = UIButton()
         button.setTitle("닫기", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
@@ -33,7 +33,7 @@ class MyCheckListSettingViewController: UIViewController{
         return button
     }()
     
-    let completeButton : UIButton = {
+    lazy var completeButton : UIButton = {
         let button = UIButton()
         button.setTitle("확인", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)
