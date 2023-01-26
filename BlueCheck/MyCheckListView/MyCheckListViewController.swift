@@ -12,6 +12,10 @@ protocol TableViewCellDelegate: AnyObject{
     func delegateFunction()
 }
 
+protocol DelegateCell: AnyObject{
+    func delegateCell()
+}
+
 struct CalendarCollectionLayout {
     
     func create() -> NSCollectionLayoutSection? {
@@ -31,7 +35,14 @@ struct CalendarCollectionLayout {
     }
 }
 
-class MyCheckListViewController: UIViewController, TableViewCellDelegate {
+class MyCheckListViewController: UIViewController, TableViewCellDelegate, DelegateCell{
+    func delegateCell() {
+        print("리로드")
+        
+        
+        self.tableView.reloadData()
+    }
+    
     
     func delegateFunction(){
         getUserDefaultsTasks()
@@ -52,7 +63,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
     
     //MARK: 전송할 componentsData
     var componentsData = DateComponents()
-    var todayKEY: String = ""
+    var firstDayGapToday: Int = 0
     
     lazy var addTaskButton : UIButton = {
         let button = UIButton()
@@ -120,6 +131,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
         let layout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.getCollectionViewLayout())
         collectionView.backgroundColor = .white
+        
         return collectionView
     }()
     
@@ -144,6 +156,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
         tableView.dataSource = self
         tableView.delegate = self
         
+        
         setConstraints()
         
 //        self.collectionView.reloadData()
@@ -153,35 +166,60 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
     func getUserDefaultsTasks(){
 //        //MARK: 제거
 //        UserDefaults.standard.removeObject(forKey: "MyCheckListTableViewTasks UserDefaults")
-        
-        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
+        let objectKey: String = "\(components.year!)년 \(components.month!)월 \(cal.component(.day, from: now))일"
+        if let savedData = UserDefaults.standard.object(forKey: objectKey) as? Data{
             let decoder = JSONDecoder()
             
             do{
-                let saveObject = try decoder.decode([MyCheckListTask].self, from: savedData)
+                let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
                 if saveObject.isEmpty{
-                    //UserDefaults에서 가져온 데이터를 디코딩 했을때 빈 배열일때
+                    
                 }
                 else{
                     taskArray = saveObject
                 }
             }
             catch{
-                print(error)
+                print("This day \(objectKey) have no UserDefaultData")
             }
         }
         else{
-            taskArray = [MyCheckListTask(title: "🔥클릭해서 계획을 세워보세요🔥", content: "계획을 수정해보세요", importance: "중요")]
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(taskArray){
-                UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
-            }
+            taskArray = [MyCheckListTask(title: "모가요", content: "네네", importance: "중요")]
+            print("됐지?")
         }
+        
+        
+        
+//        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
+//            let decoder = JSONDecoder()
+//
+//            do{
+//                let saveObject = try decoder.decode([MyCheckListTask].self, from: savedData)
+//                if saveObject.isEmpty{
+//                    //UserDefaults에서 가져온 데이터를 디코딩 했을때 빈 배열일때
+//                }
+//                else{
+//                    taskArray = saveObject
+//                }
+//            }
+//            catch{
+//                print(error)
+//            }
+//        }
+//        else{
+//            taskArray = [MyCheckListTask(title: "🔥클릭해서 계획을 세워보세요🔥", content: "계획을 수정해보세요", importance: "중요")]
+//            let encoder = JSONEncoder()
+//            if let encoded = try? encoder.encode(taskArray){
+//                UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
+//            }
+//        }
     }
     
     
     func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
+            
+            
             return CalendarCollectionLayout().create()
         }
     }
@@ -206,14 +244,9 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
         dateFormatter.dateFormat = "yyyy년 MM월"
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)
-        
-        //MARK: 오늘
-//        todayKEY = ("\(components.year!)년 \(components.month!)월 \(cal.component(.day, from: now))일")
-        todayKEY = ("\(cal.component(.day, from: now))")
-        
         components.day = 1
         
-        //MARK: components 기본 전송
+        //MARK: componentsData 저장
         componentsData = components
         self.calculation()
     }
@@ -222,19 +255,28 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate {
     private func calculation() {
         if let firstDayOfMonth = cal.date(from: components){
             let firstWeekday = cal.component(.weekday, from: firstDayOfMonth)
+            //첫번째 시작 날짜 1일 2월 ... 7토
+            
             daysCountInMonth = cal.range(of: .day, in: .month, for: firstDayOfMonth)!.count
+            //매달 몇일까지 있는지
+            
             weekdayAdding = 2 - firstWeekday
             
             
             self.yearMonthLabel.text = dateFormatter.string(from: firstDayOfMonth)
             
+            var count = 0
             self.days.removeAll()
             for day in weekdayAdding...daysCountInMonth {
                 if day < 1 {
                     self.days.append("")
+                    count += 1
                 } else {
                     self.days.append(String(day))
                 }
+                
+                //MARK: 오늘 날짜 인덱스찾기
+                firstDayGapToday = cal.component(.day, from: now) + count - 1
             }
         }
         
@@ -357,6 +399,18 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
         //MARK: components 전송
         cell.components = componentsData
         cell.configureDayLabel(text: days[indexPath.row])
+
+        //오늘 날짜 default Select
+        if (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+        }
+        
+        cell.isSelected = indexPath.row == firstDayGapToday
+        
+      
+        self.taskArray = cell.collectionViewCellTaskArray
+        print(self.taskArray)
+        
         
         return cell
     }
