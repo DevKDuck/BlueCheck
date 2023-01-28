@@ -14,6 +14,7 @@ class MyCheckListSettingViewController: UIViewController{
     weak var delegate: TableViewCellDelegate?
     var taskArray: [MyCheckListTask]?
     var taskImportance: Importance = .normal
+    var objectKey = ""
     
     var taskAddOrModify = 0 // 0이면 추가, 1이면 수정
     
@@ -89,26 +90,32 @@ class MyCheckListSettingViewController: UIViewController{
         guard let content = contentTextView.text else {return}
         
         if taskAddOrModify == 0{
-            taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue))
-            
+            if taskArray != nil {
+                taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue))
+            }
+            else{
+                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)]
+            }
         }//추가
         else if taskAddOrModify == 1{
             if taskArray != nil {
                 taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)
+            }
+            else{
+                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)]
             }
         }
         
         let MyCheckListTableViewTasks = taskArray
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(MyCheckListTableViewTasks){
-            UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
+            UserDefaults.standard.set(encoded, forKey: objectKey)
         }
         
         if let reloadData = self.delegate?.delegateFunction(){
             reloadData
         }
         self.presentingViewController?.dismiss(animated: true)
-        //텍스트 필드를 불렀어 그러면 추가할때는 .append를 하는게 맞아 그리고 수정할때는 [taskIndex]만 수정을 하는게 맞아
         
     }
     
@@ -116,16 +123,33 @@ class MyCheckListSettingViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        guard let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data else {return}
-        let decoder = JSONDecoder()
-        if let saveObject = try? decoder.decode([MyCheckListTask].self, from: savedData){
-            taskArray = saveObject
-        }
+        
+        userDefaultGetData()
         segementControlConfigure()
         setConstraints()
         setTextField()
         
-        
+    }
+    
+    func userDefaultGetData(){
+        if let savedData = UserDefaults.standard.object(forKey: objectKey) as? Data {
+            let decoder = JSONDecoder()
+            do{
+                let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
+                if saveObject.isEmpty{
+                    
+                }
+                else{
+                    taskArray = saveObject
+                }
+            }
+            catch{
+                print("This day \(objectKey) have no UserDefaultData")
+            }
+        }
+        else{
+            print("왜 여기지?")
+        }
     }
     
     func segementControlConfigure(){

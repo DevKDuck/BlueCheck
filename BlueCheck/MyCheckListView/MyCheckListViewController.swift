@@ -12,10 +12,6 @@ protocol TableViewCellDelegate: AnyObject{
     func delegateFunction()
 }
 
-protocol DelegateCell: AnyObject{
-    func delegateCell()
-}
-
 struct CalendarCollectionLayout {
     
     func create() -> NSCollectionLayoutSection? {
@@ -35,17 +31,28 @@ struct CalendarCollectionLayout {
     }
 }
 
-class MyCheckListViewController: UIViewController, TableViewCellDelegate, DelegateCell{
-    func delegateCell() {
-        print("리로드")
-        
-        
-        self.tableView.reloadData()
-    }
-    
+class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
     func delegateFunction(){
-        getUserDefaultsTasks()
+        if let savedData = UserDefaults.standard.object(forKey: translateObjectKey) as? Data{
+            let decoder = JSONDecoder()
+            
+            do{
+                let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
+                if saveObject.isEmpty{
+                    print("tableView를 재설정했을 경우 인스턴스는 생성했지만 비어있습니다.")
+                }
+                else{
+                    taskArray = saveObject
+                }
+            }
+            catch{
+                print("This day \(translateObjectKey) have no UserDefaultData")
+            }
+        }
+        else{
+            taskArray = [MyCheckListTask]()
+        }
         self.tableView.reloadData()
     }
     
@@ -59,10 +66,8 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
     var daysCountInMonth = 0
     var weekdayAdding = 0
     
-    
-    
-    //MARK: 전송할 componentsData
-    var componentsData = DateComponents()
+    var translateObjectKey = ""
+
     var firstDayGapToday: Int = 0
     
     lazy var addTaskButton : UIButton = {
@@ -79,6 +84,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
         guard let goMyCheckListSettingViewController = storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
         goMyCheckListSettingViewController.delegate = self
         goMyCheckListSettingViewController.taskAddOrModify = 0 // 추가
+        goMyCheckListSettingViewController.objectKey = translateObjectKey
         
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
@@ -103,8 +109,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
     
     @objc func tapPreMonthButton(_ sender: UIButton){
         components.month = components.month! - 1
-        //MARK: components 기본 전송
-        componentsData = components
+        
         
         self.calculation()
         self.collectionView.reloadData()
@@ -112,8 +117,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
     
     @objc func tapNextMonthButton(_ sender: UIButton){
         components.month = components.month! + 1
-        //MARK: components 기본 전송
-        componentsData = components
+        
         self.calculation()
         self.collectionView.reloadData()
     }
@@ -148,32 +152,38 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
-        self.setCollectionView()
+        
+        //MARK: UserDefualt 모두 삭제
+//        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+//            UserDefaults.standard.removeObject(forKey: key.description)
+//        }
+        
         getUserDefaultsTasks()
+        self.setCollectionView()
+        
         
         self.view.backgroundColor = .white
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         
-        
         setConstraints()
-        
-//        self.collectionView.reloadData()
         
     }
     
     func getUserDefaultsTasks(){
-//        //MARK: 제거
-//        UserDefaults.standard.removeObject(forKey: "MyCheckListTableViewTasks UserDefaults")
         let objectKey: String = "\(components.year!)년 \(components.month!)월 \(cal.component(.day, from: now))일"
+        //        MARK: 제거
+        //                UserDefaults.standard.removeObject(forKey: objectKey)
+        
+        translateObjectKey = objectKey
         if let savedData = UserDefaults.standard.object(forKey: objectKey) as? Data{
             let decoder = JSONDecoder()
             
             do{
                 let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
                 if saveObject.isEmpty{
-                    
+                    print("getUserDefaultsTasks saveObject isEmpty")
                 }
                 else{
                     taskArray = saveObject
@@ -184,41 +194,13 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
             }
         }
         else{
-            taskArray = [MyCheckListTask(title: "모가요", content: "네네", importance: "중요")]
-            print("됐지?")
+            print("getUserDefaultsTasks Data failed")
         }
-        
-        
-        
-//        if let savedData = UserDefaults.standard.object(forKey: "MyCheckListTableViewTasks UserDefaults") as? Data{
-//            let decoder = JSONDecoder()
-//
-//            do{
-//                let saveObject = try decoder.decode([MyCheckListTask].self, from: savedData)
-//                if saveObject.isEmpty{
-//                    //UserDefaults에서 가져온 데이터를 디코딩 했을때 빈 배열일때
-//                }
-//                else{
-//                    taskArray = saveObject
-//                }
-//            }
-//            catch{
-//                print(error)
-//            }
-//        }
-//        else{
-//            taskArray = [MyCheckListTask(title: "🔥클릭해서 계획을 세워보세요🔥", content: "계획을 수정해보세요", importance: "중요")]
-//            let encoder = JSONEncoder()
-//            if let encoded = try? encoder.encode(taskArray){
-//                UserDefaults.standard.set(encoded, forKey: "MyCheckListTableViewTasks UserDefaults")
-//            }
-//        }
     }
     
     
     func getCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { (section, _) -> NSCollectionLayoutSection? in
-            
             
             return CalendarCollectionLayout().create()
         }
@@ -245,9 +227,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate, Delega
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)
         components.day = 1
-        
-        //MARK: componentsData 저장
-        componentsData = components
+
         self.calculation()
     }
     
@@ -397,27 +377,58 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell else {return UICollectionViewCell()}
         
         //MARK: components 전송
-        cell.components = componentsData
-        cell.configureDayLabel(text: days[indexPath.row])
 
+        cell.configureDayLabel(text: days[indexPath.row])
+        
         //오늘 날짜 default Select
         if (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
         
-        cell.isSelected = indexPath.row == firstDayGapToday
-        
-      
-        self.taskArray = cell.collectionViewCellTaskArray
-        print(self.taskArray)
-        
+        if indexPath.row == firstDayGapToday{
+            cell.isSelected = true
+        }
+        else{
+            cell.isSelected = false
+        }
         
         return cell
     }
     
     
-
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell{
+            if cell.isSelected == true{
+                
+                let changeDay = "\(components.year!)년 \(components.month!)월 \(days[indexPath.row])일"
+                translateObjectKey = changeDay
+                if let savedData = UserDefaults.standard.object(forKey: changeDay) as? Data{
+                    let decoder = JSONDecoder()
+                    
+                    do{
+                        let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
+                        if saveObject.isEmpty{
+                        }
+                        else{
+                            taskArray = saveObject
+                        }
+                    }
+                    catch{
+                        print("This day \(changeDay) have no UserDefaultData")
+                    }
+                }
+                else{
+                    taskArray = [MyCheckListTask]()
+                }
+                
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    
+    
+    
 }
 
 extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
@@ -429,7 +440,8 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
             print("Table Cell numberOfRowsInSection Error")
         }
         
-        return 1
+        return 0
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -450,6 +462,8 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         goMyCheckListSettingViewController.delegate = self
         goMyCheckListSettingViewController.taskIndex = indexPath.row
         goMyCheckListSettingViewController.taskAddOrModify = 1 // 수정
+        goMyCheckListSettingViewController.objectKey = translateObjectKey
+        
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
     

@@ -15,15 +15,6 @@ class BucketListTableViewCell: UITableViewCell{
         return label
     }()
     
-    //    let checkImage: UIImageView = {
-    //        let checkimg = UIImageView()
-    //        checkimg.image = UIImage(systemName: "squareshape")
-    //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(pressCheckButton))
-    //        checkimg.isUserInteractionEnabled = true
-    //        checkimg.addGestureRecognizer(tapGesture)
-    //
-    //        return checkimg
-    //    }()
     var checkOrNoCheck = true
     
     lazy var checkButton: UIButton = {
