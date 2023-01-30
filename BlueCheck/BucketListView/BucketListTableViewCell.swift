@@ -28,10 +28,12 @@ class BucketListTableViewCell: UITableViewCell{
         if checkOrNoCheck == true {
             checkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             checkOrNoCheck = false
+            contentView.backgroundColor = UIColor(hue: 0.5611, saturation: 0.47, brightness: 0.91, alpha: 1.0)
         }
         else{
             checkButton.setImage(UIImage(systemName: "squareshape"), for: .normal)
             checkOrNoCheck = true
+            contentView.backgroundColor = .white
         }
     }
     

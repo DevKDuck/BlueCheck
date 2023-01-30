@@ -11,8 +11,6 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     static let identifier = "MyCheckListCollectionViewCell"
     
-    //MARK: components 전달받음
-//    var components = DateComponents()
     
     var collectionViewCellTaskArray : [MyCheckListTask]?
     

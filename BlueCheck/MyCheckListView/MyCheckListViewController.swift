@@ -450,7 +450,18 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
                 MyCheckListTableViewCell else {return UITableViewCell()}
         if let taskArray = taskArray {
             cell.contentLabel.text = taskArray[indexPath.row].title
-            cell.timeLabel.text = taskArray[indexPath.row].importance
+            cell.importLabel.text = taskArray[indexPath.row].importance
+            switch taskArray[indexPath.row].importance{
+            case "매우 중요":
+                cell.importLabel.backgroundColor = .yellow
+            case "중요":
+                cell.importLabel.backgroundColor = UIColor(hue: 0.5333, saturation: 0.39, brightness: 0.95, alpha: 1.0)
+            case "보통":
+                cell.importLabel.backgroundColor = .white
+            default:
+                break
+            }
+            
         }
         
         return cell
@@ -465,6 +476,20 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         goMyCheckListSettingViewController.objectKey = translateObjectKey
         
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        self.taskArray?.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(taskArray){
+            UserDefaults.standard.set(encoded, forKey: translateObjectKey)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
     }
     
 }
