@@ -34,6 +34,7 @@ class GroupListViewController: UIViewController{
     
     @objc func tapAddGroupButton(_ sender: UIButton){
         guard let goCreateGroupViewController = storyboard?.instantiateViewController(withIdentifier: "CreateGoupViewController") as? CreateGoupViewController else {return}
+        goCreateGroupViewController.modalPresentationStyle = .fullScreen
         
         self.present(goCreateGroupViewController,animated: true, completion: nil)
     }
