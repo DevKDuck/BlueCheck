@@ -24,8 +24,6 @@ class GroupListTableViewCell: UITableViewCell{
     }()
     
     
-    
-    
     private func setLayoutConstraint(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(objectGroupImage)

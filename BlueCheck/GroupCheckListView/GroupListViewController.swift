@@ -16,7 +16,6 @@ class GroupListViewController: UIViewController{
        return topview
    }()
     
-    
     let groupListLabel : UILabel = {
         let label = UILabel()
         label.text = "그룹 리스트"
@@ -33,7 +32,7 @@ class GroupListViewController: UIViewController{
     }()
     
     @objc func tapAddGroupButton(_ sender: UIButton){
-        guard let goCreateGroupViewController = storyboard?.instantiateViewController(withIdentifier: "CreateGoupViewController") as? CreateGoupViewController else {return}
+        guard let goCreateGroupViewController = storyboard?.instantiateViewController(withIdentifier: "CreateGoupViewController") as? CreateGroupViewController else {return}
         goCreateGroupViewController.modalPresentationStyle = .fullScreen
         
         self.present(goCreateGroupViewController,animated: true, completion: nil)

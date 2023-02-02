@@ -7,7 +7,8 @@
 
 import UIKit
 
-class CreateGoupViewController: UIViewController{
+class CreateGroupViewController: UIViewController{
+    
     
     let groupTitleLabel : UILabel = {
         let label = UILabel()
@@ -33,7 +34,7 @@ class CreateGoupViewController: UIViewController{
         label.textColor = .darkGray
         return label
     }()
-
+    
     lazy var studyButton : UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(tapButton(_:)), for: .touchUpInside)
@@ -116,8 +117,10 @@ class CreateGoupViewController: UIViewController{
     
     @objc func tapInviteButoon(_ sender: UIButton){
         guard let goInviteListViewController = storyboard?.instantiateViewController(withIdentifier: "InviteListViewController") as? InviteListViewController else {return}
-    
-        self.navigationController?.pushViewController(goInviteListViewController, animated: true)
+        //        self.navigationController?.pushViewController(goVC, animated: true)
+        goInviteListViewController.modalPresentationStyle = .fullScreen
+        self.present(goInviteListViewController, animated: true)
+        
     }
     
     
@@ -164,9 +167,9 @@ class CreateGoupViewController: UIViewController{
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.contentTextView.resignFirstResponder()
+        self.contentTextView.resignFirstResponder()
         view.endEditing(true)
-        }
+    }
     
     
     func setTitleAndImageButtonConfig(){
@@ -203,11 +206,11 @@ class CreateGoupViewController: UIViewController{
         config.image = UIImage(systemName: imageSystemName)
         config.imagePlacement = .bottom
         
-//        config.baseForegroundColor = .systemBlue
+        //        config.baseForegroundColor = .systemBlue
         config.background.strokeColor = UIColor.systemBlue
         config.background.strokeWidth = 3
-//        config.background.backgroundColor = UIColor.white
-
+        //        config.background.backgroundColor = UIColor.white
+        
         
         button.configuration = config
         button.configurationUpdateHandler = handler
@@ -220,7 +223,7 @@ class CreateGoupViewController: UIViewController{
         self.view.addSubview(groupTitleLabel)
         self.view.addSubview(groupTitleTextField)
         self.view.addSubview(groupObjectiveLabel)
-       
+        
         self.view.addSubview(studyButton)
         self.view.addSubview(exerciseButton)
         self.view.addSubview(travelButton)
@@ -233,7 +236,7 @@ class CreateGoupViewController: UIViewController{
         self.view.addSubview(contentTextView)
         
         self.view.addSubview(inviteButton)
-
+        
         self.view.addSubview(cancelButton)
         self.view.addSubview(createButton)
         
@@ -275,7 +278,7 @@ class CreateGoupViewController: UIViewController{
             cancelButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2 - 30),
             cancelButton.heightAnchor.constraint(equalToConstant: 44),
             cancelButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-
+            
             
             createButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             createButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2 - 30),
@@ -304,17 +307,17 @@ class CreateGoupViewController: UIViewController{
     
 }
 
-extension CreateGoupViewController: UITextViewDelegate{
+extension CreateGroupViewController: UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
-          if contentTextView.text.isEmpty {
-              contentTextView.text = "\n 시기 - ex)일주일에 몇번 \n \n \n  내용 - ex)운동 인증과 식단을 올리는 목적"
-              contentTextView.textColor = UIColor.lightGray
-          }
-      }
-      func textViewDidBeginEditing(_ textView: UITextView) {
-          if contentTextView.textColor == UIColor.lightGray {
-              contentTextView.text = nil
-              contentTextView.textColor = UIColor.black
-          }
-      }
+        if contentTextView.text.isEmpty {
+            contentTextView.text = "\n 시기 - ex)일주일에 몇번 \n \n \n  내용 - ex)운동 인증과 식단을 올리는 목적"
+            contentTextView.textColor = UIColor.lightGray
+        }
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if contentTextView.textColor == UIColor.lightGray {
+            contentTextView.text = nil
+            contentTextView.textColor = UIColor.black
+        }
+    }
 }

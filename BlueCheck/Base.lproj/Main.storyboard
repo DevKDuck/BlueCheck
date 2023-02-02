@@ -60,10 +60,10 @@
             </objects>
             <point key="canvasLocation" x="976.92307692307691" y="18.48341232227488"/>
         </scene>
-        <!--Create Goup View Controller-->
+        <!--Create Group View Controller-->
         <scene sceneID="67N-Z8-qiv">
             <objects>
-                <viewController storyboardIdentifier="CreateGoupViewController" id="Kvc-v4-tDg" customClass="CreateGoupViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateGoupViewController" id="Kvc-v4-tDg" customClass="CreateGroupViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rX4-9t-HAx">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,6 +89,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUG-1x-r9k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2722" y="877"/>
+        </scene>
+        <!--Invite Personal Information View Controller-->
+        <scene sceneID="yHB-8Y-mAc">
+            <objects>
+                <viewController storyboardIdentifier="InvitePersonalInformationViewController" id="CIv-ay-3dl" customClass="InvitePersonalInformationViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gdf-6o-IYu">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="PEW-kY-H9E"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wbm-Os-xoc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3496" y="884"/>
         </scene>
         <!--My Account-->
         <scene sceneID="qWY-zR-VqM">

@@ -14,12 +14,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
-//        window = UIWindow(frame: scene.coordinateSpace.bounds)
-//        window?.windowScene = scene
-//        let rootViewController = CreateGoupViewController()
+        // 루트 뷰 컨트롤러가 될 뷰 컨트롤러를 생성합니다.
+//        let rootViewController = CreateGroupViewController()
+//        // 위에서 생성한 뷰 컨트롤러로 내비게이션 컨트롤러를 생성합니다.
 //        let navigationController = UINavigationController(rootViewController: rootViewController)
-//        window?.rootViewController = navigationController
-//        window?.makeKeyAndVisible()
+//
+//        // 윈도우의 루트 뷰 컨트롤러로 내비게이션 컨트롤러를 설정합니다.
+//        self.window?.rootViewController = navigationController
+//        self.window?.makeKeyAndVisible()
+//        self.window?.windowScene = windowScene
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
