@@ -24,6 +24,12 @@
 		8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B32298A6F820093D90A /* InviteListViewController.swift */; };
 		8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */; };
 		8C9A6B37298BB0610093D90A /* InvitePersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B36298BB0610093D90A /* InvitePersonalInformationViewController.swift */; };
+		8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */; };
+		8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */; };
+		8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */; };
+		8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */; };
+		8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */; };
+		8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */; };
 		8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */; };
 		8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */; };
 		8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */; };
@@ -49,6 +55,12 @@
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
 		8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B36298BB0610093D90A /* InvitePersonalInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePersonalInformationViewController.swift; sourceTree = "<group>"; };
+		8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTableViewCell.swift; sourceTree = "<group>"; };
+		8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationStatusViewController.swift; sourceTree = "<group>"; };
+		8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsStatusTableViewCell.swift; sourceTree = "<group>"; };
+		8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsViewController.swift; sourceTree = "<group>"; };
+		8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
+		8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewController.swift; sourceTree = "<group>"; };
 		8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTableViewCell.swift; sourceTree = "<group>"; };
 		8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListSettingViewController.swift; sourceTree = "<group>"; };
 		8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTask.swift; sourceTree = "<group>"; };
@@ -71,6 +83,9 @@
 			isa = PBXGroup;
 			children = (
 				8C0EDB242989153F007FD35C /* MyAccountViewController.swift */,
+				8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */,
+				8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */,
+				8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */,
 			);
 			path = MyAccountView;
 			sourceTree = "<group>";
@@ -158,6 +173,9 @@
 			isa = PBXGroup;
 			children = (
 				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
+				8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */,
+				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
+				8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */,
 				8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */,
 				8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */,
 				8C9A6B38298BB0780093D90A /* InviteListView */,
@@ -254,17 +272,23 @@
 			files = (
 				8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */,
 				8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */,
+				8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */,
 				8C0EDB252989153F007FD35C /* MyAccountViewController.swift in Sources */,
 				8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */,
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
+				8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */,
 				8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */,
+				8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */,
+				8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */,
 				8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
+				8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
 				8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */,
 				8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */,
 				8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */,
+				8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */,
 				8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */,
 				8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */,
 				8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */,

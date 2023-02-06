@@ -53,12 +53,27 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="BucketList" id="VzP-LD-eOt">
-                        <imageReference key="image" image="basket" catalog="system" symbolScale="medium"/>
+                        <imageReference key="image" image="person.fill.questionmark" catalog="system" symbolScale="medium"/>
                     </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="976.92307692307691" y="18.48341232227488"/>
+        </scene>
+        <!--Invitation Status View Controller-->
+        <scene sceneID="2v9-sM-ItK">
+            <objects>
+                <viewController storyboardIdentifier="InvitationStatusViewController" id="d79-xh-rvN" customClass="InvitationStatusViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zBf-Dv-KT8">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ce8-Uo-sZ3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JA0-hV-9MM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1767" y="35"/>
         </scene>
         <!--Create Group View Controller-->
         <scene sceneID="67N-Z8-qiv">
@@ -88,7 +103,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUG-1x-r9k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2722" y="877"/>
+            <point key="canvasLocation" x="1194" y="1627"/>
         </scene>
         <!--Invite Personal Information View Controller-->
         <scene sceneID="yHB-8Y-mAc">
@@ -103,9 +118,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wbm-Os-xoc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3496" y="884"/>
+            <point key="canvasLocation" x="1968" y="1634"/>
         </scene>
-        <!--My Account-->
+        <!--ETC-->
         <scene sceneID="qWY-zR-VqM">
             <objects>
                 <viewController id="VOX-L4-pmg" customClass="MyAccountViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
@@ -115,7 +130,7 @@
                         <viewLayoutGuide key="safeArea" id="cDz-vH-Kra"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Account" image="person.fill.checkmark" catalog="system" id="CIC-3W-iBg"/>
+                    <tabBarItem key="tabBarItem" title="ETC" image="ellipsis.circle" catalog="system" id="CIC-3W-iBg"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UlE-Ky-IBC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -160,11 +175,41 @@
             </objects>
             <point key="canvasLocation" x="47.692307692307693" y="18.48341232227488"/>
         </scene>
+        <!--Each Group Records View Controller-->
+        <scene sceneID="QGt-7B-IwA">
+            <objects>
+                <viewController storyboardIdentifier="EachGroupRecordsViewController" id="51R-0h-nVv" customClass="EachGroupRecordsViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sIz-9Q-UWB">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="CbA-pD-I5W"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ugC-gx-pEb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2648" y="873"/>
+        </scene>
+        <!--Create Each Group Records Content View Controller-->
+        <scene sceneID="Kyb-Qc-5Et">
+            <objects>
+                <viewController storyboardIdentifier="CreateEachGroupRecordsContentViewController" id="qdc-TC-pPC" customClass="CreateEachGroupRecordsContentViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sMw-i3-KBp">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="B8G-et-GVV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nSs-RT-WJD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3463" y="873"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="basket" catalog="system" width="128" height="108"/>
         <image name="checklist" catalog="system" width="128" height="107"/>
-        <image name="person.fill.checkmark" catalog="system" width="128" height="89"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
+        <image name="person.fill.questionmark" catalog="system" width="128" height="102"/>
         <image name="rectangle.3.group.bubble.left" catalog="system" width="128" height="110"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
