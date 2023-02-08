@@ -154,7 +154,23 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         alert.addAction(album)
         alert.addAction(cancel)
         
-        self.present(alert, animated: true)
+        
+        //MARK: ActionSheet의 모달스타일은 UIModalPresentationPopover라고 설명을 해주면서 UIModalPresentationPopover을 사용 할 때는 barButtonItem 또는 팝업에 대한 위치를 설정해줘야 되어 패드와 아이폰 나눔
+    
+
+        if UIDevice.current.userInterfaceIdiom == .pad { //디바이스 타입이 iPad일때
+          if let popoverController = alert.popoverPresentationController {
+              // ActionSheet가 표현되는 위치를 저장해줍니다.
+              popoverController.sourceView = self.view
+              popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+              popoverController.permittedArrowDirections = []
+              self.present(alert, animated: true, completion: nil)
+          }
+        }
+        
+        else {
+            self.present(alert, animated: true)
+        }
         
     }
     
@@ -291,6 +307,8 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     
     func openCamera(){
         picker.sourceType = .camera
+        
+        
         present(picker, animated: false)
     }
     

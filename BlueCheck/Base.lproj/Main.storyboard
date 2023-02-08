@@ -136,6 +136,36 @@
             </objects>
             <point key="canvasLocation" x="366" y="1627"/>
         </scene>
+        <!--Log In View Controller-->
+        <scene sceneID="OBo-yp-7lF">
+            <objects>
+                <viewController storyboardIdentifier="LogInViewController" id="1e4-IC-LOL" customClass="LogInViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1Lm-7T-zi5">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Bmp-Hb-z0z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZpB-a9-EI9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-572" y="866"/>
+        </scene>
+        <!--Log In Request View Controller-->
+        <scene sceneID="iQ2-3l-JSp">
+            <objects>
+                <viewController storyboardIdentifier="LogInRequestViewController" id="kbp-sv-pDZ" customClass="LogInRequestViewController" customModule="BlueCheck" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P86-ot-g5x">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="gfP-7t-Mod"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RuS-xo-4t4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="255" y="839"/>
+        </scene>
         <!--Group-->
         <scene sceneID="3CE-RE-fD7">
             <objects>

@@ -38,6 +38,27 @@ class GroupListViewController: UIViewController{
         self.present(goCreateGroupViewController,animated: true, completion: nil)
     }
     
+    //MARK: 임시 로그인으로 이동
+    lazy var gologInRequestButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("로그인", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(tapGoLogInRequestButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func tapGoLogInRequestButton(_ sender: UIButton){
+        guard let goLogInRequestViewController = storyboard?.instantiateViewController(withIdentifier: "LogInRequestViewController") as? LogInRequestViewController else {return}
+        goLogInRequestViewController.modalPresentationStyle = .fullScreen
+        
+        self.present(goLogInRequestViewController,animated: true, completion: nil)
+    }
+    
+    
+    
+    
+    
+    
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(GroupListTableViewCell.self, forCellReuseIdentifier: "GroupListTableViewCell")
@@ -60,12 +81,14 @@ class GroupListViewController: UIViewController{
         
         self.view.addSubview(topView)
         self.view.addSubview(groupListLabel)
+        self.view.addSubview(gologInRequestButton) //임시 로그인
         self.view.addSubview(addGroupButton)
         self.view.addSubview(tableView)
         
         
         topView.translatesAutoresizingMaskIntoConstraints = false
         groupListLabel.translatesAutoresizingMaskIntoConstraints = false
+        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -76,6 +99,10 @@ class GroupListViewController: UIViewController{
             topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             topView.heightAnchor.constraint(equalToConstant: 50),
             
+            
+            //MARK: 임시로그인
+            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
+            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
             
             
             groupListLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
