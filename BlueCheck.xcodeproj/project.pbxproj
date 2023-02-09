@@ -12,6 +12,8 @@
 		8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */; };
 		8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */; };
 		8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDE29939AE8005EBB6A /* LogInViewController.swift */; };
+		8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */; };
+		8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */; };
 		8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA93296D2B3F0042248F /* AppDelegate.swift */; };
 		8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA95296D2B3F0042248F /* SceneDelegate.swift */; };
 		8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA97296D2B3F0042248F /* ViewController.swift */; };
@@ -44,6 +46,8 @@
 		8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRequestViewController.swift; sourceTree = "<group>"; };
 		8C214EDE29939AE8005EBB6A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordViewContoller.swift; sourceTree = "<group>"; };
+		8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTheMembershipViewController.swift; sourceTree = "<group>"; };
 		8C23EA90296D2B3F0042248F /* BlueCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C23EA93296D2B3F0042248F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C23EA95296D2B3F0042248F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +189,8 @@
 				8C9A6B38298BB0780093D90A /* InviteListView */,
 				8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */,
 				8C214EDE29939AE8005EBB6A /* LogInViewController.swift */,
+				8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */,
+				8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */,
 			);
 			path = GroupCheckListView;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 				8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */,
 				8C0EDB252989153F007FD35C /* MyAccountViewController.swift in Sources */,
 				8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */,
+				8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */,
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
 				8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */,
@@ -300,6 +307,7 @@
 				8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */,
 				8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */,
 				8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */,
+				8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */,
 				8C9A6B37298BB0610093D90A /* InvitePersonalInformationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
