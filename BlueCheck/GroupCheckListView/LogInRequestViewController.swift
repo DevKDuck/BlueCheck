@@ -10,22 +10,6 @@ import UIKit
 
 class LogInRequestViewController: UIViewController {
     
-    //MARK: 임시 뒤로가기 버튼
-    lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("x", for: .normal)
-        button.setTitleColor(UIColor.systemBlue, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 40, weight: .bold)
-        button.addTarget(self, action: #selector(tapBackButton(_:)), for: .touchUpInside)
-        
-        return button
-    }()
-    @objc func tapBackButton(_ sender: UIButton){
-        self.dismiss(animated: true)
-    }
-    
-    
-    
     let blueCheckLabel: UILabel = {
         let label = UILabel()
         label.text = "Blue Check"
@@ -71,25 +55,16 @@ class LogInRequestViewController: UIViewController {
     
     
     private func setLayoutConstraints(){
-        self.view.addSubview(backButton)
+        
         self.view.addSubview(blueCheckLabel)
         self.view.addSubview(logInRequestDescrpitionLabel)
         self.view.addSubview(logInButton)
         
-        
-        backButton.translatesAutoresizingMaskIntoConstraints = false
         blueCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         logInRequestDescrpitionLabel.translatesAutoresizingMaskIntoConstraints = false
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         
-        
         NSLayoutConstraint.activate([
-            
-            
-            backButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            backButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            
-            
             blueCheckLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
             blueCheckLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             
