@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class JoinTheMembershipViewController: UIViewController{
     
@@ -28,44 +30,20 @@ class JoinTheMembershipViewController: UIViewController{
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
     }()
-
     
-    let nameLabel : UILabel = {
+    
+    let errorLabel : UILabel = {
         let label = UILabel()
-        label.text = "이름"
-        label.textColor = .white
+        label.textColor = .systemRed
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
-    }()
-    
-    let nameTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "이름"
-        textField.textColor = .black
-        textField.backgroundColor = .white
-        return textField
-    }()
-    
-    let idLabel : UILabel = {
-        let label = UILabel()
-        label.text = "아이디"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
-        return label
-    }()
-    
-    let idTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "아이디"
-        textField.textColor = .black
-        textField.backgroundColor = .white
-        return textField
     }()
    
     
+    
     let emailLabel : UILabel = {
         let label = UILabel()
-        label.text = "이메일 주소"
+        label.text = "이메일"
         label.textColor = .white
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
@@ -78,7 +56,7 @@ class JoinTheMembershipViewController: UIViewController{
         textField.backgroundColor = .white
         return textField
     }()
-   
+    
     
     
     let passwordLabel : UILabel = {
@@ -96,7 +74,7 @@ class JoinTheMembershipViewController: UIViewController{
         textField.backgroundColor = .white
         return textField
     }()
-   
+    
     
     let passwordConfirmLabel : UILabel = {
         let label = UILabel()
@@ -125,6 +103,88 @@ class JoinTheMembershipViewController: UIViewController{
     }()
     
     @objc func tapJointheMembershipButton(_ sender: UIButton){
+        //MARK: 이메일 조건 비밀번호 조건을 만들어야 될듯
+        
+        if let emailText = emailTextField.text, let passwordText = passwordTextField.text, let passwordConfirmText = passwordConfirmTextField.text{
+            
+            if emailText.isEmpty || passwordText.isEmpty || passwordConfirmText.isEmpty{
+                if emailText.isEmpty{
+                    self.errorLabel.text = "이메일을 작성해주세요"
+                }
+                else if passwordText.isEmpty {
+                    self.errorLabel.text = "비밀번호을 작성해주세요"
+                }
+                else if passwordConfirmText.isEmpty{
+                    self.errorLabel.text = "비밀번호 확인 부분을 작성해주세요"
+                }
+            }
+            else{
+                if passwordTextField.text == passwordConfirmTextField.text{
+                    
+                    Auth.auth().createUser(withEmail: emailText, password: passwordText){ (user,error) in
+                        if user != nil {
+                            print("register success")
+                            self.dismiss(animated: true)
+                        }
+                        else{
+                            if let maybeError = error{
+                                let err = maybeError as NSError
+                                switch err.code{
+                                case AuthErrorCode.invalidEmail.rawValue:
+                                    self.errorLabel.text = "이메일 형식이 잘못되었습니다."
+                                case AuthErrorCode.emailAlreadyInUse.rawValue:
+                                    self.errorLabel.text = "이미 사용중인 이메일입니다."
+                                case AuthErrorCode.weakPassword.rawValue:
+                                    self.errorLabel.text = "암호는 6글자 이상이어야 합니다"
+                                default:
+                                    print("unknow error:\(err.localizedDescription)")
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+                else{
+                    self.errorLabel.text = "비밀번호가 같지 않습니다."
+                }
+            }
+        }
+    }
+    
+    let logInBoundaryView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBlue
+        return view
+    }()
+    
+    let logInLabel : UILabel = {
+        let label = UILabel()
+        label.text = "이미 가입하셨다면 로그인버튼을 눌러주세요!"
+        label.textColor = .systemBlue
+        label.font = .systemFont(ofSize: 10)
+        return label
+    }()
+    
+    
+    lazy var logInButton : UIButton = {
+        let button = UIButton()
+        button.setTitle("로그인", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 5
+        button.backgroundColor = .systemBlue
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.addTarget(self, action: #selector(tapLogInButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var logInStackView : UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.logInLabel,self.logInButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        return stackView
+    }()
+    
+    @objc func tapLogInButton(_ sender: UIButton){
         self.dismiss(animated: true)
     }
     
@@ -136,13 +196,15 @@ class JoinTheMembershipViewController: UIViewController{
         
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        
+    }
+    
     private func setLayoutConstraints(){
         self.view.addSubview(blueCheckLabel)
         self.view.addSubview(joinRequestPhrasesLabel)
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(nameTextField)
-        self.view.addSubview(idLabel)
-        self.view.addSubview(idTextField)
+        self.view.addSubview(errorLabel)
         self.view.addSubview(emailLabel)
         self.view.addSubview(emailTextField)
         self.view.addSubview(passwordLabel)
@@ -150,14 +212,13 @@ class JoinTheMembershipViewController: UIViewController{
         self.view.addSubview(passwordConfirmLabel)
         self.view.addSubview(passwordConfirmTextField)
         self.view.addSubview(jointheMembershipButton)
+        self.view.addSubview(logInBoundaryView)
+        self.view.addSubview(logInStackView)
         
-
+        
         blueCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         joinRequestPhrasesLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        idLabel.translatesAutoresizingMaskIntoConstraints = false
-        idTextField.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -165,6 +226,8 @@ class JoinTheMembershipViewController: UIViewController{
         passwordConfirmLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordConfirmTextField.translatesAutoresizingMaskIntoConstraints = false
         jointheMembershipButton.translatesAutoresizingMaskIntoConstraints = false
+        logInBoundaryView.translatesAutoresizingMaskIntoConstraints = false
+        logInStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             blueCheckLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
@@ -172,26 +235,8 @@ class JoinTheMembershipViewController: UIViewController{
             
             joinRequestPhrasesLabel.topAnchor.constraint(equalTo: self.blueCheckLabel.bottomAnchor,constant: 20),
             joinRequestPhrasesLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            
-            nameLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 40),
-            nameLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            
-            nameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            nameTextField.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor,constant: 10),
-            nameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            nameTextField.heightAnchor.constraint(equalToConstant: 44),
-            
-            idLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
-            idLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            
-            idTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            idTextField.topAnchor.constraint(equalTo: self.idLabel.bottomAnchor,constant: 10),
-            idTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            idTextField.heightAnchor.constraint(equalToConstant: 44),
-            
-            
-            
-            emailLabel.topAnchor.constraint(equalTo: idTextField.bottomAnchor,constant: 20),
+
+            emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 50),
             emailLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             
             emailTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
@@ -216,14 +261,22 @@ class JoinTheMembershipViewController: UIViewController{
             passwordConfirmTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
             passwordConfirmTextField.heightAnchor.constraint(equalToConstant: 44),
             
-            jointheMembershipButton.topAnchor.constraint(equalTo: self.passwordConfirmTextField.bottomAnchor,constant: 40),
+            errorLabel.topAnchor.constraint(equalTo: passwordConfirmTextField.bottomAnchor,constant: 20),
+            errorLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
+            
+            jointheMembershipButton.topAnchor.constraint(equalTo: self.errorLabel.bottomAnchor,constant: 20),
             jointheMembershipButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             jointheMembershipButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            jointheMembershipButton.heightAnchor.constraint(equalToConstant: 50)
-           
+            jointheMembershipButton.heightAnchor.constraint(equalToConstant: 50),
             
             
+            logInBoundaryView.topAnchor.constraint(equalTo: self.jointheMembershipButton.bottomAnchor,constant: 20),
+            logInBoundaryView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 40),
+            logInBoundaryView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor,constant: -40),
+            logInBoundaryView.heightAnchor.constraint(equalToConstant: 2),
             
+            logInStackView.topAnchor.constraint(equalTo: self.logInBoundaryView.bottomAnchor,constant: 15),
+            logInStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
             
         ])
         

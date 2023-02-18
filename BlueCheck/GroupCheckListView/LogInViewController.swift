@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class LogInViewController: UIViewController{
     
@@ -19,7 +21,7 @@ class LogInViewController: UIViewController{
     
     let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "아이디"
+        textField.placeholder = "이메일"
         textField.textColor = .darkGray
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.layer.borderWidth = 1
@@ -32,6 +34,7 @@ class LogInViewController: UIViewController{
         textField.textColor = .darkGray
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.layer.borderWidth = 1
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -49,6 +52,13 @@ class LogInViewController: UIViewController{
 //        return label
 //    }()
     
+    let logInErrorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemRed
+        label.font = .systemFont(ofSize: 14, weight: .bold)
+        return label
+    }()
+    
     lazy var logInbutton : UIButton = {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
@@ -59,7 +69,36 @@ class LogInViewController: UIViewController{
     }()
     
     @objc func tapLogInButton(_ sender: UIButton) {
-        self.dismiss(animated: true)
+        if let idText = idTextField.text, let passwordText = passwordTextField.text{
+            Auth.auth().signIn(withEmail: idText, password: passwordText){ (user, error) in
+                if user != nil{
+                    print("success")
+                    self.dismiss(animated: true)
+                }
+                else{
+                    self.logInErrorLabel.text = "아이디,비밀번호를 확인해주세요!!"
+                }
+            }
+        }
+        
+        
+    }
+    
+    lazy var passwordEyebutton : UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+        button.addTarget(self, action: #selector(tapPasswordEyebutton(_:)), for: .touchUpInside)
+         
+        return button
+    }()
+    
+    @objc func tapPasswordEyebutton(_ sender: UIButton){
+        passwordTextField.isSecureTextEntry.toggle()
+        passwordEyebutton.isSelected.toggle()
+        
+        let eyeImage = passwordEyebutton.isSelected ? UIImage(systemName: "eye.fill") : UIImage(systemName: "eye.slash.fill")
+        passwordEyebutton.setImage(eyeImage, for: .normal)
     }
     
         
@@ -211,6 +250,7 @@ class LogInViewController: UIViewController{
         self.view.addSubview(logInLabel)
         self.view.addSubview(idTextField)
         self.view.addSubview(passwordTextField)
+        self.view.addSubview(passwordEyebutton)
         self.view.addSubview(autoLogInCheckButton)
         self.view.addSubview(logInbutton)
         self.view.addSubview(logInAnonouncementButton)
@@ -225,6 +265,7 @@ class LogInViewController: UIViewController{
         logInLabel.translatesAutoresizingMaskIntoConstraints = false
         idTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordEyebutton.translatesAutoresizingMaskIntoConstraints = false
         autoLogInCheckButton.translatesAutoresizingMaskIntoConstraints = false
 //        autoLogInLabel.translatesAutoresizingMaskIntoConstraints = false
         logInbutton.translatesAutoresizingMaskIntoConstraints = false
@@ -252,6 +293,11 @@ class LogInViewController: UIViewController{
             passwordTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             passwordTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             passwordTextField.heightAnchor.constraint(equalToConstant: 44),
+            
+            passwordEyebutton.centerYAnchor.constraint(equalTo: self.passwordTextField.centerYAnchor),
+            passwordEyebutton.trailingAnchor.constraint(equalTo: self.passwordTextField.trailingAnchor, constant: -10),
+            passwordEyebutton.heightAnchor.constraint(equalToConstant: 40),
+            passwordEyebutton.widthAnchor.constraint(equalToConstant: 40),
             
             autoLogInCheckButton.topAnchor.constraint(equalTo: self.passwordTextField.bottomAnchor,constant: 20),
             autoLogInCheckButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),

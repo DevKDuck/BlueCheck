@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>565860242925-4iou5ku2847e6fqaum4hb7g7qij1voor.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.565860242925-4iou5ku2847e6fqaum4hb7g7qij1voor</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAcVRIuv6eIdT1fuYyiO8H5kjqgOKfNQsc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>565860242925</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.gyeongdeok.BlueCheck</string>
+	<key>PROJECT_ID</key>
+	<string>bluecheck-b090c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bluecheck-b090c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:565860242925:ios:71f4006faab5bbe1e143e4</string>
+</dict>
+</plist>
