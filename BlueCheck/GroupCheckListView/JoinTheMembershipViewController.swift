@@ -121,10 +121,25 @@ class JoinTheMembershipViewController: UIViewController{
             else{
                 if passwordTextField.text == passwordConfirmTextField.text{
                     
-                    Auth.auth().createUser(withEmail: emailText, password: passwordText){ (user,error) in
-                        if user != nil {
+                    Auth.auth().createUser(withEmail: emailText, password: passwordText){ (result,error) in
+                        if result != nil {
                             print("register success")
-                            self.dismiss(animated: true)
+                            
+                            guard let user = result?.user else {return} //유저 객체를 가져옴
+                            
+                            //전달할 데이터
+                            let data = ["email": emailText]
+                            
+                            //UID를 이용해 유저 데이터 저장
+                            Firestore.firestore().collection("user").document(user.uid).setData(data){ error in
+                                if let error = error{
+                                    print("DEBUG:\(error.localizedDescription)")
+                                    return
+                                }
+                            }
+                            
+                            self.navigationController?.popViewController(animated: true)
+//                            self.dismiss(animated: true)
                         }
                         else{
                             if let maybeError = error{

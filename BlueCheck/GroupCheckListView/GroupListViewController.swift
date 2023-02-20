@@ -6,9 +6,15 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 
 class GroupListViewController: UIViewController{
+    
+    var currentUser: User?
     
     let topView: UIView = {
        let topview = UIView()
@@ -32,33 +38,31 @@ class GroupListViewController: UIViewController{
     }()
     
     @objc func tapAddGroupButton(_ sender: UIButton){
-        guard let goCreateGroupViewController = storyboard?.instantiateViewController(withIdentifier: "CreateGoupViewController") as? CreateGroupViewController else {return}
+        let goCreateGroupViewController = CreateGroupViewController()
         goCreateGroupViewController.modalPresentationStyle = .fullScreen
-        
+        goCreateGroupViewController.currentUser = self.currentUser
+
         self.present(goCreateGroupViewController,animated: true, completion: nil)
     }
     
     //MARK: 임시 로그인으로 이동
-    lazy var gologInRequestButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("로그인", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(tapGoLogInRequestButton(_:)), for: .touchUpInside)
-        return button
-    }()
+//    lazy var gologInRequestButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("로그인", for: .normal)
+//        button.setTitleColor(.systemBlue, for: .normal)
+//        button.addTarget(self, action: #selector(tapGoLogInRequestButton(_:)), for: .touchUpInside)
+//        return button
+//    }()
+//
+//    @objc func tapGoLogInRequestButton(_ sender: UIButton){
+//       let goLogInRequestViewController = LogInRequestViewController()
+//
+//        goLogInRequestViewController.modalPresentationStyle = .fullScreen
+//
+//        self.present(goLogInRequestViewController,animated: true, completion: nil)
+//    }
     
-    @objc func tapGoLogInRequestButton(_ sender: UIButton){
-        guard let goLogInRequestViewController = storyboard?.instantiateViewController(withIdentifier: "LogInRequestViewController") as? LogInRequestViewController else {return}
-        goLogInRequestViewController.modalPresentationStyle = .fullScreen
-        
-        self.present(goLogInRequestViewController,animated: true, completion: nil)
-    }
-    
-    
-    
-    
-    
-    
+ 
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(GroupListTableViewCell.self, forCellReuseIdentifier: "GroupListTableViewCell")
@@ -66,13 +70,27 @@ class GroupListViewController: UIViewController{
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
+        
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         
+        
+        Firestore.firestore().collection("user").document(currentUser?.uid ?? "ㅇㅇ").getDocument { snapshot, error in
+            if error == nil && snapshot != nil && snapshot!.data() != nil{
+                print(snapshot!.data())
+            }
+        }
         setAutolayoutConstraint()
     }
     
@@ -81,14 +99,14 @@ class GroupListViewController: UIViewController{
         
         self.view.addSubview(topView)
         self.view.addSubview(groupListLabel)
-        self.view.addSubview(gologInRequestButton) //임시 로그인
+//        self.view.addSubview(gologInRequestButton) //임시 로그인
         self.view.addSubview(addGroupButton)
         self.view.addSubview(tableView)
         
         
         topView.translatesAutoresizingMaskIntoConstraints = false
         groupListLabel.translatesAutoresizingMaskIntoConstraints = false
-        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
+//        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -101,9 +119,9 @@ class GroupListViewController: UIViewController{
             
             
             //MARK: 임시로그인
-            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
-            
+//            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
+//            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
+//
             
             groupListLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
             groupListLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
@@ -122,11 +140,12 @@ class GroupListViewController: UIViewController{
 
 extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupListTableViewCell", for: indexPath) as? GroupListTableViewCell else { return UITableViewCell()}
+        
         
         cell.titleLabel.text = "그룹명"
         cell.objectGroupImage.image = UIImage(systemName: "squareshape")
@@ -140,6 +159,6 @@ extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goEachGroupRecordsViewController = EachGroupRecordsViewController()
         goEachGroupRecordsViewController.modalPresentationStyle = .fullScreen
-        self.present(goEachGroupRecordsViewController, animated: true)
+        self.navigationController?.pushViewController(goEachGroupRecordsViewController, animated: true)
     }
 }

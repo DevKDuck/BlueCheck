@@ -70,7 +70,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.view.backgroundColor = .white
         //MARK: TableView 설정
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         tableView.backgroundColor = .white

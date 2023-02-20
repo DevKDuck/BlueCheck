@@ -11,6 +11,7 @@ import AVFoundation
 class CreateEachGroupRecordsContentViewController: UIViewController{
     
     
+    
     let topView: UIView = {
         let topview = UIView()
         topview.backgroundColor = .white

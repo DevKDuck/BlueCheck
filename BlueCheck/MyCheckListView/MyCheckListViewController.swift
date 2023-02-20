@@ -81,11 +81,12 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }()
     
     @objc func tapAddTaskButton(_ sender: UIButton){
-        guard let goMyCheckListSettingViewController = storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
+       let goMyCheckListSettingViewController = MyCheckListSettingViewController()
         goMyCheckListSettingViewController.delegate = self
         goMyCheckListSettingViewController.taskAddOrModify = 0 // 추가
         goMyCheckListSettingViewController.objectKey = translateObjectKey
         
+//        self.navigationController?.pushViewController(goMyCheckListSettingViewController, animated: true)
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
     
@@ -151,6 +152,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = true
         self.initView()
         
         //MARK: UserDefualt 모두 삭제
@@ -468,8 +470,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let goMyCheckListSettingViewController = self.storyboard?.instantiateViewController(withIdentifier: "MyCheckListSettingViewController") as? MyCheckListSettingViewController else {return}
-        
+        let goMyCheckListSettingViewController = MyCheckListSettingViewController()
         goMyCheckListSettingViewController.delegate = self
         goMyCheckListSettingViewController.taskIndex = indexPath.row
         goMyCheckListSettingViewController.taskAddOrModify = 1 // 수정

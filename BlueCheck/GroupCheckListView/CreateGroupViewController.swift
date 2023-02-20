@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class CreateGroupViewController: UIViewController{
     
+    let db = Firestore.firestore()
+    var currentUser: User?
     
     let groupTitleLabel : UILabel = {
         let label = UILabel()
@@ -137,7 +141,13 @@ class CreateGroupViewController: UIViewController{
     
     @objc func tapCreateButton(_ sender: UIButton){
         //MARK: 생성 버튼클릭시 정보들을 GroupList에 reload 해야함
+        firestoreCreateDocuments()
         self.dismiss(animated: true)
+    }
+    
+    //MARK: Firebase update
+    func firestoreCreateDocuments(){
+        db.collection("user").document("ㅇㅇ").updateData(["group":groupTitleTextField.text,"object":"공부"])
     }
     
     lazy var cancelButton: UIButton = {
