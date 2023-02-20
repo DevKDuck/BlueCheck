@@ -156,6 +156,12 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
             invitationStatusViewController.modalPresentationStyle = .fullScreen
             self.present(invitationStatusViewController, animated: true)
         }
+        
+        if indexPath.row == 2 {
+            UserDefaults.standard.removeObject(forKey: "id")
+            UserDefaults.standard.removeObject(forKey: "pw")
+            self.dismiss(animated: true)
+        }
     }
     
 }

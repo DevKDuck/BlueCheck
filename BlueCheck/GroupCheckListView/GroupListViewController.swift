@@ -74,7 +74,15 @@ class GroupListViewController: UIViewController{
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = true
+        
+        Firestore.firestore().collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").collection("GroupList").getDocuments() { querySnapshot, error in
+            for document in querySnapshot!.documents{
+                print(document.data())
+            }
+        }
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,11 +94,7 @@ class GroupListViewController: UIViewController{
         tableView.delegate = self
         
         
-        Firestore.firestore().collection("user").document(currentUser?.uid ?? "ㅇㅇ").getDocument { snapshot, error in
-            if error == nil && snapshot != nil && snapshot!.data() != nil{
-                print(snapshot!.data())
-            }
-        }
+        
         setAutolayoutConstraint()
     }
     

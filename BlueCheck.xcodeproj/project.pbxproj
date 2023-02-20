@@ -51,6 +51,7 @@
 		8C508AFC29A30F2800EF29B8 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFB29A30F2800EF29B8 /* FirebaseRemoteConfigSwift */; };
 		8C508AFE29A30F2800EF29B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFD29A30F2800EF29B8 /* FirebaseStorage */; };
 		8C508B0029A30F2800EF29B8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */; };
+		8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61C95029A35ED500701799 /* TabbarViewController.swift */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
 		8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B32298A6F820093D90A /* InviteListViewController.swift */; };
 		8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */; };
@@ -87,6 +88,7 @@
 		8C23EAAF296D46DE0042248F /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB1296D47130042248F /* MyCheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
+		8C61C95029A35ED500701799 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
 		8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListTableViewCell.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				8C0EDB2329891502007FD35C /* MyAccountView */,
 				8C23EA93296D2B3F0042248F /* AppDelegate.swift */,
 				8C23EA95296D2B3F0042248F /* SceneDelegate.swift */,
+				8C61C95029A35ED500701799 /* TabbarViewController.swift */,
 				8C23EA97296D2B3F0042248F /* ViewController.swift */,
 				8C23EA99296D2B3F0042248F /* Main.storyboard */,
 				8C23EA9C296D2B430042248F /* Assets.xcassets */,
@@ -384,6 +387,7 @@
 				8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
 				8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */,
+				8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
 				8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */,
 				8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */,

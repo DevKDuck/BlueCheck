@@ -21,8 +21,6 @@ class LogInViewController: UIViewController{
     
     
     
-  
-    
     let logInLabel: UILabel = {
         let label = UILabel()
         label.text = "로그인"
@@ -50,19 +48,20 @@ class LogInViewController: UIViewController{
         return textField
     }()
     
-    let autoLogInCheckButton: UIButton = {
+    lazy var autoLogInCheckButton: UIButton = {
         let button = UIButton()
-//        button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.addTarget(self, action: #selector(tapAutoLogInButton(_:)), for: .touchUpInside)
         return button
     }()
     
-//    let autoLogInLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "자동 로그인"
-//        label.textColor = .black
-//        label.font = .systemFont(ofSize: 10, weight: .black)
-//        return label
-//    }()
+    //    let autoLogInLabel: UILabel = {
+    //        let label = UILabel()
+    //        label.text = "자동 로그인"
+    //        label.textColor = .black
+    //        label.font = .systemFont(ofSize: 10, weight: .black)
+    //        return label
+    //    }()
     
     let logInErrorLabel: UILabel = {
         let label = UILabel()
@@ -92,13 +91,16 @@ class LogInViewController: UIViewController{
                     if result != nil{
                         print("success")
                         
+                        //MARK: ID,PASSWORD 저장
+                        if self.autoLogInCheckButton.isSelected {
+                            UserDefaults.standard.set(idText, forKey: "id")
+                            UserDefaults.standard.set(passwordText, forKey: "password")
+                        }
+                        
                         guard let user = result?.user else {return}
-                        self.currentUser = user
                         
+                        let vc = TabbarViewController()
                         
-//                        self.dismiss(animated: true)
-                        
-                        let vc = GroupListViewController()
                         vc.currentUser = user
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
@@ -112,14 +114,38 @@ class LogInViewController: UIViewController{
         }
     }
     
-    
+    func autoLogin(){
+        if let userid = UserDefaults.standard.string(forKey: "id"), let userpw = UserDefaults.standard.string(forKey: "password"){
+            Auth.auth().signIn(withEmail: userid, password: userpw){ (result, error) in
+                
+                if result != nil{
+                    
+                    guard let user = result?.user else {return}
+                    
+                    let vc = TabbarViewController()
+                    
+                    vc.currentUser = user
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                    
+                }
+                else{
+                    self.logInErrorLabel.text = "자동 로그인 실패 - 아이디,비밀번호를 확인해주세요!!"
+                }
+            }
+            
+            
+        }else{
+            print("AutoLogin failed")
+        }
+    }
     
     lazy var passwordEyebutton : UIButton = {
         let button = UIButton()
         button.setTitleColor(.systemBlue, for: .normal)
         button.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
         button.addTarget(self, action: #selector(tapPasswordEyebutton(_:)), for: .touchUpInside)
-         
+        
         return button
     }()
     
@@ -131,7 +157,7 @@ class LogInViewController: UIViewController{
         passwordEyebutton.setImage(eyeImage, for: .normal)
     }
     
-        
+    
     let logInAnonouncementButton: UIButton = {
         let button = UIButton()
         button.setTitle("로그인에 어려움이 있으신가요?", for: .normal)
@@ -175,7 +201,7 @@ class LogInViewController: UIViewController{
         presentJoinTheMembershipViewController.modalPresentationStyle = .fullScreen
         
         self.navigationController?.pushViewController(presentJoinTheMembershipViewController, animated: true)
-//        self.present(presentJoinTheMembershipViewController, animated: true)
+        //        self.present(presentJoinTheMembershipViewController, animated: true)
     }
     
     let idNextdivideLabel: UILabel = {
@@ -263,6 +289,7 @@ class LogInViewController: UIViewController{
         self.view.backgroundColor = .white
         buttonConfiguration()
         setLayoutConstraints()
+        autoLogin()
         
     }
     
@@ -274,6 +301,12 @@ class LogInViewController: UIViewController{
         config.imagePadding = 5
         config.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         autoLogInCheckButton.configuration = config
+    }
+    
+    @objc func tapAutoLogInButton(_ sender: UIButton){
+        autoLogInCheckButton.isSelected.toggle()
+        let autoLogInImage = autoLogInCheckButton.isSelected ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+        autoLogInCheckButton.setImage(autoLogInImage, for: .normal)
     }
     
     
@@ -301,7 +334,7 @@ class LogInViewController: UIViewController{
         passwordEyebutton.translatesAutoresizingMaskIntoConstraints = false
         autoLogInCheckButton.translatesAutoresizingMaskIntoConstraints = false
         logInErrorLabel.translatesAutoresizingMaskIntoConstraints = false
-//        autoLogInLabel.translatesAutoresizingMaskIntoConstraints = false
+        //        autoLogInLabel.translatesAutoresizingMaskIntoConstraints = false
         logInbutton.translatesAutoresizingMaskIntoConstraints = false
         logInAnonouncementButton.translatesAutoresizingMaskIntoConstraints = false
         findIdPassWordAndJoinMembershipStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -322,7 +355,7 @@ class LogInViewController: UIViewController{
             idTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             idTextField.heightAnchor.constraint(equalToConstant: 44),
             
-
+            
             passwordTextField.topAnchor.constraint(equalTo: self.idTextField.bottomAnchor,constant: 7),
             passwordTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             passwordTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -340,11 +373,11 @@ class LogInViewController: UIViewController{
             logInErrorLabel.topAnchor.constraint(equalTo: self.autoLogInCheckButton.bottomAnchor, constant: 10),
             logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             logInErrorLabel.heightAnchor.constraint(equalToConstant: 30),
-    
+            
             
             logInAnonouncementButton.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
             logInAnonouncementButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-    
+            
             
             logInbutton.topAnchor.constraint(equalTo: self.logInErrorLabel.bottomAnchor, constant: 10),
             logInbutton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -363,7 +396,7 @@ class LogInViewController: UIViewController{
             sNSRightLineView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             sNSRightLineView.centerYAnchor.constraint(equalTo: self.sNSLogInLable.centerYAnchor),
             sNSRightLineView.heightAnchor.constraint(equalToConstant: 2),
-
+            
             
             sNSLeftLineView.trailingAnchor.constraint(equalTo: self.sNSLogInLable.leadingAnchor, constant: -5),
             sNSLeftLineView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -376,7 +409,7 @@ class LogInViewController: UIViewController{
             sNSButtonStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
             sNSButtonStackView.heightAnchor.constraint(equalToConstant: 44)
             
-
+            
         ])
     }
 }
