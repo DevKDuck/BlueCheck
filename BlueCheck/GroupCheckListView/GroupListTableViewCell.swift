@@ -19,7 +19,6 @@ class GroupListTableViewCell: UITableViewCell{
     
     let objectGroupImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemBlue
         return imageView
     }()
     
@@ -37,6 +36,8 @@ class GroupListTableViewCell: UITableViewCell{
         NSLayoutConstraint.activate([
             objectGroupImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             objectGroupImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            objectGroupImage.heightAnchor.constraint(equalToConstant: 50),
+            objectGroupImage.widthAnchor.constraint(equalToConstant: 50),
             
             
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

@@ -44,6 +44,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         
         let myAccountViewController = MyAccountViewController()
         let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "rectangle.3.group.bubble.left"), selectedImage: UIImage(systemName: "ellipsis.circle"))
+        myAccountViewController.currentUser = self.currentUser
         myAccountViewController.tabBarItem = myAccountViewControllerBarItem
         
         self.viewControllers = [bucketListViewController,myCheckListViewController,groupCheckListViewController,myAccountViewController]

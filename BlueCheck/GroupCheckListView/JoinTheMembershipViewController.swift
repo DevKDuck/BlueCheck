@@ -57,6 +57,21 @@ class JoinTheMembershipViewController: UIViewController{
         return textField
     }()
     
+    let nameLabel : UILabel = {
+        let label = UILabel()
+        label.text = "이름"
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        return label
+    }()
+    
+    let nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "이름"
+        textField.textColor = .black
+        textField.backgroundColor = .white
+        return textField
+    }()
     
     
     let passwordLabel : UILabel = {
@@ -105,7 +120,7 @@ class JoinTheMembershipViewController: UIViewController{
     @objc func tapJointheMembershipButton(_ sender: UIButton){
         //MARK: 이메일 조건 비밀번호 조건을 만들어야 될듯
         
-        if let emailText = emailTextField.text, let passwordText = passwordTextField.text, let passwordConfirmText = passwordConfirmTextField.text{
+        if let emailText = emailTextField.text, let passwordText = passwordTextField.text, let passwordConfirmText = passwordConfirmTextField.text, let nameText = nameTextField.text{
             
             if emailText.isEmpty || passwordText.isEmpty || passwordConfirmText.isEmpty{
                 if emailText.isEmpty{
@@ -128,7 +143,7 @@ class JoinTheMembershipViewController: UIViewController{
                             guard let user = result?.user else {return} //유저 객체를 가져옴
                             
                             //전달할 데이터
-                            let data = ["email": emailText]
+                            let data = ["email": emailText, "name": nameText]
                             
                             //UID를 이용해 유저 데이터 저장
                             Firestore.firestore().collection("user").document(user.uid).setData(data){ error in
@@ -222,6 +237,8 @@ class JoinTheMembershipViewController: UIViewController{
         self.view.addSubview(errorLabel)
         self.view.addSubview(emailLabel)
         self.view.addSubview(emailTextField)
+        self.view.addSubview(nameLabel)
+        self.view.addSubview(nameTextField)
         self.view.addSubview(passwordLabel)
         self.view.addSubview(passwordTextField)
         self.view.addSubview(passwordConfirmLabel)
@@ -236,6 +253,8 @@ class JoinTheMembershipViewController: UIViewController{
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordConfirmLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -259,8 +278,16 @@ class JoinTheMembershipViewController: UIViewController{
             emailTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
             emailTextField.heightAnchor.constraint(equalToConstant: 44),
             
+            nameLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor,constant: 20),
+            nameLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             
-            passwordLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor,constant: 20),
+            nameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
+            nameTextField.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor,constant: 10),
+            nameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
+            nameTextField.heightAnchor.constraint(equalToConstant: 44),
+            
+            
+            passwordLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
             passwordLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             
             passwordTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),

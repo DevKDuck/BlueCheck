@@ -7,37 +7,26 @@
 
 import UIKit
 import AVFoundation
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class CreateEachGroupRecordsContentViewController: UIViewController{
     
+    var currentUser: User?
+    var groupDocumentName = ""
     
     
-    let topView: UIView = {
-        let topview = UIView()
-        topview.backgroundColor = .white
-        return topview
-    }()
-    
-    //MARK: 임시 뒤로가기 버튼
-    lazy var disMissButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        button.setTitleColor(UIColor.darkGray, for: .normal)
-        button.addTarget(self, action: #selector(tapDismissButton(_:)), for: .touchUpInside)
+    lazy var completeButton : UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(tapCompleteButton(_:)))
         return button
     }()
     
-    lazy var completeButton : UIButton = {
-        let button = UIButton()
-        button.setTitle("완료", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(self, action: #selector(tapDismissButton(_:)), for: .touchUpInside)
-        return button
-    }()
     
-    @objc func tapDismissButton(_ sender: UIButton){
-        self.dismiss(animated: true)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
+    
     
     let titleTextField: UITextField = {
         let textField = UITextField()
@@ -119,6 +108,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         imageViewTapGestureAttributes()
         setAttributesDatePicker()
         setLayoutConstraints()
+        self.navigationItem.rightBarButtonItem = completeButton
         picker.delegate = self
         
     }
@@ -134,12 +124,12 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         let alert = UIAlertController(title: "인증 사진 찾기", message: "자랑스럽게 이루어낸 사진을 공유하세요!", preferredStyle: .actionSheet)
         
         let camera = UIAlertAction(title: "카메라", style: .default) { camera in
-//            let pickerController = UIImagePickerController()
-//            pickerController.sourceType = .camera
-//            pickerController.allowsEditing = false
-//            pickerController.mediaTypes = ["public.image"]
-////            pickerController.delegate = self
-//            self.present(pickerController, animated: true)
+            //            let pickerController = UIImagePickerController()
+            //            pickerController.sourceType = .camera
+            //            pickerController.allowsEditing = false
+            //            pickerController.mediaTypes = ["public.image"]
+            ////            pickerController.delegate = self
+            //            self.present(pickerController, animated: true)
             self.openCamera()
         }
         
@@ -157,16 +147,16 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         
         //MARK: ActionSheet의 모달스타일은 UIModalPresentationPopover라고 설명을 해주면서 UIModalPresentationPopover을 사용 할 때는 barButtonItem 또는 팝업에 대한 위치를 설정해줘야 되어 패드와 아이폰 나눔
-    
-
+        
+        
         if UIDevice.current.userInterfaceIdiom == .pad { //디바이스 타입이 iPad일때
-          if let popoverController = alert.popoverPresentationController {
-              // ActionSheet가 표현되는 위치를 저장해줍니다.
-              popoverController.sourceView = self.view
-              popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-              popoverController.permittedArrowDirections = []
-              self.present(alert, animated: true, completion: nil)
-          }
+            if let popoverController = alert.popoverPresentationController {
+                // ActionSheet가 표현되는 위치를 저장해줍니다.
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+                self.present(alert, animated: true, completion: nil)
+            }
         }
         
         else {
@@ -180,26 +170,67 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         startDatePicker.datePickerMode = .dateAndTime
         startDatePicker.locale = Locale(identifier: "ko-KR")
         startDatePicker.timeZone  = .autoupdatingCurrent
-        startDatePicker.addTarget(self, action: #selector(valueChangedDatePicker(_:)), for: .valueChanged)
+        startDatePicker.addTarget(self, action: #selector(startValueChangedDatePicker(_:)), for: .valueChanged)
         
         
         endDatePicker.preferredDatePickerStyle = .automatic
         endDatePicker.datePickerMode = .dateAndTime
         endDatePicker.locale = Locale(identifier: "ko-KR")
         endDatePicker.timeZone  = .autoupdatingCurrent
-        endDatePicker.addTarget(self, action: #selector(valueChangedDatePicker(_:)), for: .valueChanged)
+        endDatePicker.addTarget(self, action: #selector(endValueChangedDatePicker(_:)), for: .valueChanged)
+    }
+    var startDate = ""
+    var endDate = ""
+    
+    @objc func startValueChangedDatePicker(_ sender: UIDatePicker){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        startDate = dateFormatter.string(from: sender.date)
     }
     
-    @objc func valueChangedDatePicker(_ sender: UIDatePicker){
+    
+    @objc func endValueChangedDatePicker(_ sender: UIDatePicker){
         //시작날짜 종료날짜 변경필요
-        print(sender.date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+        dateFormatter.locale = Locale(identifier:"ko_KR")
+        endDate = dateFormatter.string(from: sender.date)
     }
     
+    @objc func tapCompleteButton(_ sender: UIButton){
+        
+        
+        if startDate == "" {
+            let now = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            dateFormatter.locale = Locale(identifier:"ko_KR")
+            startDate = dateFormatter.string(from: now)
+        }
+        if endDate == "" {
+            let now = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            dateFormatter.locale = Locale(identifier:"ko_KR")
+            endDate = dateFormatter.string(from: now)
+        }
+        let data = ["제목" : titleTextField.text!, "시작 날짜" : startDate, "종료 날짜" : endDate, "사진" : "" , "내용": contentTextView.text!]
+        //        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).updateData(data){ err in
+        //            if let error = err{
+        //                print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
+        //            }
+        //        }
+        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).collection("Group").addDocument(data: data){ err in
+            if let error = err{
+                print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
+            }
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
     
     private func setLayoutConstraints(){
-        self.view.addSubview(topView)
-        self.view.addSubview(completeButton)
-        self.view.addSubview(disMissButton)
+        
         self.view.addSubview(titleTextField)
         self.view.addSubview(titlebarView)
         
@@ -218,9 +249,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         
         
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        completeButton.translatesAutoresizingMaskIntoConstraints = false
-        disMissButton.translatesAutoresizingMaskIntoConstraints = false
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         startLabel.translatesAutoresizingMaskIntoConstraints = false
         startDatePicker.translatesAutoresizingMaskIntoConstraints = false
@@ -233,18 +261,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         contentTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 44),
             
-            completeButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            completeButton.trailingAnchor.constraint(equalTo: self.topView.trailingAnchor,constant: -20),
-            
-            disMissButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            disMissButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
-            
-            titleTextField.topAnchor.constraint(equalTo: self.topView.bottomAnchor, constant: 5),
+            titleTextField.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             titleTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             titleTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             titleTextField.heightAnchor.constraint(equalToConstant: 50),

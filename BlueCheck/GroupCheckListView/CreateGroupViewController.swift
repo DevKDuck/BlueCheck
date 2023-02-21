@@ -13,6 +13,7 @@ class CreateGroupViewController: UIViewController{
     
     let db = Firestore.firestore()
     var currentUser: User?
+    var meetObject = ""
     
     let groupTitleLabel : UILabel = {
         let label = UILabel()
@@ -76,6 +77,11 @@ class CreateGroupViewController: UIViewController{
             $0.isSelected = false
         }
         sender.isSelected = true
+        
+        if let objectText = sender.titleLabel?.text {
+            meetObject = objectText
+        }
+        
     }
     
     let objectiveStackView: UIStackView = {
@@ -147,7 +153,25 @@ class CreateGroupViewController: UIViewController{
     
     //MARK: Firebase update
     func firestoreCreateDocuments(){
-        db.collection("user").document("ㅇㅇ").updateData(["group":groupTitleTextField.text,"object":"공부"])
+        guard let titleText = groupTitleTextField.text, let contentText = contentTextView.text else {return}
+        let data = ["그룹명" : titleText, "목표" : meetObject, "내용" : contentText]
+        let randomNum = Float.random(in: 0...10)
+        
+        //uid + 랜덤값 으로 collection 만들기
+        
+        Firestore.firestore().collection("user").document(currentUser?.uid ?? "ㅇㅇ").collection("group").document((currentUser?.uid ?? "ㅇㅇ") + "\(randomNum)").setData(data){ error in
+            if let error = error{
+                print("Error:\(error.localizedDescription)")
+                return
+            }
+        }
+        
+        Firestore.firestore().collection((currentUser?.uid ?? "ㅇㅇ") + "\(randomNum)").document(currentUser?.uid ?? "ㅇㅇ").setData([:]){error in
+            if let error = error{
+                print("RandomNumCollectionCreateError: \(error.localizedDescription)")
+                return
+            }
+        }
     }
     
     lazy var cancelButton: UIButton = {

@@ -6,14 +6,19 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 class MyAccountViewController: UIViewController{
     
+    var currentUser: User?
+    
     let topView: UIView = {
-       let topview = UIView()
+        let topview = UIView()
         topview.backgroundColor = .white
-       return topview
-   }()
+        return topview
+    }()
     
     let seeMoreLabel : UILabel = {
         let label = UILabel()
@@ -31,7 +36,6 @@ class MyAccountViewController: UIViewController{
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "박경덕님"
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 30, weight: .bold)
         return label
@@ -40,7 +44,6 @@ class MyAccountViewController: UIViewController{
     
     let emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "loading95@naver.com"
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
@@ -75,6 +78,25 @@ class MyAccountViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         setLayoutConstraints()
+        getFireStoreData()
+    }
+    
+    func getFireStoreData(){
+        let db = Firestore.firestore()
+        
+        db.collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").getDocument{ snapshot, error in
+            if let err = error{
+                print("MyAccountView Error:\(err.localizedDescription)")
+            }
+            else{
+                let data = snapshot?.data()
+                if let FirestoreData = data {
+                    self.nameLabel.text = FirestoreData["name"] as? String
+                    self.emailLabel.text = FirestoreData["email"] as? String
+                }
+            }
+            
+        }
     }
     
     
@@ -86,7 +108,7 @@ class MyAccountViewController: UIViewController{
         self.view.addSubview(emailLabel)
         self.view.addSubview(myAccountStackView)
         self.view.addSubview(tableView)
-
+        
         
         
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +117,7 @@ class MyAccountViewController: UIViewController{
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             
             topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -123,8 +145,8 @@ class MyAccountViewController: UIViewController{
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
-                
-    
+        
+        
     }
 }
 

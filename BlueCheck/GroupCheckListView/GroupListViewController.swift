@@ -17,10 +17,10 @@ class GroupListViewController: UIViewController{
     var currentUser: User?
     
     let topView: UIView = {
-       let topview = UIView()
+        let topview = UIView()
         topview.backgroundColor = .white
-       return topview
-   }()
+        return topview
+    }()
     
     let groupListLabel : UILabel = {
         let label = UILabel()
@@ -41,28 +41,10 @@ class GroupListViewController: UIViewController{
         let goCreateGroupViewController = CreateGroupViewController()
         goCreateGroupViewController.modalPresentationStyle = .fullScreen
         goCreateGroupViewController.currentUser = self.currentUser
-
+        
         self.present(goCreateGroupViewController,animated: true, completion: nil)
     }
     
-    //MARK: 임시 로그인으로 이동
-//    lazy var gologInRequestButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("로그인", for: .normal)
-//        button.setTitleColor(.systemBlue, for: .normal)
-//        button.addTarget(self, action: #selector(tapGoLogInRequestButton(_:)), for: .touchUpInside)
-//        return button
-//    }()
-//
-//    @objc func tapGoLogInRequestButton(_ sender: UIButton){
-//       let goLogInRequestViewController = LogInRequestViewController()
-//
-//        goLogInRequestViewController.modalPresentationStyle = .fullScreen
-//
-//        self.present(goLogInRequestViewController,animated: true, completion: nil)
-//    }
-    
- 
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(GroupListTableViewCell.self, forCellReuseIdentifier: "GroupListTableViewCell")
@@ -70,15 +52,46 @@ class GroupListViewController: UIViewController{
         return tableView
     }()
     
+    var groupNameArray = [String]()
+    var groupObjectArray = [UIImage]()
+    var groupDocumentsArray = [String]()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = true
         
-        Firestore.firestore().collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").collection("GroupList").getDocuments() { querySnapshot, error in
+    }
+    
+    func getFireStoreData() {
+        Firestore.firestore().collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").collection("group").getDocuments { querySnapshot, error in
             for document in querySnapshot!.documents{
+                print(document.documentID)
                 print(document.data())
+                let data = document.data()
+                guard let groupName = data["그룹명"] as? String else {return}
+                guard let groupObject = data["목표"] as? String else {return}
+                
+                self.groupNameArray.append(groupName)
+                self.groupDocumentsArray.append(document.documentID)
+                
+                switch groupObject{
+                case "공부":
+                    self.groupObjectArray.append(UIImage(systemName: "book")!)
+                case "운동":
+                    self.groupObjectArray.append(UIImage(systemName: "figure.strengthtraining.traditional")!)
+                case "여행":
+                    self.groupObjectArray.append(UIImage(systemName: "figure.stairs")!)
+                case "맛집":
+                    self.groupObjectArray.append(UIImage(systemName: "light.recessed")!)
+                case "기타":
+                    self.groupObjectArray.append(UIImage(systemName: "guitars")!)
+                default:
+                    break
+                }
+                
             }
+            self.tableView.reloadData()
         }
     }
     
@@ -93,8 +106,7 @@ class GroupListViewController: UIViewController{
         tableView.dataSource = self
         tableView.delegate = self
         
-        
-        
+        getFireStoreData()
         setAutolayoutConstraint()
     }
     
@@ -103,14 +115,14 @@ class GroupListViewController: UIViewController{
         
         self.view.addSubview(topView)
         self.view.addSubview(groupListLabel)
-//        self.view.addSubview(gologInRequestButton) //임시 로그인
+        //        self.view.addSubview(gologInRequestButton) //임시 로그인
         self.view.addSubview(addGroupButton)
         self.view.addSubview(tableView)
         
         
         topView.translatesAutoresizingMaskIntoConstraints = false
         groupListLabel.translatesAutoresizingMaskIntoConstraints = false
-//        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
+        //        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -123,9 +135,9 @@ class GroupListViewController: UIViewController{
             
             
             //MARK: 임시로그인
-//            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-//            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
-//
+            //            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
+            //            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
+            //
             
             groupListLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
             groupListLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
@@ -144,25 +156,28 @@ class GroupListViewController: UIViewController{
 
 extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        
+        return self.groupNameArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupListTableViewCell", for: indexPath) as? GroupListTableViewCell else { return UITableViewCell()}
         
-        
-        cell.titleLabel.text = "그룹명"
-        cell.objectGroupImage.image = UIImage(systemName: "squareshape")
+        cell.titleLabel.text = groupNameArray[indexPath.row]
+        cell.objectGroupImage.image = groupObjectArray[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goEachGroupRecordsViewController = EachGroupRecordsViewController()
         goEachGroupRecordsViewController.modalPresentationStyle = .fullScreen
+        goEachGroupRecordsViewController.currentUser = self.currentUser
+        goEachGroupRecordsViewController.groupDocumentName = self.groupDocumentsArray[indexPath.row]
+        
         self.navigationController?.pushViewController(goEachGroupRecordsViewController, animated: true)
     }
 }

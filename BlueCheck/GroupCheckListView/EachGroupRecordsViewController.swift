@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class EachGroupRecordsViewController: UIViewController {
+    
+    var currentUser: User?
+    var groupDocumentName = ""
     
     lazy var addContentButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(tapAddContentButton(_:)))
@@ -17,8 +23,12 @@ class EachGroupRecordsViewController: UIViewController {
     @objc func tapAddContentButton(_ sender: UIButton){
 
         let goVC = CreateEachGroupRecordsContentViewController()
+        goVC.currentUser = self.currentUser
+        goVC.groupDocumentName = self.groupDocumentName
+        
         goVC.modalPresentationStyle = .fullScreen
-        self.present(goVC,animated: true, completion: nil)
+//        self.present(goVC,animated: true, completion: nil)
+        self.navigationController?.pushViewController(goVC, animated: true)
     }
     
     let tableView: UITableView = {
@@ -44,8 +54,18 @@ class EachGroupRecordsViewController: UIViewController {
         
         self.title = "그룹명"
         self.navigationItem.rightBarButtonItem = self.addContentButton
-        
+        getFireStoreData()
         setAutolayoutConstraint()
+    }
+    
+    func getFireStoreData() {
+        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).collection("Group").getDocuments { querySnapshot, error in
+            for document in querySnapshot!.documents{
+                let data = document.data()
+                print(data)
+            }
+            self.tableView.reloadData()
+        }
     }
     
     

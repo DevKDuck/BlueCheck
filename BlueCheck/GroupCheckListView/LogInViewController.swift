@@ -149,12 +149,18 @@ class LogInViewController: UIViewController{
         return button
     }()
     
+    
+    
     @objc func tapPasswordEyebutton(_ sender: UIButton){
         passwordTextField.isSecureTextEntry.toggle()
         passwordEyebutton.isSelected.toggle()
         
         let eyeImage = passwordEyebutton.isSelected ? UIImage(systemName: "eye.fill") : UIImage(systemName: "eye.slash.fill")
         passwordEyebutton.setImage(eyeImage, for: .normal)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     
