@@ -10,6 +10,7 @@ import AVFoundation
 import Firebase
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
 
 class CreateEachGroupRecordsContentViewController: UIViewController{
     
@@ -215,7 +216,14 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             dateFormatter.locale = Locale(identifier:"ko_KR")
             endDate = dateFormatter.string(from: now)
         }
-        let data = ["제목" : titleTextField.text!, "시작 날짜" : startDate, "종료 날짜" : endDate, "사진" : "" , "내용": contentTextView.text!]
+        
+        guard let user = Auth.auth().currentUser else {return}
+        guard let recordUIImage = recordImage.image else {return}
+        print(user.uid)
+        let randomNum = String(Float.random(in: 0...10))
+        uploadImage(img: recordUIImage, randomNum: randomNum)
+        
+        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : ("\(groupDocumentName)/\(randomNum)") , "content": contentTextView.text!]
         //        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).updateData(data){ err in
         //            if let error = err{
         //                print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
@@ -226,7 +234,41 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
             }
         }
+        
+   
+        
+        
+//        FirebaseStorageManager.uploadImage(image: recordUIImage, pathRoot: "\(groupDocumentName)/" ) { error in
+//            if let error = error {
+//                print("FirebaseStorage Image save failed: \(error.debugDescription)")
+//            }
+//            //            if let url = url {
+//////                UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
+////                self.title = "이미지 업로드 완료"
+////            }
+//        }
+        
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    
+    func uploadImage(img: UIImage, randomNum: String){
+        var data = Data()
+        data = img.jpegData(compressionQuality: 0.8)!
+        let filePath = groupDocumentName
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/png"
+        Storage.storage().reference().child("\(filePath)/\(randomNum)").putData(data,metadata: metaData){ (metaData,error) in
+            if let error = error{
+                print(error.localizedDescription)
+                return
+            }
+            else{
+                print("성공")
+            }
+            
+        }
+        
     }
     
     private func setLayoutConstraints(){
@@ -335,21 +377,38 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         picker.sourceType = .photoLibrary
         present(picker, animated: false)
     }
+    
+    
+    
+    
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            picker.dismiss(animated: true)
-            return
-        }
-        self.recordImage.image = image
-        picker.dismiss(animated: true, completion: nil)
-        // 비디오인 경우 - url로 받는 형태
-        //    guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
-        //      picker.dismiss(animated: true, completion: nil)
-        //      return
-        //    }
-        //    let video = AVAsset(url: url)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+//                      ,let user = Auth.auth().currentUser
+        else { return }
+//
+//                FirebaseStorageManager.uploadImage(image: selectedImage, pathRoot: user.uid) { url in
+//                    if let url = url {
+//                        UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
+//                        self.title = "이미지 업로드 완료"
+//                    }
+//                }
+                self.recordImage.image = selectedImage
+                
+                picker.dismiss(animated: true)
+//        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+//            picker.dismiss(animated: true)
+//            return
+//        }
+//        self.recordImage.image = image
+//        picker.dismiss(animated: true, completion: nil)
+//        // 비디오인 경우 - url로 받는 형태
+//        //    guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+//        //      picker.dismiss(animated: true, completion: nil)
+//        //      return
+//        //    }
+//        //    let video = AVAsset(url: url)
     }
 }

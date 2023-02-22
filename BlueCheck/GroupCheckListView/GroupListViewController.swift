@@ -69,8 +69,8 @@ class GroupListViewController: UIViewController{
                 print(document.documentID)
                 print(document.data())
                 let data = document.data()
-                guard let groupName = data["그룹명"] as? String else {return}
-                guard let groupObject = data["목표"] as? String else {return}
+                guard let groupName = data["groupName"] as? String else {return}
+                guard let groupObject = data["object"] as? String else {return}
                 
                 self.groupNameArray.append(groupName)
                 self.groupDocumentsArray.append(document.documentID)
@@ -173,11 +173,11 @@ extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let goEachGroupRecordsViewController = EachGroupRecordsViewController()
-        goEachGroupRecordsViewController.modalPresentationStyle = .fullScreen
-        goEachGroupRecordsViewController.currentUser = self.currentUser
-        goEachGroupRecordsViewController.groupDocumentName = self.groupDocumentsArray[indexPath.row]
+        let goGroupListCollectionViewController = GroupListCollectionViewController()
+        goGroupListCollectionViewController.modalPresentationStyle = .fullScreen
+        goGroupListCollectionViewController.currentUser = self.currentUser
+        goGroupListCollectionViewController.groupDocumentName = self.groupDocumentsArray[indexPath.row]
         
-        self.navigationController?.pushViewController(goEachGroupRecordsViewController, animated: true)
+        self.navigationController?.pushViewController(goGroupListCollectionViewController, animated: true)
     }
 }

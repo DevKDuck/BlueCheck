@@ -154,7 +154,7 @@ class CreateGroupViewController: UIViewController{
     //MARK: Firebase update
     func firestoreCreateDocuments(){
         guard let titleText = groupTitleTextField.text, let contentText = contentTextView.text else {return}
-        let data = ["그룹명" : titleText, "목표" : meetObject, "내용" : contentText]
+        let data = ["groupName" : titleText, "object" : meetObject, "content" : contentText]
         let randomNum = Float.random(in: 0...10)
         
         //uid + 랜덤값 으로 collection 만들기

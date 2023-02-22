@@ -24,6 +24,7 @@
 		8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAB1296D47130042248F /* MyCheckListViewController.swift */; };
 		8C23EAB5296D485C0042248F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8C23EAB4296D485C0042248F /* SnapKit */; };
 		8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */; };
+		8C4874D929A6194400FD871B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 8C4874D829A6194400FD871B /* Kingfisher */; };
 		8C508ACC29A30F2800EF29B8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508ACB29A30F2800EF29B8 /* FirebaseAnalytics */; };
 		8C508ACE29A30F2800EF29B8 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508ACD29A30F2800EF29B8 /* FirebaseAnalyticsOnDeviceConversion */; };
 		8C508AD029A30F2800EF29B8 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508ACF29A30F2800EF29B8 /* FirebaseAnalyticsSwift */; };
@@ -52,6 +53,9 @@
 		8C508AFE29A30F2800EF29B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFD29A30F2800EF29B8 /* FirebaseStorage */; };
 		8C508B0029A30F2800EF29B8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */; };
 		8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61C95029A35ED500701799 /* TabbarViewController.swift */; };
+		8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */; };
+		8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */; };
+		8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
 		8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B32298A6F820093D90A /* InviteListViewController.swift */; };
 		8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */; };
@@ -67,6 +71,7 @@
 		8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */; };
 		8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */; };
 		8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */; };
+		8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +94,9 @@
 		8C23EAB1296D47130042248F /* MyCheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
 		8C61C95029A35ED500701799 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
+		8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewController.swift; sourceTree = "<group>"; };
+		8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
 		8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListTableViewCell.swift; sourceTree = "<group>"; };
@@ -104,6 +112,7 @@
 		8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTask.swift; sourceTree = "<group>"; };
 		8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +128,7 @@
 				8C508ADA29A30F2800EF29B8 /* FirebaseAuthCombine-Community in Frameworks */,
 				8C508AE629A30F2800EF29B8 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				8C508AD029A30F2800EF29B8 /* FirebaseAnalyticsSwift in Frameworks */,
+				8C4874D929A6194400FD871B /* Kingfisher in Frameworks */,
 				8C508AF429A30F2800EF29B8 /* FirebaseMLModelDownloader in Frameworks */,
 				8C508AD229A30F2800EF29B8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				8C508ACC29A30F2800EF29B8 /* FirebaseAnalytics in Frameworks */,
@@ -243,9 +253,13 @@
 				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
 				8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */,
 				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
+				8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */,
 				8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */,
 				8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */,
 				8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */,
+				8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */,
+				8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */,
+				8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */,
 				8C9A6B38298BB0780093D90A /* InviteListView */,
 				8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */,
 				8C214EDE29939AE8005EBB6A /* LogInViewController.swift */,
@@ -310,6 +324,7 @@
 				8C508AFB29A30F2800EF29B8 /* FirebaseRemoteConfigSwift */,
 				8C508AFD29A30F2800EF29B8 /* FirebaseStorage */,
 				8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */,
+				8C4874D829A6194400FD871B /* Kingfisher */,
 			);
 			productName = BlueCheck;
 			productReference = 8C23EA90296D2B3F0042248F /* BlueCheck.app */;
@@ -342,6 +357,7 @@
 			packageReferences = (
 				8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				8C4874D729A6194400FD871B /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 8C23EA91296D2B3F0042248F /* Products */;
 			projectDirPath = "";
@@ -378,7 +394,10 @@
 				8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */,
 				8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */,
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
+				8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */,
+				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
+				8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */,
 				8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */,
 				8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */,
 				8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */,
@@ -386,6 +405,7 @@
 				8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */,
 				8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
+				8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */,
 				8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */,
 				8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
@@ -640,6 +660,14 @@
 				kind = branch;
 			};
 		};
+		8C4874D729A6194400FD871B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -655,6 +683,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		8C4874D829A6194400FD871B /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C4874D729A6194400FD871B /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		8C508ACB29A30F2800EF29B8 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
