@@ -10,13 +10,14 @@ import Firebase
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+import Kingfisher
+
 
 class GroupListCollectionViewController: UIViewController{
     
     var currentUser: User?
     var groupDocumentName = ""
     var groupListArray : [GroupListTask] = []
-    var imageArray : [UIImage] = []
     
     lazy var addContentButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(tapAddContentButton(_:)))
@@ -87,12 +88,6 @@ class GroupListCollectionViewController: UIViewController{
                         let data = document.data()
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
                         let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
-                      
-//                        Storage.storage().reference().child(taskInfo.image).downloadURL { (url,error) in
-//
-//
-//                        }
-//
                         
                         self.groupListArray.append(taskInfo)
                         
@@ -102,7 +97,6 @@ class GroupListCollectionViewController: UIViewController{
                     }
                     
                 }
-                print(self.imageArray)
                 self.collectionView.reloadData()
             }
         }
@@ -122,9 +116,23 @@ extension GroupListCollectionViewController: UICollectionViewDelegate, UICollect
         cell.contentLabel.text = "내용: " + groupListArray[indexPath.row].content
         cell.startDateLabel.text = "시작 날짜: " + groupListArray[indexPath.row].startDate
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
-//        cell.authImage.image = imageArray[indexPath.row]
+        
+        DispatchQueue.global().async {
+            Storage.storage().reference().child(self.groupListArray[indexPath.row].image).downloadURL { (url,error) in
+                if let error = error {
+                    print("FireStorage Get Image Error : \(error.localizedDescription)")
+                }
+                else{
+                    DispatchQueue.main.async {
+                        cell.authImage.kf.setImage(with: url)
+                        cell.authImage.contentMode = .scaleToFill
+                    }
+                }
+            }
+        }
+       
+        
         return cell
     }
     
 }
-

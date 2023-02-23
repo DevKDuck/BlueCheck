@@ -143,7 +143,7 @@ class JoinTheMembershipViewController: UIViewController{
                             guard let user = result?.user else {return} //유저 객체를 가져옴
                             
                             //전달할 데이터
-                            let data = ["email": emailText, "name": nameText]
+                            let data = ["email": emailText, "name": nameText, "uid": user.uid]
                             
                             //UID를 이용해 유저 데이터 저장
                             Firestore.firestore().collection("user").document(user.uid).setData(data){ error in

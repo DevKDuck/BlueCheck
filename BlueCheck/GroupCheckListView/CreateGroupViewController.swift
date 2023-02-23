@@ -126,11 +126,9 @@ class CreateGroupViewController: UIViewController{
     }()
     
     @objc func tapInviteButoon(_ sender: UIButton){
-        guard let goInviteListViewController = storyboard?.instantiateViewController(withIdentifier: "InviteListViewController") as? InviteListViewController else {return}
-        //        self.navigationController?.pushViewController(goVC, animated: true)
+        let goInviteListViewController = InviteListViewController()
         goInviteListViewController.modalPresentationStyle = .fullScreen
         self.present(goInviteListViewController, animated: true)
-        
     }
     
     

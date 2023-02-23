@@ -234,20 +234,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
             }
         }
-        
-   
-        
-        
-//        FirebaseStorageManager.uploadImage(image: recordUIImage, pathRoot: "\(groupDocumentName)/" ) { error in
-//            if let error = error {
-//                print("FirebaseStorage Image save failed: \(error.debugDescription)")
-//            }
-//            //            if let url = url {
-//////                UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
-////                self.title = "이미지 업로드 완료"
-////            }
-//        }
-        
         self.navigationController?.popViewController(animated: true)
     }
     
