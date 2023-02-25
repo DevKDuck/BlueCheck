@@ -12,7 +12,7 @@ import FirebaseFirestore
 class CreateGroupViewController: UIViewController{
     
     let db = Firestore.firestore()
-    var currentUser: User?
+    var currentUserEmail: String = ""
     var meetObject = ""
     
     let groupTitleLabel : UILabel = {
@@ -155,16 +155,17 @@ class CreateGroupViewController: UIViewController{
         let data = ["groupName" : titleText, "object" : meetObject, "content" : contentText]
         let randomNum = Float.random(in: 0...10)
         
-        //uid + 랜덤값 으로 collection 만들기
+//        //uid + 랜덤값 으로 collection 만들기
+//        guard let uID = Auth.auth().currentUser?.uid else {return}
         
-        Firestore.firestore().collection("user").document(currentUser?.uid ?? "ㅇㅇ").collection("group").document((currentUser?.uid ?? "ㅇㅇ") + "\(randomNum)").setData(data){ error in
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").document(currentUserEmail + "\(randomNum)").setData(data){ error in
             if let error = error{
                 print("Error:\(error.localizedDescription)")
                 return
             }
         }
         
-        Firestore.firestore().collection((currentUser?.uid ?? "ㅇㅇ") + "\(randomNum)").document(currentUser?.uid ?? "ㅇㅇ").setData([:]){error in
+        Firestore.firestore().collection(currentUserEmail + "\(randomNum)").document(currentUserEmail).setData([:]){error in
             if let error = error{
                 print("RandomNumCollectionCreateError: \(error.localizedDescription)")
                 return

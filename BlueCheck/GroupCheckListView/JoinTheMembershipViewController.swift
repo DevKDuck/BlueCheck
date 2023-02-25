@@ -145,8 +145,15 @@ class JoinTheMembershipViewController: UIViewController{
                             //전달할 데이터
                             let data = ["email": emailText, "name": nameText, "uid": user.uid]
                             
+                           //MARK: 여기 수정햇음
                             //UID를 이용해 유저 데이터 저장
-                            Firestore.firestore().collection("user").document(user.uid).setData(data){ error in
+//                            Firestore.firestore().collection("user").document(user.uid).setData(data){ error in
+//                                if let error = error{
+//                                    print("DEBUG:\(error.localizedDescription)")
+//                                    return
+//                                }
+//                            }
+                            Firestore.firestore().collection("user").document(emailText).setData(data){ error in
                                 if let error = error{
                                     print("DEBUG:\(error.localizedDescription)")
                                     return

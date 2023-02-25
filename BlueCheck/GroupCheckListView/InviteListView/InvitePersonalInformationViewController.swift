@@ -15,6 +15,8 @@ class InvitePersonalInformationViewController: UIViewController{
     let db = Firestore.firestore()
     var userUID: String = ""
     var userUidArray : [String] = []
+    var userName: String = ""
+    var userNameArray: [String] = []
     
     
     let emailLabel : UILabel = {
@@ -22,6 +24,23 @@ class InvitePersonalInformationViewController: UIViewController{
         label.text = "이메일"
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 30, weight: .bold)
+        return label
+    }()
+    
+    
+    let addNameListTitleLabel : UILabel = {
+        let label = UILabel()
+        label.text = "추가 명단"
+        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        return label
+    }()
+    
+    
+    var addNameLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: 15)
         return label
     }()
     
@@ -36,6 +55,7 @@ class InvitePersonalInformationViewController: UIViewController{
     
     let userInfoOrWrongLabel : UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         return label
     }()
     
@@ -71,31 +91,52 @@ class InvitePersonalInformationViewController: UIViewController{
         userInfoOrWrongLabel.text = "추가되었습니다."
         userInfoOrWrongLabel.textColor = .systemBlue
         
+//        addNameLabel.text = userName
+        
+        if userName != "" && !userNameArray.contains(userName){
+            userNameArray.append(userName)
+            var text = ""
+            userNameArray.forEach{
+                text += "\($0) 님 "
+            }
+            addNameLabel.text = text
+        }
     }
     
     @objc func tapSearchUserButton(_ sender: UIButton){
         //유저 찾기
-        
-        db.collection("user").getDocuments{ querySnapshot, error in
-            for document in querySnapshot!.documents{
-                let data = document.data()
-                guard let userEmail = data["email"] as? String else { return }
-                if let email = self.emailTextField.text {
-                    if email == userEmail{
-                        guard let userName = data["name"] as? String else { return }
-                        guard let userUID = data["uid"] as? String else { return }
-                        self.userInfoOrWrongLabel.text = userName + "님으로 확인되었습니다."
-                        self.userInfoOrWrongLabel.textColor = .systemBlue
-                        self.userUID = userUID
+        if emailTextField.text?.isEmpty == true{
+            self.userInfoOrWrongLabel.text = "이메일을 입력해주세요!"
+            self.userInfoOrWrongLabel.textColor = .systemRed
+        }
+        else{
+            guard let textFieldEmail = emailTextField.text else {return}
+            db.collection("user").document(textFieldEmail).getDocument{ snapshot, error in
+                if let error = error{
+                    print(error.localizedDescription)
+                }
+                else{
+                    
+                    if let snapshot = snapshot, snapshot.exists {
+                        let data = snapshot.data()
+                        guard let userEmail = data?["email"] as? String else { return }
+                        
+                        if textFieldEmail == userEmail{
+                            guard let userName = data?["name"] as? String else { return }
+                            guard let userUID = data?["uid"] as? String else { return }
+                            self.userInfoOrWrongLabel.text = userName + "님으로 확인되었습니다."
+                            self.userName = userName
+                            self.userInfoOrWrongLabel.textColor = .systemBlue
+                            self.userUID = userUID
+                        }
                     }
                     else{
-                        self.userInfoOrWrongLabel.text = "유저의 정보를 찾을 수 없습니다."
+                        self.userInfoOrWrongLabel.text = "유저를 찾을수 없습니다."
                         self.userInfoOrWrongLabel.textColor = .systemRed
                     }
                 }
             }
         }
-        
     }
     
     
@@ -122,6 +163,8 @@ class InvitePersonalInformationViewController: UIViewController{
         self.view.addSubview(emailLabel)
         self.view.addSubview(emailTextField)
         self.view.addSubview(userInfoOrWrongLabel)
+        self.view.addSubview(addNameListTitleLabel)
+        self.view.addSubview(addNameLabel)
         self.view.addSubview(addButton)
         self.view.addSubview(searchUserButton)
         self.view.addSubview(inviteButton)
@@ -130,6 +173,8 @@ class InvitePersonalInformationViewController: UIViewController{
         
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        addNameListTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        addNameLabel.translatesAutoresizingMaskIntoConstraints = false
         addButton.translatesAutoresizingMaskIntoConstraints = false
         userInfoOrWrongLabel.translatesAutoresizingMaskIntoConstraints = false
         searchUserButton.translatesAutoresizingMaskIntoConstraints = false
@@ -156,6 +201,13 @@ class InvitePersonalInformationViewController: UIViewController{
             searchUserButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             searchUserButton.heightAnchor.constraint(equalToConstant: 44),
             searchUserButton.topAnchor.constraint(equalTo: self.userInfoOrWrongLabel.bottomAnchor, constant: 10),
+            
+            addNameListTitleLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            addNameListTitleLabel.topAnchor.constraint(equalTo: self.searchUserButton.bottomAnchor,constant: 20),
+            
+            addNameLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            addNameLabel.topAnchor.constraint(equalTo: self.addNameListTitleLabel.bottomAnchor, constant: 20),
+            addNameLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
             
             addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -30),

@@ -14,7 +14,7 @@ import FirebaseStorage
 
 class CreateEachGroupRecordsContentViewController: UIViewController{
     
-    var currentUser: User?
+    var currentUserEmail: String = ""
     var groupDocumentName = ""
     
     
@@ -224,12 +224,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         uploadImage(img: recordUIImage, randomNum: randomNum)
         
         let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : ("\(groupDocumentName)/\(randomNum)") , "content": contentTextView.text!]
-        //        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).updateData(data){ err in
-        //            if let error = err{
-        //                print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
-        //            }
-        //        }
-        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).collection("Group").addDocument(data: data){ err in
+        Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").addDocument(data: data){ err in
             if let error = err{
                 print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
             }

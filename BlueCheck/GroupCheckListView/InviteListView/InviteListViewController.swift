@@ -45,45 +45,46 @@ class InviteListViewController: UIViewController{
     }()
     
     @objc func tapAddPersonnelButton(_ sender: UIButton){
-        let alert = UIAlertController(title: "이메일", message: "초대하고 싶은 사람의 이메일을 적어보세요", preferredStyle: .alert)
-        let add = UIAlertAction(title: "추가", style: .default){ [weak self] _ in
-            DispatchQueue.global().async {
-                Firestore.firestore().collection("user").getDocuments{ querySnapshot, error in
-                    for document in querySnapshot!.documents{
-                        let data = document.data()
-                        guard let userEmail = data["email"] as? String else {return}
-                        if let text = alert.textFields?[0].text{
-                            if text == userEmail{
-                                //guard let userName = data["name"] as? String else { return }
-                                guard let userUID = data["uid"] as? String else { return }
-                                self?.userUidArray.append(userUID)
-                            }
-                        }
-                        
-                    }
-                    
-                }
-            }
-            self?.activityIndicator.startAnimating()
-            self?.activityIndicator.isHidden = false
-
-                self?.tableView.reloadData()
-            
-        }
-        
-        let cancel = UIAlertAction(title: "취소", style: .cancel){ _ in
-            
-        }
-        
-        alert.addTextField{ textField in
-            textField.placeholder = "이메일을 적어보세요"
-            textField.textColor = .systemBlue
-        }
-        
-        alert.addAction(add)
-        alert.addAction(cancel)
-        
-        present(alert, animated: true)
+//        let alert = UIAlertController(title: "이메일", message: "초대하고 싶은 사람의 이메일을 적어보세요", preferredStyle: .alert)
+//        let add = UIAlertAction(title: "추가", style: .default){ [weak self] _ in
+//            DispatchQueue.global().async {
+//                Firestore.firestore().collection("user").getDocuments{ querySnapshot, error in
+//                    for document in querySnapshot!.documents{
+//                        let data = document.data()
+//                        guard let userEmail = data["email"] as? String else {return}
+//                        if let text = alert.textFields?[0].text{
+//                            if text == userEmail{
+//                                //guard let userName = data["name"] as? String else { return }
+//                                guard let userUID = data["uid"] as? String else { return }
+//                                self?.userUidArray.append(userUID)
+//                            }
+//                        }
+//
+//                    }
+//
+//                }
+//            }
+//            self?.activityIndicator.startAnimating()
+//            self?.activityIndicator.isHidden = false
+//
+//                self?.tableView.reloadData()
+//
+//        }
+//
+//        let cancel = UIAlertAction(title: "취소", style: .cancel){ _ in
+//
+//        }
+//
+//        alert.addTextField{ textField in
+//            textField.placeholder = "이메일을 적어보세요"
+//            textField.textColor = .systemBlue
+//        }
+//
+//        alert.addAction(add)
+//        alert.addAction(cancel)
+//
+//        present(alert, animated: true)
+        self.present(InvitePersonalInformationViewController(), animated: true)
     }
     
     

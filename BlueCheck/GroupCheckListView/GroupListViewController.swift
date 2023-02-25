@@ -14,7 +14,7 @@ import FirebaseFirestoreSwift
 
 class GroupListViewController: UIViewController{
     
-    var currentUser: User?
+    var currentUserEmail: String = ""
     
     let topView: UIView = {
         let topview = UIView()
@@ -40,7 +40,7 @@ class GroupListViewController: UIViewController{
     @objc func tapAddGroupButton(_ sender: UIButton){
         let goCreateGroupViewController = CreateGroupViewController()
         goCreateGroupViewController.modalPresentationStyle = .fullScreen
-        goCreateGroupViewController.currentUser = self.currentUser
+        goCreateGroupViewController.currentUserEmail = self.currentUserEmail
         
         self.present(goCreateGroupViewController,animated: true, completion: nil)
     }
@@ -64,7 +64,7 @@ class GroupListViewController: UIViewController{
     }
     
     func getFireStoreData() {
-        Firestore.firestore().collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").collection("group").getDocuments { querySnapshot, error in
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").getDocuments { querySnapshot, error in
             for document in querySnapshot!.documents{
                 print(document.documentID)
                 print(document.data())
@@ -175,7 +175,7 @@ extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goGroupListCollectionViewController = GroupListCollectionViewController()
         goGroupListCollectionViewController.modalPresentationStyle = .fullScreen
-        goGroupListCollectionViewController.currentUser = self.currentUser
+        goGroupListCollectionViewController.currentUserEmail = self.currentUserEmail
         goGroupListCollectionViewController.groupDocumentName = self.groupDocumentsArray[indexPath.row]
         
         self.navigationController?.pushViewController(goGroupListCollectionViewController, animated: true)

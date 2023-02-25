@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class EachGroupRecordsViewController: UIViewController {
     
-    var currentUser: User?
+    var currentUserEmail: String = ""
     var groupDocumentName = ""
     
     lazy var addContentButton: UIBarButtonItem = {
@@ -23,7 +23,7 @@ class EachGroupRecordsViewController: UIViewController {
     @objc func tapAddContentButton(_ sender: UIButton){
 
         let goVC = CreateEachGroupRecordsContentViewController()
-        goVC.currentUser = self.currentUser
+        goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
         
         goVC.modalPresentationStyle = .fullScreen
@@ -59,7 +59,7 @@ class EachGroupRecordsViewController: UIViewController {
     }
     
     func getFireStoreData() {
-        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).collection("Group").getDocuments { querySnapshot, error in
+        Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
             for document in querySnapshot!.documents{
                 let data = document.data()
                 print(data)

@@ -96,12 +96,12 @@ class LogInViewController: UIViewController{
                             UserDefaults.standard.set(idText, forKey: "id")
                             UserDefaults.standard.set(passwordText, forKey: "password")
                         }
-                        
-                        guard let user = result?.user else {return}
+                        //MARK: 여기 수정햇음
+//                        guard let user = result?.user else {return}
                         
                         let vc = TabbarViewController()
                         
-                        vc.currentUser = user
+                        vc.currentUserEmail = idText
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                         
@@ -120,11 +120,11 @@ class LogInViewController: UIViewController{
                 
                 if result != nil{
                     
-                    guard let user = result?.user else {return}
+//                    guard let user = result?.user else {return}
                     
                     let vc = TabbarViewController()
                     
-                    vc.currentUser = user
+                    vc.currentUserEmail = userid
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                     

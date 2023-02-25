@@ -13,7 +13,7 @@ import FirebaseFirestore
 class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
     
     
-    var currentUser: User?
+    var currentUserEmail: String = ""
     
     
     override func viewDidLoad() {
@@ -38,13 +38,13 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         let groupCheckListViewController = UINavigationController(rootViewController: groupCheckRootViewController)
         let groupCheckListViewControllerBarItem = UITabBarItem(title: "Group List", image: UIImage(systemName: "eye"), selectedImage: UIImage(systemName: "rectangle.3.group.bubble.left"))
         groupCheckListViewController.tabBarItem = groupCheckListViewControllerBarItem
-        groupCheckRootViewController.currentUser = self.currentUser
+        groupCheckRootViewController.currentUserEmail = self.currentUserEmail
         
         
         
         let myAccountViewController = MyAccountViewController()
         let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "rectangle.3.group.bubble.left"), selectedImage: UIImage(systemName: "ellipsis.circle"))
-        myAccountViewController.currentUser = self.currentUser
+        myAccountViewController.currentUserEmail = self.currentUserEmail
         myAccountViewController.tabBarItem = myAccountViewControllerBarItem
         
         self.viewControllers = [bucketListViewController,myCheckListViewController,groupCheckListViewController,myAccountViewController]

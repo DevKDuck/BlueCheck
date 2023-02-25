@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class MyAccountViewController: UIViewController{
     
-    var currentUser: User?
+    var currentUserEmail:String = ""
     
     let topView: UIView = {
         let topview = UIView()
@@ -84,7 +84,7 @@ class MyAccountViewController: UIViewController{
     func getFireStoreData(){
         let db = Firestore.firestore()
         
-        db.collection("user").document(self.currentUser?.uid ?? "ㅇㅇ").getDocument{ snapshot, error in
+        db.collection("user").document(currentUserEmail).getDocument{ snapshot, error in
             if let err = error{
                 print("MyAccountView Error:\(err.localizedDescription)")
             }

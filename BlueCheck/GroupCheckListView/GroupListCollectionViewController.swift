@@ -15,7 +15,7 @@ import Kingfisher
 
 class GroupListCollectionViewController: UIViewController{
     
-    var currentUser: User?
+    var currentUserEmail: String = ""
     var groupDocumentName = ""
     var groupListArray : [GroupListTask] = []
     
@@ -27,7 +27,7 @@ class GroupListCollectionViewController: UIViewController{
     @objc func tapAddContentButton(_ sender: UIButton){
         
         let goVC = CreateEachGroupRecordsContentViewController()
-        goVC.currentUser = self.currentUser
+        goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
         
         goVC.modalPresentationStyle = .fullScreen
@@ -77,7 +77,7 @@ class GroupListCollectionViewController: UIViewController{
     }
     
     func getFireStoreData() {
-        Firestore.firestore().collection(groupDocumentName).document(currentUser!.uid).collection("Group").getDocuments { querySnapshot, error in
+        Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
             
             if let error = error {
                 print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
