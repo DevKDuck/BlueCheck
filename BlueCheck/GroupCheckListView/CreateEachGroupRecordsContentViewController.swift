@@ -16,6 +16,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     
     var currentUserEmail: String = ""
     var groupDocumentName = ""
+    var currentUserName: String = ""
     
     
     lazy var completeButton : UIBarButtonItem = {
@@ -105,13 +106,30 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
+        getFireStoreData()
         imageViewTapGestureAttributes()
         setAttributesDatePicker()
         setLayoutConstraints()
         self.navigationItem.rightBarButtonItem = completeButton
         picker.delegate = self
         
+    }
+    
+    func getFireStoreData(){
+        let db = Firestore.firestore()
+        
+        db.collection("user").document(currentUserEmail).getDocument{ snapshot, error in
+            if let err = error{
+                print("MyAccountView Error:\(err.localizedDescription)")
+            }
+            else{
+                let data = snapshot?.data()
+                if let FirestoreData = data {
+                    self.currentUserName = FirestoreData["name"] as? String ?? ""
+                }
+            }
+            
+        }
     }
     
     private func imageViewTapGestureAttributes(){
@@ -217,18 +235,18 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             endDate = dateFormatter.string(from: now)
         }
         
-        guard let user = Auth.auth().currentUser else {return}
         guard let recordUIImage = recordImage.image else {return}
-        print(user.uid)
         let randomNum = String(Float.random(in: 0...10))
         uploadImage(img: recordUIImage, randomNum: randomNum)
         
-        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : ("\(groupDocumentName)/\(randomNum)") , "content": contentTextView.text!]
+        
+        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : ("\(groupDocumentName)/\(randomNum)") , "content": contentTextView.text!, "writer": currentUserName ]
         Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").addDocument(data: data){ err in
             if let error = err{
                 print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
             }
         }
+        
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -244,10 +262,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 print(error.localizedDescription)
                 return
             }
-            else{
-                print("성공")
-            }
-            
         }
         
     }
@@ -367,29 +381,29 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-//                      ,let user = Auth.auth().currentUser
+                //                      ,let user = Auth.auth().currentUser
         else { return }
-//
-//                FirebaseStorageManager.uploadImage(image: selectedImage, pathRoot: user.uid) { url in
-//                    if let url = url {
-//                        UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
-//                        self.title = "이미지 업로드 완료"
-//                    }
-//                }
-                self.recordImage.image = selectedImage
-                
-                picker.dismiss(animated: true)
-//        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-//            picker.dismiss(animated: true)
-//            return
-//        }
-//        self.recordImage.image = image
-//        picker.dismiss(animated: true, completion: nil)
-//        // 비디오인 경우 - url로 받는 형태
-//        //    guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
-//        //      picker.dismiss(animated: true, completion: nil)
-//        //      return
-//        //    }
-//        //    let video = AVAsset(url: url)
+        //
+        //                FirebaseStorageManager.uploadImage(image: selectedImage, pathRoot: user.uid) { url in
+        //                    if let url = url {
+        //                        UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
+        //                        self.title = "이미지 업로드 완료"
+        //                    }
+        //                }
+        self.recordImage.image = selectedImage
+        
+        picker.dismiss(animated: true)
+        //        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+        //            picker.dismiss(animated: true)
+        //            return
+        //        }
+        //        self.recordImage.image = image
+        //        picker.dismiss(animated: true, completion: nil)
+        //        // 비디오인 경우 - url로 받는 형태
+        //        //    guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+        //        //      picker.dismiss(animated: true, completion: nil)
+        //        //      return
+        //        //    }
+        //        //    let video = AVAsset(url: url)
     }
 }

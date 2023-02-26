@@ -9,11 +9,31 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class CreateGroupViewController: UIViewController{
+
+protocol GetInvitationList: AnyObject{
+    func getUserNameArray(nameArray:[String])
+    func getUserEmailArray(emailArray:[String])
+}
+
+
+
+class CreateGroupViewController: UIViewController, GetInvitationList{
+    
+    func getUserNameArray(nameArray: [String]) {
+       userNameArray = nameArray
+    }
+    
+    func getUserEmailArray(emailArray: [String]) {
+        userEmailArray = emailArray
+    }
+    
     
     let db = Firestore.firestore()
     var currentUserEmail: String = ""
     var meetObject = ""
+    var userEmailArray: [String] = []
+    var userNameArray = [String]()
+    
     
     let groupTitleLabel : UILabel = {
         let label = UILabel()
@@ -128,6 +148,10 @@ class CreateGroupViewController: UIViewController{
     @objc func tapInviteButoon(_ sender: UIButton){
         let goInviteListViewController = InviteListViewController()
         goInviteListViewController.modalPresentationStyle = .fullScreen
+        goInviteListViewController.inviteDatadelegate = self
+        goInviteListViewController.userNameArray = userNameArray
+        goInviteListViewController.userEmailArray = userEmailArray
+        
         self.present(goInviteListViewController, animated: true)
     }
     
@@ -165,10 +189,23 @@ class CreateGroupViewController: UIViewController{
             }
         }
         
+        
         Firestore.firestore().collection(currentUserEmail + "\(randomNum)").document(currentUserEmail).setData([:]){error in
             if let error = error{
                 print("RandomNumCollectionCreateError: \(error.localizedDescription)")
                 return
+            }
+        }
+        
+        
+        //MARK: 초대
+        let inviteData = ["groupName": titleText,"object" : meetObject, "content" : contentText, "status": "hold", "groupNumber" : currentUserEmail + "\(randomNum)"]
+        userEmailArray.forEach{
+            Firestore.firestore().collection("user").document($0).collection("Invite status").document(currentUserEmail + "\(randomNum)").setData(inviteData){ error in
+                if let error = error{
+                    print("Error:\(error.localizedDescription)")
+                    return
+                }
             }
         }
     }
@@ -187,6 +224,10 @@ class CreateGroupViewController: UIViewController{
         self.dismiss(animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print(userNameArray)
+        print(userEmailArray)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

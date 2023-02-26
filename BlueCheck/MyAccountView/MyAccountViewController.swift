@@ -175,6 +175,7 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let invitationStatusViewController = InvitationStatusViewController()
+            invitationStatusViewController.currentUserEmail = currentUserEmail
             invitationStatusViewController.modalPresentationStyle = .fullScreen
             self.present(invitationStatusViewController, animated: true)
         }

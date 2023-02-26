@@ -11,14 +11,12 @@ class InvitationsStatusTableViewCell: UITableViewCell{
     
     let objectiveLabel : UILabel = {
         let label = UILabel()
-        label.text = "[목적]"
         label.textColor = .systemBlue
         return label
     }()
 
     let groupNameLabel : UILabel = {
         let label = UILabel()
-        label.text = "그룹 이름"
         label.textAlignment = .left
         label.textColor = .darkGray
         return label

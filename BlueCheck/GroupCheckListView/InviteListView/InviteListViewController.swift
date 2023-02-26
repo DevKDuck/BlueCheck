@@ -10,10 +10,33 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 
-class InviteListViewController: UIViewController{
+protocol GettingInvitationList: AnyObject{
+    func getUserNameArray(nameArray:[String])
+    func getUserEmailArray(emailArray:[String])
+    func getEmailAfterTableViewReload()
+}
+
+
+class InviteListViewController: UIViewController, GettingInvitationList{
+    
+    func getUserNameArray(nameArray: [String]) {
+        userNameArray = nameArray
+    }
+    
+    func getUserEmailArray(emailArray: [String]) {
+        userEmailArray = emailArray
+    }
+    
+    func getEmailAfterTableViewReload() {
+        tableView.reloadData()
+    }
+    
+
     
     var userUidArray = [String]()
-    
+    var userNameArray = [String]()
+    var userEmailArray = [String]()
+    weak var inviteDatadelegate: GetInvitationList?
     
     let topView: UIView = {
         let topview = UIView()
@@ -84,7 +107,11 @@ class InviteListViewController: UIViewController{
 //        alert.addAction(cancel)
 //
 //        present(alert, animated: true)
-        self.present(InvitePersonalInformationViewController(), animated: true)
+       let vc = InvitePersonalInformationViewController()
+        vc.delegate = self
+        vc.userEmailArray = userEmailArray
+        vc.userNameArray = userNameArray
+        self.present(vc, animated: true)
     }
     
     
@@ -97,6 +124,14 @@ class InviteListViewController: UIViewController{
     }()
     
     @objc func tapCompleteAddPersonnelButton(_ sender: UIButton){
+       
+        if let nameData = self.inviteDatadelegate?.getUserNameArray(nameArray: userNameArray){
+            nameData
+        }
+        if let emailData = self.inviteDatadelegate?.getUserEmailArray(emailArray: userEmailArray){
+            emailData
+        }
+        
         self.dismiss(animated: true)
     }
     
@@ -109,8 +144,9 @@ class InviteListViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        tableView.reloadData()
-        print(userUidArray)
+        getUserNameArray(nameArray: userNameArray)
+        getUserEmailArray(emailArray: userEmailArray)
+        getEmailAfterTableViewReload()
     }
     
     override func viewDidLoad() {
@@ -177,43 +213,67 @@ class InviteListViewController: UIViewController{
 
 extension InviteListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if userUidArray.isEmpty{
-            return 0
-        }
-        else{
-            return userUidArray.count
-        }
+//        if userUidArray.isEmpty{
+//            return 0
+//        }
+//        else{
+//            return userUidArray.count
+//        }
+        return userEmailArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "InviteListTableViewCell") as? InviteListTableViewCell else {return UITableViewCell()}
         
+        cell.emailLabel.text = userEmailArray[indexPath.row]
+        cell.nameLabel.text = userNameArray[indexPath.row]
+        cell.removeButton.tag = indexPath.row
+        cell.removeButton.addTarget(self, action: #selector(tapRemoveButton( _:)), for: .touchUpInside)
         
-        if !userUidArray.isEmpty{
-            
-            DispatchQueue.global().async {
-                Firestore.firestore().collection("user").document(self.userUidArray[indexPath.row]).getDocument{ snapshot, error in
-                    if let error = error{
-                        print(error,"왜안돼")
-                    }
-                    else{
-                        print(self.userUidArray)
-                        let data = snapshot?.data()
-                        
-                        DispatchQueue.main.async {
-                            self.activityIndicator.stopAnimating()
-                            self.activityIndicator.isHidden = true
-                            cell.nameLabel.text = data?["name"] as? String
-                            cell.emailLabel.text = data?["email"] as? String
-                        }
-                    }
-                }
-            }
-        }
-        
+//        if !userUidArray.isEmpty{
+//
+//            DispatchQueue.global().async {
+//                Firestore.firestore().collection("user").document(self.userUidArray[indexPath.row]).getDocument{ snapshot, error in
+//                    if let error = error{
+//                        print(error,"왜안돼")
+//                    }
+//                    else{
+//                        print(self.userUidArray)
+//                        let data = snapshot?.data()
+//
+//                        DispatchQueue.main.async {
+//                            self.activityIndicator.stopAnimating()
+//                            self.activityIndicator.isHidden = true
+//                            cell.nameLabel.text = data?["name"] as? String
+//                            cell.emailLabel.text = data?["email"] as? String
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         return cell
     }
+    
+    @objc func tapRemoveButton(_ sender: UIButton){
+    
+        
+        let alert = UIAlertController(title: "\(userNameArray[sender.tag]) 님", message: "\(userNameArray[sender.tag]) 님을 정말 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let delete = UIAlertAction(title: "삭제", style: .default){ _ in
+            self.userNameArray.remove(at: sender.tag)
+            self.userEmailArray.remove(at: sender.tag)
+            self.tableView.reloadData()
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: false)
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44

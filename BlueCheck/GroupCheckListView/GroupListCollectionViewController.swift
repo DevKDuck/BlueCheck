@@ -13,7 +13,10 @@ import FirebaseStorage
 import Kingfisher
 
 
-class GroupListCollectionViewController: UIViewController{
+
+
+class GroupListCollectionViewController: UIViewController {
+
     
     var currentUserEmail: String = ""
     var groupDocumentName = ""
@@ -29,7 +32,6 @@ class GroupListCollectionViewController: UIViewController{
         let goVC = CreateEachGroupRecordsContentViewController()
         goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
-        
         goVC.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(goVC, animated: true)
     }

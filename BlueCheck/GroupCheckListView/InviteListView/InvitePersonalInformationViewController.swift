@@ -17,6 +17,9 @@ class InvitePersonalInformationViewController: UIViewController{
     var userUidArray : [String] = []
     var userName: String = ""
     var userNameArray: [String] = []
+    var userEmail: String = ""
+    var userEmailArray: [String] = []
+    weak var delegate: GettingInvitationList?
     
     
     let emailLabel : UILabel = {
@@ -88,18 +91,23 @@ class InvitePersonalInformationViewController: UIViewController{
     }()
     
     @objc func tapAddButton(_ sender: UIButton){
-        userInfoOrWrongLabel.text = "추가되었습니다."
-        userInfoOrWrongLabel.textColor = .systemBlue
-        
-//        addNameLabel.text = userName
-        
         if userName != "" && !userNameArray.contains(userName){
             userNameArray.append(userName)
+            userEmailArray.append(userEmail)
+            userInfoOrWrongLabel.text = "추가되었습니다."
+            userInfoOrWrongLabel.textColor = .systemBlue
             var text = ""
             userNameArray.forEach{
                 text += "\($0) 님 "
             }
             addNameLabel.text = text
+        }else if userInfoOrWrongLabel.text == "유저를 찾을수 없습니다." {
+            userInfoOrWrongLabel.text = "추가 할 수 없습니다."
+            userInfoOrWrongLabel.textColor = .systemRed
+        }
+        else if userNameArray.contains(userName){
+            userInfoOrWrongLabel.text = "이미 추가 되었습니다."
+            userInfoOrWrongLabel.textColor = .systemRed
         }
     }
     
@@ -128,6 +136,7 @@ class InvitePersonalInformationViewController: UIViewController{
                             self.userName = userName
                             self.userInfoOrWrongLabel.textColor = .systemBlue
                             self.userUID = userUID
+                            self.userEmail = userEmail
                         }
                     }
                     else{
@@ -142,8 +151,17 @@ class InvitePersonalInformationViewController: UIViewController{
     
     @objc func tapInviteButton(_ sender: UIButton){
         //초대하는 사람의 uid를 추가
-        let goInviteListViewController = InviteListViewController()
-        goInviteListViewController.userUidArray = self.userUidArray
+        if let getNameData = self.delegate?.getUserNameArray(nameArray: userNameArray){
+            getNameData
+        }
+        
+        if let getEmailData = self.delegate?.getUserEmailArray(emailArray: userEmailArray){
+            getEmailData
+        }
+        if let reloadView = self.delegate?.getEmailAfterTableViewReload(){
+            reloadView
+        }
+        
         self.dismiss(animated: true)
     }
     
@@ -152,6 +170,16 @@ class InvitePersonalInformationViewController: UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = .white
         setLayoutConstraints()
+        setAddUserList()
+        
+    }
+    
+    func setAddUserList(){
+        var text = ""
+        userNameArray.forEach{
+            text += "\($0) 님 "
+        }
+        addNameLabel.text = text
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

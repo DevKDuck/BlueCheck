@@ -31,6 +31,7 @@ class InviteListTableViewCell: UITableViewCell{
         return button
     }()
     
+   
     
     private func setLayoutConstraints(){
         contentView.addSubview(nameLabel)
@@ -43,17 +44,21 @@ class InviteListTableViewCell: UITableViewCell{
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         removeButton.translatesAutoresizingMaskIntoConstraints = false
         
+        let ratioWidth = self.bounds.width / 10
         
         NSLayoutConstraint.activate([
             nameLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            nameLabel.widthAnchor.constraint(equalToConstant: ratioWidth * 2),
             
             removeButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             removeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            removeButton.widthAnchor.constraint(equalToConstant: ratioWidth * 2),
             
             emailLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             emailLabel.leadingAnchor.constraint(equalTo: self.nameLabel.trailingAnchor, constant: 20),
-            emailLabel.trailingAnchor.constraint(equalTo: self.removeButton.leadingAnchor, constant: -20)
+            emailLabel.trailingAnchor.constraint(equalTo: self.removeButton.leadingAnchor, constant: -20),
+            emailLabel.widthAnchor.constraint(equalToConstant: ratioWidth * 8),
 
         
         ])
