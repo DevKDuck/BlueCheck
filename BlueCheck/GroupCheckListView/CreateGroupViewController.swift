@@ -197,6 +197,13 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
             }
         }
         
+//        Firestore.firestore().collection(currentUserEmail + "\(randomNum)").document("ALL").collection("Record").setData([:]){error in
+//            if let error = error{
+//                print("RandomNumCollectionCreateError: \(error.localizedDescription)")
+//                return
+//            }
+//        }
+//        
         
         //MARK: 초대
         let inviteData = ["groupName": titleText,"object" : meetObject, "content" : contentText, "status": "hold", "groupNumber" : currentUserEmail + "\(randomNum)"]

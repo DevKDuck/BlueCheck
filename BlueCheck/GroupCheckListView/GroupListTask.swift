@@ -13,6 +13,14 @@ struct GroupListTask: Codable{
     var endDate: String
     var content: String
     var image: String
+    var writer: String
 }
 
 
+struct InviteListTask: Codable{
+    var content: String
+    var groupName: String
+    var groupNumber: String
+    var object: String
+    var status: String
+}

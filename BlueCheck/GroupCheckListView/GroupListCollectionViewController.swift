@@ -16,7 +16,7 @@ import Kingfisher
 
 
 class GroupListCollectionViewController: UIViewController {
-
+    
     
     var currentUserEmail: String = ""
     var groupDocumentName = ""
@@ -38,6 +38,8 @@ class GroupListCollectionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        getFireStoreData()
         self.navigationController?.navigationBar.isHidden = false
     }
     
@@ -62,10 +64,9 @@ class GroupListCollectionViewController: UIViewController {
         view.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
-        self.title = "그룹명"
         self.navigationItem.rightBarButtonItem = self.addContentButton
         setLayoutConstraints()
-        getFireStoreData()
+        
         
     }
     
@@ -79,28 +80,26 @@ class GroupListCollectionViewController: UIViewController {
     }
     
     func getFireStoreData() {
-        Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
+        Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
             
             if let error = error {
                 print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
             }else{
-                for document in querySnapshot!.documents{
-                    
-                    do{
+                self.groupListArray.removeAll()
+                do{
+                    for document in querySnapshot!.documents{
                         let data = document.data()
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
                         let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
-                        
                         self.groupListArray.append(taskInfo)
-                        
-                        
-                    }catch let err{
-                        print("err: \(err)")
+
                     }
-                    
+                }catch let err{
+                    print("err: \(err)")
                 }
-                self.collectionView.reloadData()
             }
+            self.collectionView.reloadData()
+            
         }
     }
 }
@@ -132,7 +131,7 @@ extension GroupListCollectionViewController: UICollectionViewDelegate, UICollect
                 }
             }
         }
-       
+        
         
         return cell
     }

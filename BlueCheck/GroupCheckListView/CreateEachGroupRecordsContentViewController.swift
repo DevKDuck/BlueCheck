@@ -236,28 +236,32 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         }
         
         guard let recordUIImage = recordImage.image else {return}
-        let randomNum = String(Float.random(in: 0...10))
-        uploadImage(img: recordUIImage, randomNum: randomNum)
+        
+        //자신이 만들었나 확인하기 위해 아래 루트에 난수이미지통해 저장
+        let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
+        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : newDoc.documentID, "content": contentTextView.text!, "writer": currentUserName ]
+        
+        newDoc.setData(["DocID" : newDoc.documentID])
+        uploadImage(img: recordUIImage, docID: newDoc.documentID)
         
         
-        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : ("\(groupDocumentName)/\(randomNum)") , "content": contentTextView.text!, "writer": currentUserName ]
-        Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").addDocument(data: data){ err in
-            if let error = err{
-                print("CreateEachGroupContentView Create Data Error: \(error.localizedDescription)")
-            }
-        }
+
+//        //그룹 -> Record -> 난수이미지 : data 로 업데이트
+        let groupDoc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(newDoc.documentID)
+        groupDoc.setData(data)
+        
         
         self.navigationController?.popViewController(animated: true)
     }
     
     
-    func uploadImage(img: UIImage, randomNum: String){
+    func uploadImage(img: UIImage, docID: String){
         var data = Data()
         data = img.jpegData(compressionQuality: 0.8)!
-        let filePath = groupDocumentName
+
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
-        Storage.storage().reference().child("\(filePath)/\(randomNum)").putData(data,metadata: metaData){ (metaData,error) in
+        Storage.storage().reference().child(docID).putData(data,metadata: metaData){ (metaData,error) in
             if let error = error{
                 print(error.localizedDescription)
                 return

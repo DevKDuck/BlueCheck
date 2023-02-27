@@ -12,9 +12,12 @@ import FirebaseFirestore
 class InvitationStatusViewController: UIViewController{
     
     var currentUserEmail: String = ""
-    var invitedGroupNameArray = [String]()
-    var invitedObjectArray = [String]()
+//    var invitedGroupNameArray = [String]()
+//    var invitedObjectArray = [String]()
+//    var inviteGroupNumberArray = [String]()
+//    var inviteGroupContentArray = [String]()
     
+    var inviteGroupList: [InviteListTask] = []
     
     let topView: UIView = {
         let topview = UIView()
@@ -67,15 +70,19 @@ class InvitationStatusViewController: UIViewController{
                 print("Error: \(error.localizedDescription)")
             }
             else{
+                self.inviteGroupList.removeAll()
                 guard let documents = documents else {return}
                 for document in documents.documents{
-                    let data = document.data()
-                    guard let groupName = data["groupName"] as? String else {return}
-                    guard let object = data["object"] as? String else {return}
                     
-                    self.invitedGroupNameArray.append(groupName)
-                    self.invitedObjectArray.append(object)
-                    
+                    do{
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let inviteList = try JSONDecoder().decode(InviteListTask.self, from: jsonData)
+                        self.inviteGroupList.append(inviteList)
+                    }
+                    catch let err{
+                        print("err: \(err)")
+                    }
                 }
                 self.tableView.reloadData()
             }
@@ -119,16 +126,76 @@ class InvitationStatusViewController: UIViewController{
 
 extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return invitedGroupNameArray.count
+        return inviteGroupList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationsStatusTableViewCell") as? InvitationsStatusTableViewCell else {return UITableViewCell()}
-        cell.groupNameLabel.text = invitedGroupNameArray[indexPath.row]
-        cell.objectiveLabel.text = invitedObjectArray[indexPath.row]
-        return cell
+        cell.groupNameLabel.text = inviteGroupList[indexPath.row].groupName
+        cell.objectiveLabel.text = inviteGroupList[indexPath.row].object
         
+        
+        
+//        cell.groupNameLabel.text = invitedGroupNameArray[indexPath.row]
+//        cell.objectiveLabel.text = invitedObjectArray[indexPath.row]
+        cell.acceptButton.tag = indexPath.row
+        cell.acceptButton.addTarget(self, action: #selector(tapAcceptButton(_:)), for: .touchUpInside)
+        cell.rejectButton.tag = indexPath.row
+        cell.rejectButton.addTarget(self, action: #selector(tapRejectButton(_:)), for: .touchUpInside)
+        return cell
     }
+    
+    @objc func tapAcceptButton (_ sender: UIButton){
+        //자신의 groupList에 추가
+        let data = ["groupName" : inviteGroupList[sender.tag].groupName, "groupNumber" :inviteGroupList[sender.tag].groupNumber,"object" :inviteGroupList[sender.tag].object, "content" : inviteGroupList[sender.tag].content]
+        
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").document(inviteGroupList[sender.tag].groupNumber).setData(data){ error in
+            if let error = error{
+                print("Error:\(error.localizedDescription)")
+                return
+            }
+        }
+        
+        //Invite Status의 document 삭제
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("Invite status").document(inviteGroupList[sender.tag].groupNumber).delete(){ err in
+            if let err = err{
+                print("Error removing document: \(err)")
+            }
+            else{
+                print("Document successfully removed!")
+            }
+        }
+        
+        let alert = UIAlertController(title: "초대에 수락하였습니다", message: "그룹리스트를 확인해보세요", preferredStyle: .alert)
+        
+        let confirm = UIAlertAction(title: "확인", style: .cancel){ _ in
+            self.getFirebaseGroupInvitationStatus()
+        }
+        alert.addAction(confirm)
+        self.present(alert, animated: false)
+    }
+    
+    @objc func tapRejectButton (_ sender: UIButton){
+        
+        //Invite Status의 document 삭제
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("Invite status").document(inviteGroupList[sender.tag].groupNumber).delete(){ err in
+            if let err = err{
+                print("Error removing document: \(err)")
+            }
+            else{
+                print("Document successfully removed!")
+            }
+        }
+        
+        let alert = UIAlertController(title: "초대를 거절하였습니다", message: "", preferredStyle: .alert)
+        
+        let confirm = UIAlertAction(title: "확인", style: .cancel){ _ in
+            self.getFirebaseGroupInvitationStatus()
+        }
+        alert.addAction(confirm)
+        self.present(alert, animated: false)
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
