@@ -134,10 +134,6 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
         cell.groupNameLabel.text = inviteGroupList[indexPath.row].groupName
         cell.objectiveLabel.text = inviteGroupList[indexPath.row].object
         
-        
-        
-//        cell.groupNameLabel.text = invitedGroupNameArray[indexPath.row]
-//        cell.objectiveLabel.text = invitedObjectArray[indexPath.row]
         cell.acceptButton.tag = indexPath.row
         cell.acceptButton.addTarget(self, action: #selector(tapAcceptButton(_:)), for: .touchUpInside)
         cell.rejectButton.tag = indexPath.row
@@ -199,6 +195,16 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let invitationGroupContentView = InvitationGroupContentViewController()
+        invitationGroupContentView.titleLabel.text = inviteGroupList[indexPath.row].groupName
+        invitationGroupContentView.objectLabel.text = inviteGroupList[indexPath.row].object
+        invitationGroupContentView.contentLabel.text = inviteGroupList[indexPath.row].content
+        
+        
+        present(invitationGroupContentView, animated: true)
     }
     
 }

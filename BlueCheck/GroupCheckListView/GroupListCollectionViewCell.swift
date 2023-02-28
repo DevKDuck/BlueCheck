@@ -21,6 +21,15 @@ class GroupListCollectionViewCell: UICollectionViewCell{
         return label
     }()
     
+    let writerLabel: UILabel = {
+        let label = UILabel()
+        
+        label.textColor = .systemBlue
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let startDateLabel: UILabel = {
         let label = UILabel()
         
@@ -55,6 +64,8 @@ class GroupListCollectionViewCell: UICollectionViewCell{
         return imageView
     }()
     
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayoutConstraints()
@@ -68,6 +79,7 @@ class GroupListCollectionViewCell: UICollectionViewCell{
     
     func setLayoutConstraints(){
         self.addSubview(titleLabel)
+        self.addSubview(writerLabel)
         self.addSubview(authImage)
         self.addSubview(startDateLabel)
         self.addSubview(endDateLabel)
@@ -76,6 +88,10 @@ class GroupListCollectionViewCell: UICollectionViewCell{
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            
+            
+            writerLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            writerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
             
             authImage.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: 10),
             authImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),

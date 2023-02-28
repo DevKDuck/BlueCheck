@@ -48,7 +48,7 @@ class GroupListCollectionViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height - 100)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -117,6 +117,7 @@ extension GroupListCollectionViewController: UICollectionViewDelegate, UICollect
         cell.contentLabel.text = "내용: " + groupListArray[indexPath.row].content
         cell.startDateLabel.text = "시작 날짜: " + groupListArray[indexPath.row].startDate
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
+        cell.writerLabel.text = "작성자:" + groupListArray[indexPath.row].writer
         
         DispatchQueue.global().async {
             Storage.storage().reference().child(self.groupListArray[indexPath.row].image).downloadURL { (url,error) in

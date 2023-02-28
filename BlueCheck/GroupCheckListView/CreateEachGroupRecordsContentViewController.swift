@@ -6,7 +6,8 @@
 //
 
 import UIKit
-import AVFoundation
+import MobileCoreServices
+
 import Firebase
 import FirebaseFirestore
 import FirebaseAuth
@@ -143,12 +144,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         let alert = UIAlertController(title: "인증 사진 찾기", message: "자랑스럽게 이루어낸 사진을 공유하세요!", preferredStyle: .actionSheet)
         
         let camera = UIAlertAction(title: "카메라", style: .default) { camera in
-            //            let pickerController = UIImagePickerController()
-            //            pickerController.sourceType = .camera
-            //            pickerController.allowsEditing = false
-            //            pickerController.mediaTypes = ["public.image"]
-            ////            pickerController.delegate = self
-            //            self.present(pickerController, animated: true)
             self.openCamera()
         }
         
@@ -177,7 +172,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 self.present(alert, animated: true, completion: nil)
             }
         }
-        
+
         else {
             self.present(alert, animated: true)
         }
@@ -245,8 +240,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         uploadImage(img: recordUIImage, docID: newDoc.documentID)
         
         
-
-//        //그룹 -> Record -> 난수이미지 : data 로 업데이트
+        
+        //        //그룹 -> Record -> 난수이미지 : data 로 업데이트
         let groupDoc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(newDoc.documentID)
         groupDoc.setData(data)
         
@@ -258,7 +253,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     func uploadImage(img: UIImage, docID: String){
         var data = Data()
         data = img.jpegData(compressionQuality: 0.8)!
-
+        
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
         Storage.storage().reference().child(docID).putData(data,metadata: metaData){ (metaData,error) in
@@ -366,14 +361,18 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
 extension CreateEachGroupRecordsContentViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     
     func openCamera(){
+        
         picker.sourceType = .camera
-        
-        
+        picker.allowsEditing = false
+//            picker.delegate = self
+//            picker.mediaTypes = [UTType.image.identifier]
+            
         present(picker, animated: false)
+      
     }
     
     func openLibrary(){
-        picker.sourceType = .photoLibrary
+        self.picker.sourceType = .photoLibrary
         present(picker, animated: false)
     }
     
@@ -384,30 +383,12 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
-        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-                //                      ,let user = Auth.auth().currentUser
-        else { return }
-        //
-        //                FirebaseStorageManager.uploadImage(image: selectedImage, pathRoot: user.uid) { url in
-        //                    if let url = url {
-        //                        UserDefaults.standard.set(url.absoluteString, forKey: "myImageUrl")
-        //                        self.title = "이미지 업로드 완료"
-        //                    }
-        //                }
-        self.recordImage.image = selectedImage
         
-        picker.dismiss(animated: true)
-        //        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-        //            picker.dismiss(animated: true)
-        //            return
-        //        }
-        //        self.recordImage.image = image
-        //        picker.dismiss(animated: true, completion: nil)
-        //        // 비디오인 경우 - url로 받는 형태
-        //        //    guard let url = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
-        //        //      picker.dismiss(animated: true, completion: nil)
-        //        //      return
-        //        //    }
-        //        //    let video = AVAsset(url: url)
+        
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            print("\(selectedImage)사진은 정상적으로 찍힘")
+            self.recordImage.image = selectedImage
+            picker.dismiss(animated: true)
+        }
     }
 }

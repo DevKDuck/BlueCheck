@@ -52,6 +52,7 @@
 		8C508AFC29A30F2800EF29B8 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFB29A30F2800EF29B8 /* FirebaseRemoteConfigSwift */; };
 		8C508AFE29A30F2800EF29B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFD29A30F2800EF29B8 /* FirebaseStorage */; };
 		8C508B0029A30F2800EF29B8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */; };
+		8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */; };
 		8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61C95029A35ED500701799 /* TabbarViewController.swift */; };
 		8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */; };
 		8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */; };
@@ -63,7 +64,6 @@
 		8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */; };
 		8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */; };
 		8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */; };
-		8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */; };
 		8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */; };
 		8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */; };
 		8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */; };
@@ -93,6 +93,7 @@
 		8C23EAAF296D46DE0042248F /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB1296D47130042248F /* MyCheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListViewController.swift; sourceTree = "<group>"; };
 		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
+		8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationGroupContentViewController.swift; sourceTree = "<group>"; };
 		8C61C95029A35ED500701799 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewController.swift; sourceTree = "<group>"; };
 		8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -104,7 +105,6 @@
 		8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationStatusViewController.swift; sourceTree = "<group>"; };
 		8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsStatusTableViewCell.swift; sourceTree = "<group>"; };
-		8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsViewController.swift; sourceTree = "<group>"; };
 		8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewController.swift; sourceTree = "<group>"; };
 		8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTableViewCell.swift; sourceTree = "<group>"; };
@@ -162,6 +162,7 @@
 				8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */,
 				8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */,
 				8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */,
+				8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */,
 			);
 			path = MyAccountView;
 			sourceTree = "<group>";
@@ -251,7 +252,6 @@
 			isa = PBXGroup;
 			children = (
 				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
-				8C9A6B3F2991062E0093D90A /* EachGroupRecordsViewController.swift */,
 				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
 				8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */,
 				8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */,
@@ -404,9 +404,9 @@
 				8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */,
 				8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */,
 				8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */,
+				8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
 				8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */,
-				8C9A6B402991062E0093D90A /* EachGroupRecordsViewController.swift in Sources */,
 				8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
 				8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */,
@@ -570,6 +570,8 @@
 				INFOPLIST_FILE = BlueCheck/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "블루체크";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "~를 사용하기 위해서 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "~를 사용하기 위해서 사진첩 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -605,6 +607,8 @@
 				INFOPLIST_FILE = BlueCheck/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "블루체크";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "~를 사용하기 위해서 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "~를 사용하기 위해서 사진첩 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

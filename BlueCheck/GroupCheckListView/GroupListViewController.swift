@@ -115,14 +115,12 @@ class GroupListViewController: UIViewController{
         
         self.view.addSubview(topView)
         self.view.addSubview(groupListLabel)
-        //        self.view.addSubview(gologInRequestButton) //임시 로그인
         self.view.addSubview(addGroupButton)
         self.view.addSubview(tableView)
         
         
         topView.translatesAutoresizingMaskIntoConstraints = false
         groupListLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        gologInRequestButton.translatesAutoresizingMaskIntoConstraints = false //임시 로그인
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -132,12 +130,6 @@ class GroupListViewController: UIViewController{
             topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             topView.heightAnchor.constraint(equalToConstant: 50),
-            
-            
-            //MARK: 임시로그인
-            //            gologInRequestButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            //            gologInRequestButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
-            //
             
             groupListLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
             groupListLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
