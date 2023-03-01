@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class FindIDPasswordViewContoller: UIViewController{
     
     //MARK: 임시 뒤로가기 버튼
     lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setTitle("<--", for: .normal)
+        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(tapBackButton(_:)), for: .touchUpInside)
         return button
@@ -30,10 +32,10 @@ class FindIDPasswordViewContoller: UIViewController{
         return label
     }()
     
-    let nameTextField: UITextField = {
+    let idPartNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "이름"
-        textField.layer.borderWidth = 2
+        textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
     }()
@@ -41,15 +43,15 @@ class FindIDPasswordViewContoller: UIViewController{
     let idPartEmailField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "이메일"
-        textField.layer.borderWidth = 2
+        textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
     }()
     
-    let idTextField: UITextField = {
+    let passwordPartNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "아이디"
-        textField.layer.borderWidth = 2
+        textField.placeholder = "이름"
+        textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
     }()
@@ -57,7 +59,7 @@ class FindIDPasswordViewContoller: UIViewController{
     let passwordPartEmailField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "이메일"
-        textField.layer.borderWidth = 2
+        textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
     }()
@@ -81,8 +83,35 @@ class FindIDPasswordViewContoller: UIViewController{
     }()
     
     @objc func tapidPartSearchButton(_ sender: UIButton){
-        let alert = UIAlertController(title: "아이디 전송 완료", message: "이메일에서 아이디를 확인해주세요.", preferredStyle: .alert)
-        
+        guard let emailText = idPartEmailField.text else {return}
+        Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
+            
+            if let error = error{
+                print("GetDocument user Error: \(error.localizedDescription)")
+            }
+            else{
+                if document?.exists == false{
+                    self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                }
+                else{
+                    guard let document = document else{return}
+                    guard let data = document.data() else {return}
+                    guard let firestoreName = data["name"] as? String else {return}
+                    guard let name = self.idPartNameTextField.text else {return}
+                    
+                    if firestoreName != name{
+                        self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                    }
+                    else{
+                        self.executeAlertController(emailText, "존재하는 이메일입니다.")
+                    }
+                }
+            }
+        }
+    }
+    
+    func executeAlertController(_ title: String, _ message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .cancel){ cancel in
             alert.dismiss(animated: true)
         }
@@ -101,14 +130,52 @@ class FindIDPasswordViewContoller: UIViewController{
     }()
     
     @objc func tapPasswordPartSearchButton(_ sender: UIButton){
-        let alert = UIAlertController(title: "비밀번호 전송 완료", message: "이메일에서 비밀번호를 확인해주세요.", preferredStyle: .alert)
+        guard let emailText = passwordPartEmailField.text else {return}
         
-        let confirm = UIAlertAction(title: "확인", style: .cancel){ cancel in
-            alert.dismiss(animated: true)
+        Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
+            
+            if let error = error{
+                print("GetDocument user Error: \(error.localizedDescription)")
+            }
+            else{
+                if document?.exists == false{
+                    self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                }
+                else{
+                    guard let document = document else{return}
+                    guard let data = document.data() else {return}
+                    guard let firestoreName = data["name"] as? String else {return}
+                    guard let name = self.passwordPartNameTextField.text else {return}
+                    
+                    if firestoreName != name{
+                        self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                    }
+                    else{
+                        Auth.auth().sendPasswordReset(withEmail: emailText){ error in
+                            if let error = error{
+                                print("SendPasswordReset Email Error: \(error.localizedDescription)")
+                            }
+                            else{
+                                self.executeAlertController("비밀번호 변경 메일전송 완료", "이메일에서 비밀번호를 변경해주세요.")
+                            }
+                        }
+                        
+                    }
+                }
+            }
         }
-        alert.addAction(confirm)
         
-        self.present(alert, animated: true)
+        
+        Auth.auth().sendPasswordReset(withEmail: emailText){ error in
+            let alert = UIAlertController(title: "비밀번호 변경 메일전송 완료", message: "이메일에서 비밀번호를 변경해주세요.", preferredStyle: .alert)
+
+            let confirm = UIAlertAction(title: "확인", style: .cancel){ cancel in
+                alert.dismiss(animated: true)
+            }
+            alert.addAction(confirm)
+
+            self.present(alert, animated: true)
+        }
     }
     
     
@@ -124,13 +191,13 @@ class FindIDPasswordViewContoller: UIViewController{
         self.view.addSubview(backButton)
         
         self.view.addSubview(findIDLabel)
-        self.view.addSubview(nameTextField)
+        self.view.addSubview(idPartNameTextField)
         self.view.addSubview(idPartEmailField)
         self.view.addSubview(idPartSearchButton)
         
         
         self.view.addSubview(findPasswordLabel)
-        self.view.addSubview(idTextField)
+        self.view.addSubview(passwordPartNameTextField)
         self.view.addSubview(passwordPartEmailField)
         self.view.addSubview(passwordPartSearchButton)
         
@@ -138,11 +205,11 @@ class FindIDPasswordViewContoller: UIViewController{
         backButton.translatesAutoresizingMaskIntoConstraints = false
         
         findIDLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        idPartNameTextField.translatesAutoresizingMaskIntoConstraints = false
         idPartEmailField.translatesAutoresizingMaskIntoConstraints = false
         idPartSearchButton.translatesAutoresizingMaskIntoConstraints = false
         findPasswordLabel.translatesAutoresizingMaskIntoConstraints = false
-        idTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordPartNameTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordPartEmailField.translatesAutoresizingMaskIntoConstraints = false
         passwordPartSearchButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -158,13 +225,13 @@ class FindIDPasswordViewContoller: UIViewController{
             findIDLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 90),
             findIDLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             
-            nameTextField.topAnchor.constraint(equalTo: self.findIDLabel.bottomAnchor, constant: 20),
-            nameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            nameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            nameTextField.heightAnchor.constraint(equalToConstant: 44),
+            idPartNameTextField.topAnchor.constraint(equalTo: self.findIDLabel.bottomAnchor, constant: 20),
+            idPartNameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            idPartNameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            idPartNameTextField.heightAnchor.constraint(equalToConstant: 44),
             
             
-            idPartEmailField.topAnchor.constraint(equalTo: self.nameTextField.bottomAnchor, constant: 10),
+            idPartEmailField.topAnchor.constraint(equalTo: self.idPartNameTextField.bottomAnchor, constant: 10),
             idPartEmailField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             idPartEmailField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             idPartEmailField.heightAnchor.constraint(equalToConstant: 44),
@@ -178,13 +245,13 @@ class FindIDPasswordViewContoller: UIViewController{
             findPasswordLabel.topAnchor.constraint(equalTo: self.idPartSearchButton.bottomAnchor, constant: 30),
             findPasswordLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             
-            idTextField.topAnchor.constraint(equalTo: self.findPasswordLabel.bottomAnchor, constant: 20),
-            idTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            idTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            idTextField.heightAnchor.constraint(equalToConstant: 44),
+            passwordPartNameTextField.topAnchor.constraint(equalTo: self.findPasswordLabel.bottomAnchor, constant: 20),
+            passwordPartNameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            passwordPartNameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            passwordPartNameTextField.heightAnchor.constraint(equalToConstant: 44),
             
             
-            passwordPartEmailField.topAnchor.constraint(equalTo: self.idTextField.bottomAnchor, constant: 10),
+            passwordPartEmailField.topAnchor.constraint(equalTo: self.passwordPartNameTextField.bottomAnchor, constant: 10),
             passwordPartEmailField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             passwordPartEmailField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             passwordPartEmailField.heightAnchor.constraint(equalToConstant: 44),

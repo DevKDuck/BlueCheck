@@ -199,9 +199,10 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let invitationGroupContentView = InvitationGroupContentViewController()
-        invitationGroupContentView.titleLabel.text = inviteGroupList[indexPath.row].groupName
-        invitationGroupContentView.objectLabel.text = inviteGroupList[indexPath.row].object
-        invitationGroupContentView.contentLabel.text = inviteGroupList[indexPath.row].content
+        invitationGroupContentView.modalPresentationStyle = .popover
+        invitationGroupContentView.titleLabel.text = "그룹명: " + inviteGroupList[indexPath.row].groupName
+        invitationGroupContentView.objectLabel.text = "목적: " + inviteGroupList[indexPath.row].object
+        invitationGroupContentView.contentLabel.text = "자세한 내용 : " + inviteGroupList[indexPath.row].content
         
         
         present(invitationGroupContentView, animated: true)
