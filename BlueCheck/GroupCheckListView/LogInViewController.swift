@@ -99,7 +99,7 @@ class LogInViewController: UIViewController{
                             UserDefaults.standard.set(passwordText, forKey: "password")
                         }
                         //MARK: 여기 수정햇음
-//                        guard let user = result?.user else {return}
+                        //                        guard let user = result?.user else {return}
                         
                         let vc = TabbarViewController()
                         
@@ -122,7 +122,7 @@ class LogInViewController: UIViewController{
                 
                 if result != nil{
                     
-//                    guard let user = result?.user else {return}
+                    //                    guard let user = result?.user else {return}
                     
                     let vc = TabbarViewController()
                     
@@ -264,24 +264,9 @@ class LogInViewController: UIViewController{
         return label
     }()
     
-    let kakaotalkButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        
-        return button
-    }()
     
-    let naverButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        button.contentMode = .scaleToFill
-        return button
-    }()
-    
-    lazy var appleButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        button.contentMode = .scaleToFill
+    lazy var appleButton: ASAuthorizationAppleIDButton = {
+        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
         button.addTarget(self, action: #selector(tapAppleButton(_:)), for: .touchUpInside)
         return button
     }()
@@ -290,12 +275,6 @@ class LogInViewController: UIViewController{
         startSignInWithAppleFlow()
     }
     
-    lazy var sNSButtonStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [kakaotalkButton,naverButton,appleButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        return stackView
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -338,7 +317,8 @@ class LogInViewController: UIViewController{
         self.view.addSubview(sNSLeftLineView)
         self.view.addSubview(sNSRightLineView)
         self.view.addSubview(sNSLogInLable)
-        self.view.addSubview(sNSButtonStackView)
+        self.view.addSubview(appleButton)
+        
         
         
         
@@ -348,14 +328,14 @@ class LogInViewController: UIViewController{
         passwordEyebutton.translatesAutoresizingMaskIntoConstraints = false
         autoLogInCheckButton.translatesAutoresizingMaskIntoConstraints = false
         logInErrorLabel.translatesAutoresizingMaskIntoConstraints = false
-        //        autoLogInLabel.translatesAutoresizingMaskIntoConstraints = false
         logInbutton.translatesAutoresizingMaskIntoConstraints = false
         logInAnonouncementButton.translatesAutoresizingMaskIntoConstraints = false
         findIdPassWordAndJoinMembershipStackView.translatesAutoresizingMaskIntoConstraints = false
         sNSLeftLineView.translatesAutoresizingMaskIntoConstraints = false
         sNSRightLineView.translatesAutoresizingMaskIntoConstraints = false
         sNSLogInLable.translatesAutoresizingMaskIntoConstraints = false
-        sNSButtonStackView.translatesAutoresizingMaskIntoConstraints = false
+        appleButton.translatesAutoresizingMaskIntoConstraints = false
+        
         
         NSLayoutConstraint.activate([
             
@@ -417,12 +397,10 @@ class LogInViewController: UIViewController{
             sNSLeftLineView.centerYAnchor.constraint(equalTo: self.sNSLogInLable.centerYAnchor),
             sNSLeftLineView.heightAnchor.constraint(equalToConstant: 2),
             
-            sNSButtonStackView.topAnchor.constraint(equalTo: self.sNSLogInLable.bottomAnchor, constant: 20),
-            sNSButtonStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            sNSButtonStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            sNSButtonStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
-            sNSButtonStackView.heightAnchor.constraint(equalToConstant: 44)
-            
+            appleButton.topAnchor.constraint(equalTo: self.sNSLeftLineView.bottomAnchor,constant: 20),
+            appleButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            appleButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            appleButton.heightAnchor.constraint(equalToConstant: 44)
             
         ])
     }
@@ -454,20 +432,40 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                 // User is signed in to Firebase with Apple.
                 // ...
                 
-                let data = ["email" : authResult?.user.email, "name" : "애플로그인으로 없음", "uid" : authResult?.user.uid]
                 
-                
-                Firestore.firestore().collection("user").document(authResult?.user.email ?? "").setData(data as [String : Any]){ error in
-                    if let error = error{
-                        print("DEBUG:\(error.localizedDescription)")
-                        return
+                Firestore.firestore().collection("user").document(authResult?.user.email ?? "").getDocument { document,err  in
+                    if let err = err{
+                        print("Firestore Apple SignIn Error: \(err.localizedDescription)")
+                    }
+                    else{
+                        if document?.exists == true{
+                            goTabbarViewController()
+                        }
+                        else{
+                            
+                            let data = ["email" : authResult?.user.email, "name" : "이름을 설정해주세요", "uid" : authResult?.user.uid]
+                            
+                            Firestore.firestore().collection("user").document(authResult?.user.email ?? "").setData(data as [String : Any]){ error in
+                                if let error = error{
+                                    print("DEBUG:\(error.localizedDescription)")
+                                    return
+                                }
+                            }
+                            
+                        }
                     }
                 }
                 
-                let tabbarViewController = TabbarViewController()
-                tabbarViewController.currentUserEmail = authResult?.user.email ?? ""
-                tabbarViewController.modalPresentationStyle = .fullScreen
-                self.present(tabbarViewController, animated: true)
+                
+                goTabbarViewController()
+                
+                
+                func goTabbarViewController(){
+                    let tabbarViewController = TabbarViewController()
+                    tabbarViewController.currentUserEmail = authResult?.user.email ?? ""
+                    tabbarViewController.modalPresentationStyle = .fullScreen
+                    self.present(tabbarViewController, animated: true)
+                }
             }
         }
     }
@@ -503,7 +501,7 @@ extension LogInViewController {
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         let charset: Array<Character> =
-            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
         var result = ""
         var remainingLength = length
         

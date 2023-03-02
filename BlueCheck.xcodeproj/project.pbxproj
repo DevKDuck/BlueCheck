@@ -69,6 +69,7 @@
 		8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */; };
 		8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */; };
 		8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */; };
+		8CB9D95329B0734300799495 /* MyProfileSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D95229B0734300799495 /* MyProfileSettingController.swift */; };
 		8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */; };
 		8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */; };
 		8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */; };
@@ -111,6 +112,7 @@
 		8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTableViewCell.swift; sourceTree = "<group>"; };
 		8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListSettingViewController.swift; sourceTree = "<group>"; };
 		8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTask.swift; sourceTree = "<group>"; };
+		8CB9D95229B0734300799495 /* MyProfileSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileSettingController.swift; sourceTree = "<group>"; };
 		8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageManager.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				8C0EDB242989153F007FD35C /* MyAccountViewController.swift */,
+				8CB9D95229B0734300799495 /* MyProfileSettingController.swift */,
 				8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */,
 				8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */,
 				8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */,
@@ -409,6 +412,7 @@
 				8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
 				8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */,
+				8CB9D95329B0734300799495 /* MyProfileSettingController.swift in Sources */,
 				8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
 				8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */,

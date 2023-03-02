@@ -159,7 +159,7 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyAccountTableViewCell") as?
                 MyAccountTableViewCell else {return UITableViewCell()}
         
-        let namingLabelArray = ["초대현황", "그룹 관리", "로그아웃"]
+        let namingLabelArray = ["초대현황", "프로필 관리", "로그아웃"]
         cell.namingLabel.text = namingLabelArray[indexPath.row]
         
         if indexPath.row == 2{
@@ -178,6 +178,11 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
             invitationStatusViewController.currentUserEmail = currentUserEmail
             invitationStatusViewController.modalPresentationStyle = .fullScreen
             self.present(invitationStatusViewController, animated: true)
+        }
+        if indexPath.row == 1 {
+            let myProfileSettingController = MyProfileSettingController()
+            myProfileSettingController.modalPresentationStyle = .fullScreen
+            self.present(myProfileSettingController, animated: true)
         }
         
         if indexPath.row == 2 {
