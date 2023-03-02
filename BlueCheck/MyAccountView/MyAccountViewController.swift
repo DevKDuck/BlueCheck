@@ -14,19 +14,6 @@ class MyAccountViewController: UIViewController{
     
     var currentUserEmail:String = ""
     
-    let topView: UIView = {
-        let topview = UIView()
-        topview.backgroundColor = .white
-        return topview
-    }()
-    
-    let seeMoreLabel : UILabel = {
-        let label = UILabel()
-        label.text = "더보기"
-        label.textColor = .systemBlue
-        return label
-    }()
-    
     let myAccountView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -34,7 +21,7 @@ class MyAccountViewController: UIViewController{
     }()
     
     
-    let nameLabel: UILabel = {
+    let nickNameLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 30, weight: .bold)
@@ -51,7 +38,7 @@ class MyAccountViewController: UIViewController{
     
     
     lazy var myAccountStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel,emailLabel])
+        let stackView = UIStackView(arrangedSubviews: [nickNameLabel,emailLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 5
@@ -66,10 +53,27 @@ class MyAccountViewController: UIViewController{
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = false
+        setNavigationBar()
+        
+    }
     
-    
-    
-    
+    func setNavigationBar(){
+        self.navigationController?.navigationBar.isHidden = false
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemBlue]
+        appearance.backgroundColor = .white
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        title = "더보기"
+        
+    }
+
     override func viewDidLoad(){
         super.viewDidLoad()
         
@@ -91,7 +95,7 @@ class MyAccountViewController: UIViewController{
             else{
                 let data = snapshot?.data()
                 if let FirestoreData = data {
-                    self.nameLabel.text = FirestoreData["name"] as? String
+                    self.nickNameLabel.text = FirestoreData["nickName"] as? String
                     self.emailLabel.text = FirestoreData["email"] as? String
                 }
             }
@@ -101,36 +105,20 @@ class MyAccountViewController: UIViewController{
     
     
     private func setLayoutConstraints(){
-        self.view.addSubview(topView)
-        self.view.addSubview(seeMoreLabel)
         self.view.addSubview(myAccountView)
-        self.view.addSubview(nameLabel)
+        self.view.addSubview(nickNameLabel)
         self.view.addSubview(emailLabel)
         self.view.addSubview(myAccountStackView)
         self.view.addSubview(tableView)
         
-        
-        
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        seeMoreLabel.translatesAutoresizingMaskIntoConstraints = false
         myAccountView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
-            topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 50),
-            
-            
-            
-            seeMoreLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
-            seeMoreLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            
-            myAccountView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
+            myAccountView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             myAccountView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             myAccountView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             myAccountView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3 - 50),
@@ -176,13 +164,12 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
         if indexPath.row == 0 {
             let invitationStatusViewController = InvitationStatusViewController()
             invitationStatusViewController.currentUserEmail = currentUserEmail
-            invitationStatusViewController.modalPresentationStyle = .fullScreen
-            self.present(invitationStatusViewController, animated: true)
+            self.navigationController?.pushViewController(invitationStatusViewController, animated: true)
         }
         if indexPath.row == 1 {
             let myProfileSettingController = MyProfileSettingController()
-            myProfileSettingController.modalPresentationStyle = .fullScreen
-            self.present(myProfileSettingController, animated: true)
+            myProfileSettingController.currentUserEmail = currentUserEmail
+            self.navigationController?.pushViewController(myProfileSettingController, animated: true)
         }
         
         if indexPath.row == 2 {

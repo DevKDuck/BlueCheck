@@ -12,25 +12,8 @@ import FirebaseFirestore
 class InvitationStatusViewController: UIViewController{
     
     var currentUserEmail: String = ""
-//    var invitedGroupNameArray = [String]()
-//    var invitedObjectArray = [String]()
-//    var inviteGroupNumberArray = [String]()
-//    var inviteGroupContentArray = [String]()
     
     var inviteGroupList: [InviteListTask] = []
-    
-    let topView: UIView = {
-        let topview = UIView()
-        topview.backgroundColor = .white
-        return topview
-    }()
-    
-    let invitationStatusLabel : UILabel = {
-        let label = UILabel()
-        label.text = "초대 현황"
-        label.textColor = .systemBlue
-        return label
-    }()
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -40,19 +23,24 @@ class InvitationStatusViewController: UIViewController{
     }()
     
     
-    //MARK: 임시 뒤로가기 버튼
-    lazy var dismissButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        button.setTitleColor(UIColor.darkGray, for: .normal)
-        button.addTarget(self, action: #selector(tapDismissButton(_:)), for: .touchUpInside)
-        return button
-    }()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigationBar()
     
-    @objc func tapDismissButton(_ sender: UIButton){
-        self.dismiss(animated: true)
     }
     
+    func setNavigationBar(){
+        self.navigationController?.navigationBar.isHidden = false
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemBlue]
+        appearance.backgroundColor = .white
+
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        title = "초대현황"
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,31 +80,13 @@ class InvitationStatusViewController: UIViewController{
     
     
     private func setLayoutConstraints(){
-        self.view.addSubview(topView)
-        self.view.addSubview(invitationStatusLabel)
-        self.view.addSubview(dismissButton)
         self.view.addSubview(tableView)
         
-        
-        topView.translatesAutoresizingMaskIntoConstraints = false
-        invitationStatusLabel.translatesAutoresizingMaskIntoConstraints = false
-        dismissButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         
-        NSLayoutConstraint.activate([
-            topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            topView.heightAnchor.constraint(equalToConstant: 50),
-            
-            invitationStatusLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
-            invitationStatusLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            
-            dismissButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            dismissButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 20),
-            
-            tableView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
+        NSLayoutConstraint.activate([            
+            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)

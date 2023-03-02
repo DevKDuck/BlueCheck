@@ -34,6 +34,8 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         let myCheckListViewControllerBarItem = UITabBarItem(title: "Check List", image: UIImage(systemName: "checklist"), selectedImage: UIImage(systemName: "checklist.checked"))
         myCheckListViewController.tabBarItem = myCheckListViewControllerBarItem
         
+        
+        
         let groupCheckRootViewController = GroupListViewController()
         let groupCheckListViewController = UINavigationController(rootViewController: groupCheckRootViewController)
         let groupCheckListViewControllerBarItem = UITabBarItem(title: "Group List", image: UIImage(systemName: "eye"), selectedImage: UIImage(systemName: "rectangle.3.group.bubble.left"))
@@ -42,9 +44,12 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         
         
         
-        let myAccountViewController = MyAccountViewController()
+        
+        let myAccountRootViewController = MyAccountViewController()
+        let myAccountViewController = UINavigationController(rootViewController: myAccountRootViewController)
+        
         let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "rectangle.3.group.bubble.left"), selectedImage: UIImage(systemName: "ellipsis.circle"))
-        myAccountViewController.currentUserEmail = self.currentUserEmail
+        myAccountRootViewController.currentUserEmail = self.currentUserEmail
         myAccountViewController.tabBarItem = myAccountViewControllerBarItem
         
         self.viewControllers = [bucketListViewController,myCheckListViewController,groupCheckListViewController,myAccountViewController]

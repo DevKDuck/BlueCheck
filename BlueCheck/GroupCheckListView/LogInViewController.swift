@@ -443,7 +443,7 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                         }
                         else{
                             
-                            let data = ["email" : authResult?.user.email, "name" : "이름을 설정해주세요", "uid" : authResult?.user.uid]
+                            let data = ["email" : authResult?.user.email, "name" : "이름을 설정해주세요", "uid" : authResult?.user.uid, "nickName" : "닉네임을 설정해주세요"]
                             
                             Firestore.firestore().collection("user").document(authResult?.user.email ?? "").setData(data as [String : Any]){ error in
                                 if let error = error{
