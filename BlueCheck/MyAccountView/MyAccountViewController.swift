@@ -58,6 +58,7 @@ class MyAccountViewController: UIViewController{
         
         self.navigationController?.navigationBar.isHidden = false
         setNavigationBar()
+        getFireStoreData()
         
     }
     
@@ -82,7 +83,6 @@ class MyAccountViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         setLayoutConstraints()
-        getFireStoreData()
     }
     
     func getFireStoreData(){

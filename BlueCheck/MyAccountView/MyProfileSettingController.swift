@@ -15,7 +15,9 @@ class MyProfileSettingController: UIViewController{
     
     let profileImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .systemBlue
+        image.backgroundColor = .white
+        image.image = UIImage(systemName: "xmark")
+    
         return image
     }()
     
@@ -143,7 +145,7 @@ class MyProfileSettingController: UIViewController{
         commentChangeNickNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-        profileImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.view.bounds.height / 6 ),
+        profileImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.view.bounds.height / 8 ),
         profileImage.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
         profileImage.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2),
         profileImage.heightAnchor.constraint(equalToConstant: self.view.bounds.width / 2),
