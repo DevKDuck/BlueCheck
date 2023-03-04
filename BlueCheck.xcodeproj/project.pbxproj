@@ -58,6 +58,9 @@
 		8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */; };
 		8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
+		8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */; };
+		8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 8C83508B29B3582000C1033F /* BSImagePicker */; };
+		8C83508E29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */; };
 		8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B32298A6F820093D90A /* InviteListViewController.swift */; };
 		8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */; };
 		8C9A6B37298BB0610093D90A /* InvitePersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B36298BB0610093D90A /* InvitePersonalInformationViewController.swift */; };
@@ -101,6 +104,8 @@
 		8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
+		8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewImageCollectionCell.swift; sourceTree = "<group>"; };
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
 		8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B36298BB0610093D90A /* InvitePersonalInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePersonalInformationViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +141,7 @@
 				8C508AD229A30F2800EF29B8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				8C508ACC29A30F2800EF29B8 /* FirebaseAnalytics in Frameworks */,
 				8C508AE829A30F2800EF29B8 /* FirebaseFirestoreSwift in Frameworks */,
+				8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */,
 				8C508ACE29A30F2800EF29B8 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				8C508AD429A30F2800EF29B8 /* FirebaseAppCheck in Frameworks */,
 				8C508AF829A30F2800EF29B8 /* FirebasePerformance in Frameworks */,
@@ -258,6 +264,7 @@
 			children = (
 				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
 				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
+				8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */,
 				8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */,
 				8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */,
 				8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */,
@@ -265,6 +272,7 @@
 				8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */,
 				8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */,
 				8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */,
+				8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */,
 				8C9A6B38298BB0780093D90A /* InviteListView */,
 				8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */,
 				8C214EDE29939AE8005EBB6A /* LogInViewController.swift */,
@@ -330,6 +338,7 @@
 				8C508AFD29A30F2800EF29B8 /* FirebaseStorage */,
 				8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */,
 				8C4874D829A6194400FD871B /* Kingfisher */,
+				8C83508B29B3582000C1033F /* BSImagePicker */,
 			);
 			productName = BlueCheck;
 			productReference = 8C23EA90296D2B3F0042248F /* BlueCheck.app */;
@@ -363,6 +372,7 @@
 				8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */,
 				8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8C4874D729A6194400FD871B /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				8C83508A29B3582000C1033F /* XCRemoteSwiftPackageReference "BSImagePicker" */,
 			);
 			productRefGroup = 8C23EA91296D2B3F0042248F /* Products */;
 			projectDirPath = "";
@@ -394,12 +404,14 @@
 			files = (
 				8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */,
 				8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */,
+				8C83508E29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift in Sources */,
 				8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */,
 				8C0EDB252989153F007FD35C /* MyAccountViewController.swift in Sources */,
 				8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */,
 				8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */,
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
 				8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */,
+				8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */,
 				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
 				8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */,
@@ -688,6 +700,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		8C83508A29B3582000C1033F /* XCRemoteSwiftPackageReference "BSImagePicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mikaoj/BSImagePicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -835,6 +855,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		8C83508B29B3582000C1033F /* BSImagePicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C83508A29B3582000C1033F /* XCRemoteSwiftPackageReference "BSImagePicker" */;
+			productName = BSImagePicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

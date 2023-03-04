@@ -13,6 +13,9 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 
+import BSImagePicker
+import Photos
+
 class CreateEachGroupRecordsContentViewController: UIViewController{
     
     var currentUserEmail: String = ""
@@ -60,12 +63,33 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     
     let recordImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "figure.tennis")
+        imageView.image = UIImage(systemName: "plus")
         imageView.contentMode = .scaleAspectFit
         imageView.tintColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         
         return imageView
     }()
+    
+    var selectedAssetsArray = [PHAsset]()
+    var userSelectedImages = [UIImage(systemName: "plus")]
+    
+    
+    var imageCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height / 3)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
+        collectionView.register(CreateEachGroupRecordsContentViewImageCollectionCell.self, forCellWithReuseIdentifier: "CreateEachGroupRecordsContentViewImageCollectionCell")
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+
+      
+    
     
     
     let titlebarView: UIView = {
@@ -104,6 +128,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     
     let picker = UIImagePickerController()
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -112,6 +138,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         setAttributesDatePicker()
         setLayoutConstraints()
         self.navigationItem.rightBarButtonItem = completeButton
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
         picker.delegate = self
         
     }
@@ -234,10 +262,15 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         //자신이 만들었나 확인하기 위해 아래 루트에 난수이미지통해 저장
         let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
+        
+        
         let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : newDoc.documentID, "content": contentTextView.text!, "writer": currentUserName ]
         
         newDoc.setData(["DocID" : newDoc.documentID])
-        uploadImage(img: recordUIImage, docID: newDoc.documentID)
+        for image in userSelectedImages{
+            uploadImage(img: image!, docID: newDoc.documentID)
+        }
+//        uploadImage(img: recordUIImage, docID: newDoc.documentID)
         
         
         
@@ -256,7 +289,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
-        Storage.storage().reference().child(docID).putData(data,metadata: metaData){ (metaData,error) in
+        let randoumNum = Float.random(in: 1...10)
+        Storage.storage().reference().child("\(docID)/\(randoumNum)").putData(data,metadata: metaData){ (metaData,error) in
             if let error = error{
                 print(error.localizedDescription)
                 return
@@ -278,7 +312,10 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         self.view.addSubview(endDatePicker)
         
         self.view.addSubview(datebarView)
-        self.view.addSubview(recordImage)
+        
+//        self.view.addSubview(recordImage)
+        self.view.addSubview(imageCollectionView)
+       
         self.view.addSubview(recordImagebarView)
         
         self.view.addSubview(contentTextView)
@@ -293,7 +330,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         
         
-        recordImage.translatesAutoresizingMaskIntoConstraints = false
+//        recordImage.translatesAutoresizingMaskIntoConstraints = false
         contentTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -336,12 +373,17 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             datebarView.heightAnchor.constraint(equalToConstant: 2),
             
             
-            recordImage.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
-            recordImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            recordImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            recordImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
-            
-            recordImagebarView.topAnchor.constraint(equalTo: self.recordImage.bottomAnchor,constant: 5),
+//            recordImage.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
+//            recordImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+//            recordImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+//            recordImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
+
+            imageCollectionView.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
+            imageCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            imageCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            imageCollectionView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
+
+            recordImagebarView.topAnchor.constraint(equalTo: self.imageCollectionView.bottomAnchor,constant: 5),
             recordImagebarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             recordImagebarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             recordImagebarView.heightAnchor.constraint(equalToConstant: 2),
@@ -372,11 +414,64 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     }
     
     func openLibrary(){
-        self.picker.sourceType = .photoLibrary
-        present(picker, animated: false)
+//        self.picker.sourceType = .photoLibrary
+//        present(picker, animated: false)
+        pressImageLibrary()
+        
     }
     
+    func pressImageLibrary(){
+        let imagePicker = ImagePickerController()
+        imagePicker.settings.selection.max = 5 //최대개수 5
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
+        
+        presentImagePicker(imagePicker, select: {(assets) in
+            
+        }, deselect: {(assets) in
+            
+        }, cancel: {(assets) in
+            
+        }, finish: {(assets) in
+            if assets.count > 0 {
+                self.userSelectedImages.removeAll()
+            }
+            //사진을 하나이상 고르면 + 마크 없애기
+            
+            for asset in 0..<assets.count{
+                self.selectedAssetsArray.append(assets[asset])
+            }
+            self.convertAssetToImages()
+            self.imageCollectionView.reloadData()
+            imagePicker.dismiss(animated: false)
+        })
+    }
     
+    func convertAssetToImages() {
+            
+            if selectedAssetsArray.count != 0 {
+                
+                for i in 0..<selectedAssetsArray.count {
+                    
+                    let imageManager = PHImageManager.default()
+                    let option = PHImageRequestOptions()
+                    option.isSynchronous = true //비동기
+                    var thumbnail = UIImage()
+                    
+                    imageManager.requestImage(for: selectedAssetsArray[i],
+                                              targetSize: CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height / 3),
+                                              contentMode: .aspectFit,
+                                              options: option) { (result, info) in
+                        thumbnail = result!
+                    }
+                    //화질 어떻게 고쳐야 할듯..
+                    
+                    let data = thumbnail.jpegData(compressionQuality: 1.0)
+                    let newImage = UIImage(data: data!)
+                    
+                    self.userSelectedImages.append(newImage! as UIImage)
+                }
+            }
+        }
     
     
     func imagePickerController(
@@ -391,4 +486,58 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
             picker.dismiss(animated: true)
         }
     }
+}
+
+extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userSelectedImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CreateEachGroupRecordsContentViewImageCollectionCell", for: indexPath) as? CreateEachGroupRecordsContentViewImageCollectionCell else {return UICollectionViewCell()}
+        cell.imageView.image = userSelectedImages[indexPath.row]
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: "인증 사진 찾기", message: "자랑스럽게 이루어낸 사진을 공유하세요!", preferredStyle: .actionSheet)
+        
+        let camera = UIAlertAction(title: "카메라", style: .default) { camera in
+            self.openCamera()
+        }
+        
+        let album = UIAlertAction(title: "앨범", style: .default) { album in
+            self.openLibrary()
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { cancel in
+            alert.dismiss(animated: true)
+        }
+        
+        alert.addAction(camera)
+        alert.addAction(album)
+        alert.addAction(cancel)
+        
+        
+        //MARK: ActionSheet의 모달스타일은 UIModalPresentationPopover라고 설명을 해주면서 UIModalPresentationPopover을 사용 할 때는 barButtonItem 또는 팝업에 대한 위치를 설정해줘야 되어 패드와 아이폰 나눔
+        
+        
+        if UIDevice.current.userInterfaceIdiom == .pad { //디바이스 타입이 iPad일때
+            if let popoverController = alert.popoverPresentationController {
+                // ActionSheet가 표현되는 위치를 저장해줍니다.
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popoverController.permittedArrowDirections = []
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+
+        else {
+            self.present(alert, animated: true)
+        }
+        
+    }
+    
+    
 }

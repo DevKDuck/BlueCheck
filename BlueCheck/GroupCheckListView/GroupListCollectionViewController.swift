@@ -58,6 +58,7 @@ class GroupListCollectionViewController: UIViewController {
         return collectionView
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,7 +93,7 @@ class GroupListCollectionViewController: UIViewController {
                         let jsonData = try JSONSerialization.data(withJSONObject: data)
                         let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
                         self.groupListArray.append(taskInfo)
-
+                        
                     }
                 }catch let err{
                     print("err: \(err)")
@@ -119,19 +120,21 @@ extension GroupListCollectionViewController: UICollectionViewDelegate, UICollect
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
         cell.writerLabel.text = "작성자:" + groupListArray[indexPath.row].writer
         
-        DispatchQueue.global().async {
-            Storage.storage().reference().child(self.groupListArray[indexPath.row].image).downloadURL { (url,error) in
-                if let error = error {
-                    print("FireStorage Get Image Error : \(error.localizedDescription)")
-                }
-                else{
-                    DispatchQueue.main.async {
-                        cell.authImage.kf.setImage(with: url)
-                        cell.authImage.contentMode = .scaleToFill
-                    }
-                }
-            }
-        }
+        cell.imageArray = groupListArray
+        
+        
+//        Storage.storage().reference().child(self.groupListArray[indexPath.row].image).downloadURL { (url,error) in
+//            if let error = error {
+//                print("FireStorage Get Image Error : \(error.localizedDescription)")
+//            }
+//            else{
+//                
+//                cell.authImage.kf.setImage(with: url)
+//                cell.authImage.contentMode = .scaleToFill
+//                
+//            }
+//            
+//        }
         
         
         return cell
