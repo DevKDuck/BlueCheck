@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseStorage
 import Kingfisher
 
@@ -60,19 +61,19 @@ class GroupListCollectionViewCell: UITableViewCell{
         return label
     }()
     
-//    var imageCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//
-//        layout.scrollDirection = .horizontal
-////        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height - 100)
-//
-//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        collectionView.backgroundColor = .white
-//        collectionView.register(GroupListImageCollectionViewCell.self, forCellWithReuseIdentifier: "GroupListImageCollectionViewCell")
-//        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-//        collectionView.translatesAutoresizingMaskIntoConstraints = false
-//        return collectionView
-//    }()
+    //    var imageCollectionView: UICollectionView = {
+    //        let layout = UICollectionViewFlowLayout()
+    //
+    //        layout.scrollDirection = .horizontal
+    ////        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height - 100)
+    //
+    //        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    //        collectionView.backgroundColor = .white
+    //        collectionView.register(GroupListImageCollectionViewCell.self, forCellWithReuseIdentifier: "GroupListImageCollectionViewCell")
+    //        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    //        collectionView.translatesAutoresizingMaskIntoConstraints = false
+    //        return collectionView
+    //    }()
     
     let recorImage: UIImageView = {
         var imageView = UIImageView()
@@ -82,60 +83,59 @@ class GroupListCollectionViewCell: UITableViewCell{
         return imageView
     }()
     
-    var imageNames = [UIImage(systemName: "xmark"),UIImage(systemName: "arrow.backward.circle.fill"),UIImage(systemName: "arrowshape.turn.up.right.circle.fill")]
+    var imageNames = [UIImage]()
     
     
     private let imageScrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.backgroundColor = .white
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
         scrollView.alwaysBounceVertical = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.isScrollEnabled = true
         scrollView.isPagingEnabled = true
-        scrollView.bounces = false 
-            
-            return scrollView
-        }()
+        scrollView.bounces = false
+        
+        return scrollView
+    }()
     
     let pageControl: UIPageControl = {
-       let pageControl = UIPageControl()
+        let pageControl = UIPageControl()
         return pageControl
     }()
     
-
+    
     var urlArray: [URL] = []
-    var urlDoubleArray: [[URL]] = [[]]
- 
+    var itemArray: [StorageReference] = []
+    
+//    let imageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+//        imageScrollView.addSubview(imageView)
+//        return imageView
+//    }()
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         imageScrollView.delegate = self
         pageControl.currentPage = 0
-        pageControl.numberOfPages = urlArray.count
+        pageControl.numberOfPages = imageNames.count
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.pageIndicatorTintColor = .lightGray // 페이지를 암시하는 동그란 점의 색상
         pageControl.currentPageIndicatorTintColor = .systemBlue // 현재 페이지를 암시하는 동그란 점 색상
         
-        imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(urlArray.count), height: UIScreen.main.bounds.width)
-//        for (index, imageName) in imageNames.enumerated() {
-//            
-//            let imageView = UIImageView(image: imageName)
-//            imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-//            imageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
-//            imageScrollView.addSubview(imageView)
-//        }
+        imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(imageNames.count), height: UIScreen.main.bounds.width)
+        for (index, imageName) in imageNames.enumerated() {
+            
+            let imageView = UIImageView(image: imageName)
+            imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+            imageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
+            imageScrollView.addSubview(imageView)
+        }
         
-            for (index, url) in urlArray.enumerated() {
-                let imageView = UIImageView()
-                imageView.kf.setImage(with: url)
-                imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-                imageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
-                imageScrollView.addSubview(imageView)
-            }
-        
-
         setLayoutConstraints()
     }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
     
@@ -155,8 +155,8 @@ class GroupListCollectionViewCell: UITableViewCell{
         contentView.addSubview(imageScrollView)
         contentView.addSubview(pageControl)
         
-    
-//        self.addSubview(authImage)
+        
+        //        self.addSubview(authImage)
         contentView.addSubview(startDateLabel)
         contentView.addSubview(endDateLabel)
         contentView.addSubview(contentLabel)
@@ -169,8 +169,8 @@ class GroupListCollectionViewCell: UITableViewCell{
             writerLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             writerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
-
-
+            
+            
             imageScrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 10),
             imageScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
@@ -195,13 +195,13 @@ class GroupListCollectionViewCell: UITableViewCell{
         contentView.layer.cornerRadius = 3.0
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor.systemBlue.cgColor
-            
+        
     }
 }
 
 extension GroupListCollectionViewCell: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-           pageControl.currentPage = Int(Float(scrollView.contentOffset.x / UIScreen.main.bounds.width))
+        pageControl.currentPage = Int(Float(scrollView.contentOffset.x / UIScreen.main.bounds.width))
     }
 }
 

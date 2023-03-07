@@ -14,7 +14,6 @@ import Kingfisher
 
 
 
-
 class GroupListCollectionViewController: UIViewController {
     
     
@@ -74,76 +73,100 @@ class GroupListCollectionViewController: UIViewController {
     var itemArray: [[StorageReference]] = []
     var urlArrayArray: [[URL]] = []
     var urlArray: [URL] = []
+    var imageArray: [UIImage] = []
+    var imageArrayArray: [[UIImage]] = []
     
     func getFireStoreData() {
-        Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
-            
-            if let error = error {
-                print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
-            }else{
-                self.groupListArray.removeAll()
-                do{
-                    for document in querySnapshot!.documents{
-                        let data = document.data()
-                        let jsonData = try JSONSerialization.data(withJSONObject: data)
-                        let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
-                        
-                        let ref = Storage.storage().reference().child(taskInfo.image)
-                        
-                        ref.listAll{(result, err) in
-                            self.itemArray.append(result!.items)
-                            for item in result!.items{
-                                item.downloadURL{ url , eRROR in
-                                    self.urlArray.append(url!)
+        
+            Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
+                }else{
+                    self.groupListArray.removeAll()
+                    do{
+                        for document in querySnapshot!.documents{
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
+                            
+                            let ref = Storage.storage().reference().child(taskInfo.image)
+                            
+                            
+                            ref.listAll{ (result, err) in
+                                if result!.items != [StorageReference]() {
+                                    for item in result!.items{
+                                        item.downloadURL{ url, error in
+                                            guard let url = url else {return}
+                                            DispatchQueue.global().async { [weak self] in
+                                                if let data = try? Data(contentsOf: url) {
+                                                    if let image = UIImage(data: data) {
+                                                        DispatchQueue.global().sync {
+                                                            self?.imageArray.append(image)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                    
                                 }
-                                
+                                DispatchQueue.global().sync {
+                                    self.imageArrayArray.append(self.imageArray)
+                                    self.imageArray.removeAll()
+                                    
+                                }
                             }
-                            self.urlArrayArray.append(self.urlArray)
-                            self.urlArray.removeAll()
-                            print(self.urlArrayArray)
+                            
+                           
+                            self.groupListArray.append(taskInfo)
+                            
                         }
                         
-                        self.groupListArray.append(taskInfo)
+                    }catch let err{
+                        print("err: \(err)")
                         
                     }
-                }catch let err{
-                    print("err: \(err)")
+                    
                 }
+            
+            //            let vc = GroupListCollectionViewCell()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 15.0){
+                self.groupListTableView.reloadData()
             }
-            self.groupListTableView.reloadData()
         }
         
     }
     
-
-//
-//    func getFireStorage(){
-//        for i in groupListArray{
-//            Storage.storage().reference().child(i.image).listAll{ result , error in
-//                if let error = error {
-//                    print("Storage get ListAll 실패: \(error.localizedDescription)")
-//                }
-//                else{
-//                    self.urlArray.removeAll()
-//                    for item in result!.items{
-//
-//                        item.downloadURL { (url,error) in
-//                            if let error = error {
-//                                print("FireStorage Get Image Error : \(error.localizedDescription)")
-//                            }
-//                            else{
-//                                guard let url = url else {return}
-//                                self.urlArray.append(url)
-//                            }
-//
-//                        }
-//                    }
-//                    self.urlDoubleArray.append(self.urlArray)
-//                }
-//
-//            }
-//        }
-//    }
+    
+    //
+    //    func getFireStorage(){
+    //        for i in groupListArray{
+    //            Storage.storage().reference().child(i.image).listAll{ result , error in
+    //                if let error = error {
+    //                    print("Storage get ListAll 실패: \(error.localizedDescription)")
+    //                }
+    //                else{
+    //                    self.urlArray.removeAll()
+    //                    for item in result!.items{
+    //
+    //                        item.downloadURL { (url,error) in
+    //                            if let error = error {
+    //                                print("FireStorage Get Image Error : \(error.localizedDescription)")
+    //                            }
+    //                            else{
+    //                                guard let url = url else {return}
+    //                                self.urlArray.append(url)
+    //                            }
+    //
+    //                        }
+    //                    }
+    //                    self.urlDoubleArray.append(self.urlArray)
+    //                }
+    //
+    //            }
+    //        }
+    //    }
 }
 
 extension GroupListCollectionViewController: UITableViewDataSource, UITableViewDelegate{
@@ -159,8 +182,9 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         cell.startDateLabel.text = "시작 날짜: " + groupListArray[indexPath.row].startDate
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
         cell.writerLabel.text = "작성자:" + groupListArray[indexPath.row].writer
-        print(self.itemArray)
-//        cell.urlArray = urlDoubleArray[indexPath.row]
+        print(imageArrayArray)
+        cell.imageNames = imageArrayArray[indexPath.row]
+        //        cell.urlArray = urlDoubleArray[indexPath.row]
         return cell
     }
     
