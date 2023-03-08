@@ -61,19 +61,6 @@ class GroupListCollectionViewCell: UITableViewCell{
         return label
     }()
     
-    //    var imageCollectionView: UICollectionView = {
-    //        let layout = UICollectionViewFlowLayout()
-    //
-    //        layout.scrollDirection = .horizontal
-    ////        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height - 100)
-    //
-    //        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    //        collectionView.backgroundColor = .white
-    //        collectionView.register(GroupListImageCollectionViewCell.self, forCellWithReuseIdentifier: "GroupListImageCollectionViewCell")
-    //        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    //        collectionView.translatesAutoresizingMaskIntoConstraints = false
-    //        return collectionView
-    //    }()
     
     let recorImage: UIImageView = {
         var imageView = UIImageView()
@@ -83,10 +70,10 @@ class GroupListCollectionViewCell: UITableViewCell{
         return imageView
     }()
     
-    var imageNames = [UIImage]()
+    var imageNames = [UIImage(systemName: "xmark"),UIImage(systemName: "xmark"),UIImage(systemName: "xmark")]
     
     
-    private let imageScrollView: UIScrollView = {
+     let imageScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.backgroundColor = .white
@@ -106,35 +93,104 @@ class GroupListCollectionViewCell: UITableViewCell{
     }()
     
     
-    var urlArray: [URL] = []
-    var itemArray: [StorageReference] = []
+//    var urlArray: [URL] = []
+//    var itemArray: [StorageReference] = []
     
-//    let imageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-//        imageScrollView.addSubview(imageView)
-//        return imageView
-//    }()
-    
-    
+    var imageDataArray: [String] = []
+
+    let cellimageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        return imageView
+    }()
+    let cellimageView2: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        return imageView
+    }()
+    let cellimageView3: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        return imageView
+    }()
+    let cellimageView4: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        return imageView
+    }()
+    let cellimageView5: UIImageView = {
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        return imageView
+    }()
+
+    var lastIndex: Int?
+    var imageCount = 0
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         imageScrollView.delegate = self
         pageControl.currentPage = 0
-        pageControl.numberOfPages = imageNames.count
+//        pageControl.numberOfPages = lastIndex ?? 5
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.pageIndicatorTintColor = .lightGray // 페이지를 암시하는 동그란 점의 색상
         pageControl.currentPageIndicatorTintColor = .systemBlue // 현재 페이지를 암시하는 동그란 점 색상
         
-        imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(imageNames.count), height: UIScreen.main.bounds.width)
-        for (index, imageName) in imageNames.enumerated() {
-            
-            let imageView = UIImageView(image: imageName)
-            imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-            imageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
-            imageScrollView.addSubview(imageView)
-        }
+//        imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(imageDataArray.count), height: UIScreen.main.bounds.width)
+//        imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(lastIndex ?? 5), height: UIScreen.main.bounds.width)
+        
+//        switch imageCount{
+//
+//            case 0:
+//            cellimageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+//            imageScrollView.addSubview(cellimageView)
+//        case 1:
+//        cellimageView2.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+//        imageScrollView.addSubview(cellimageView2)
+//        case 2:
+//        cellimageView3.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+//        imageScrollView.addSubview(cellimageView3)
+//        case 3:
+//        cellimageView4.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+//        imageScrollView.addSubview(cellimageView4)
+//        case 4:
+//        cellimageView5.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+//        imageScrollView.addSubview(cellimageView5)
+//
+//            default:
+//            break
+//
+//        }
+        
+        cellimageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(0)
+        cellimageView2.frame.origin.x = UIScreen.main.bounds.width * CGFloat(1)
+        cellimageView3.frame.origin.x = UIScreen.main.bounds.width * CGFloat(2)
+        cellimageView4.frame.origin.x = UIScreen.main.bounds.width * CGFloat(3)
+        cellimageView5.frame.origin.x = UIScreen.main.bounds.width * CGFloat(4)
+
+//        imageScrollView.addSubview(cellimageView)
+//        imageScrollView.addSubview(cellimageView2)
+//        imageScrollView.addSubview(cellimageView3)
+//        imageScrollView.addSubview(cellimageView4)
+//        imageScrollView.addSubview(cellimageView5)
+
+        
+//
+//        for (index, imageName) in imageDataArray.enumerated() {
+//            Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                if let error = error {
+//                    print(error)
+//                }
+//                else{
+//                    let image = UIImage(data: data!)
+//                    let imageView = UIImageView(image: image!)
+//                    imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+//                    imageView.frame.origin.x = UIScreen.main.bounds.width * CGFloat(index)
+//                    self.imageScrollView.addSubview(imageView)
+//                }
+//            }
+//
+//        }
         
         setLayoutConstraints()
     }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
@@ -146,8 +202,9 @@ class GroupListCollectionViewCell: UITableViewCell{
         fatalError("init(coder:) has not been implemented")
         
     }
+
     
-    
+   
     
     func setLayoutConstraints(){
         contentView.addSubview(titleLabel)

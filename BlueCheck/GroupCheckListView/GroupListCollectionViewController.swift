@@ -78,95 +78,32 @@ class GroupListCollectionViewController: UIViewController {
     
     func getFireStoreData() {
         
-            Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
-                if let error = error {
-                    print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
-                }else{
-                    self.groupListArray.removeAll()
-                    do{
-                        for document in querySnapshot!.documents{
-                            let data = document.data()
-                            let jsonData = try JSONSerialization.data(withJSONObject: data)
-                            let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
-                            
-                            let ref = Storage.storage().reference().child(taskInfo.image)
-                            
-                            
-                            ref.listAll{ (result, err) in
-                                if result!.items != [StorageReference]() {
-                                    for item in result!.items{
-                                        item.downloadURL{ url, error in
-                                            guard let url = url else {return}
-                                            DispatchQueue.global().async { [weak self] in
-                                                if let data = try? Data(contentsOf: url) {
-                                                    if let image = UIImage(data: data) {
-                                                        DispatchQueue.global().sync {
-                                                            self?.imageArray.append(image)
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            
-                                        }
-                                    }
-                                    
-                                }
-                                DispatchQueue.global().sync {
-                                    self.imageArrayArray.append(self.imageArray)
-                                    self.imageArray.removeAll()
-                                    
-                                }
-                            }
-                            
-                           
-                            self.groupListArray.append(taskInfo)
-                            
-                        }
-                        
-                    }catch let err{
-                        print("err: \(err)")
-                        
-                    }
+        Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
+            if let error = error {
+                print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
+            }else{
+                self.groupListArray.removeAll()
+                do{
+                    for document in querySnapshot!.documents{
+                        let data = document.data()
+                        let jsonData = try JSONSerialization.data(withJSONObject: data)
+                        let taskInfo = try JSONDecoder().decode(GroupListTask.self, from: jsonData)
+                        self.groupListArray.append(taskInfo)
+             }
+                    
+                }catch let err{
+                    print("err: \(err)")
                     
                 }
-            
-            //            let vc = GroupListCollectionViewCell()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 15.0){
-                self.groupListTableView.reloadData()
+                
             }
+            
+                self.groupListTableView.reloadData()
         }
         
     }
     
     
-    //
-    //    func getFireStorage(){
-    //        for i in groupListArray{
-    //            Storage.storage().reference().child(i.image).listAll{ result , error in
-    //                if let error = error {
-    //                    print("Storage get ListAll 실패: \(error.localizedDescription)")
-    //                }
-    //                else{
-    //                    self.urlArray.removeAll()
-    //                    for item in result!.items{
-    //
-    //                        item.downloadURL { (url,error) in
-    //                            if let error = error {
-    //                                print("FireStorage Get Image Error : \(error.localizedDescription)")
-    //                            }
-    //                            else{
-    //                                guard let url = url else {return}
-    //                                self.urlArray.append(url)
-    //                            }
-    //
-    //                        }
-    //                    }
-    //                    self.urlDoubleArray.append(self.urlArray)
-    //                }
-    //
-    //            }
-    //        }
-    //    }
 }
 
 extension GroupListCollectionViewController: UITableViewDataSource, UITableViewDelegate{
@@ -182,9 +119,74 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         cell.startDateLabel.text = "시작 날짜: " + groupListArray[indexPath.row].startDate
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
         cell.writerLabel.text = "작성자:" + groupListArray[indexPath.row].writer
-        print(imageArrayArray)
-        cell.imageNames = imageArrayArray[indexPath.row]
-        //        cell.urlArray = urlDoubleArray[indexPath.row]
+        cell.lastIndex = groupListArray[indexPath.row].image.count
+        
+        
+        for (index, imageName) in groupListArray[indexPath.row].image.enumerated() {
+            Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print(error)
+                }
+                else{
+                    let image = UIImage(data: data!)
+                    if index == 0{
+                        cell.imageCount = 0
+                        cell.cellimageView.image = image!
+                        cell.imageScrollView.addSubview(cell.cellimageView)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = 1
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(1), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                    if index == 1{
+                        cell.imageCount = 1
+                        cell.cellimageView2.image = image!
+                        cell.imageScrollView.addSubview(cell.cellimageView2)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = 2
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(2), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                    if index == 2{
+                        cell.imageCount = 2
+                        cell.cellimageView3.image = image!
+                        cell.imageScrollView.addSubview(cell.cellimageView3)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = 3
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(3), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                    if index == 3{
+                        cell.imageCount = 3
+                        cell.cellimageView4.image = image!
+                        cell.imageScrollView.addSubview(cell.cellimageView4)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = 4
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(4), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                    if index == 4{
+                        cell.imageCount = 4
+                        cell.cellimageView5.image = image!
+                        cell.imageScrollView.addSubview(cell.cellimageView5)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = 5
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(5), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                    
+                    
+                }
+            }
+            
+        }
+        
+        
         return cell
     }
     

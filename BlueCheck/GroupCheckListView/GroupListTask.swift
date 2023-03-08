@@ -12,7 +12,7 @@ struct GroupListTask: Codable{
     var startDate: String
     var endDate: String
     var content: String
-    var image: String
+    var image: [String]
     var writer: String
 }
 

@@ -260,16 +260,33 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         guard let recordUIImage = recordImage.image else {return}
         
-        //자신이 만들었나 확인하기 위해 아래 루트에 난수이미지통해 저장
+        //새로운 내용을 만들때 만드는 문서
         let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
         
+        var imageDocArray : [String] = []
+       
+        for image in userSelectedImages {
+            let randomNum = newDoc.documentID + String(Float.random(in: 0...10))
+            imageDocArray.append(randomNum)
+            uploadImage(img: image!, randomNum: randomNum)
+        }
         
-        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "image" : newDoc.documentID, "content": contentTextView.text!, "writer": currentUserName ]
+        
+        let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserName, "image" : imageDocArray] as [String : Any]
         
         newDoc.setData(["DocID" : newDoc.documentID])
-        for image in userSelectedImages{
-            uploadImage(img: image!, docID: newDoc.documentID)
-        }
+        
+        //새로운 내용을 만들때 이미지를 저장하는 문서의 이름을 담은 변수
+//        var imageDocArray : [String] = []
+        
+//        for image in userSelectedImages {
+//            let newImageDoc =     Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document(newDoc.documentID).collection("Images").document()
+//            imageDocArray.append(newImageDoc.documentID)
+//            uploadImage(img: image!, docID: newImageDoc.documentID)
+//            newImageDoc.setData(["imageName" : newImageDoc.documentID])
+//        }
+        
+        
 //        uploadImage(img: recordUIImage, docID: newDoc.documentID)
         
         
@@ -283,14 +300,13 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     }
     
     
-    func uploadImage(img: UIImage, docID: String){
+    func uploadImage(img: UIImage, randomNum: String){
         var data = Data()
         data = img.jpegData(compressionQuality: 0.8)!
         
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
-        let randoumNum = Float.random(in: 1...10)
-        Storage.storage().reference().child("\(docID)/\(randoumNum)").putData(data,metadata: metaData){ (metaData,error) in
+        Storage.storage().reference().child(randomNum).putData(data,metadata: metaData){ (metaData,error) in
             if let error = error{
                 print(error.localizedDescription)
                 return
