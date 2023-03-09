@@ -13,7 +13,18 @@ class GroupListTableViewCell: UITableViewCell{
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
-        label.textAlignment = .center
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    let contentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 15)
+        label.numberOfLines = 0
         return label
     }()
     
@@ -26,11 +37,13 @@ class GroupListTableViewCell: UITableViewCell{
     private func setLayoutConstraint(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(objectGroupImage)
+        contentView.addSubview(contentLabel)
         
         contentView.backgroundColor = .white
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         objectGroupImage.translatesAutoresizingMaskIntoConstraints = false
+        contentLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
@@ -40,9 +53,15 @@ class GroupListTableViewCell: UITableViewCell{
             objectGroupImage.widthAnchor.constraint(equalToConstant: 50),
             
             
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 15),
             titleLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            
+            contentLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor,constant: 10),
+            contentLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
+            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -10)
+            
             
 
         

@@ -55,6 +55,7 @@ class GroupListViewController: UIViewController{
     var groupNameArray = [String]()
     var groupObjectArray = [UIImage]()
     var groupDocumentsArray = [String]()
+    var groupContentArray = [String]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,9 +72,12 @@ class GroupListViewController: UIViewController{
                 let data = document.data()
                 guard let groupName = data["groupName"] as? String else {return}
                 guard let groupObject = data["object"] as? String else {return}
+                guard let groupContent = data["content"] as? String else {return}
+                
                 
                 self.groupNameArray.append(groupName)
                 self.groupDocumentsArray.append(document.documentID)
+                self.groupContentArray.append(groupContent)
                 
                 switch groupObject{
                 case "공부":
@@ -157,6 +161,7 @@ extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
         
         cell.titleLabel.text = groupNameArray[indexPath.row]
         cell.objectGroupImage.image = groupObjectArray[indexPath.row]
+        cell.contentLabel.text = groupContentArray[indexPath.row]
         return cell
     }
     
