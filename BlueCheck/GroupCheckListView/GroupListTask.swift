@@ -14,6 +14,7 @@ struct GroupListTask: Codable{
     var content: String
     var image: [String]
     var writer: String
+    var documentID: String
 }
 
 

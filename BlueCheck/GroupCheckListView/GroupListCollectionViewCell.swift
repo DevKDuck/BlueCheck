@@ -24,8 +24,43 @@ class GroupListCollectionViewCell: UITableViewCell{
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
         return label
     }()
+    
+    lazy var modifyButton: UIButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.addTarget(self, action: #selector(tapModifyButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+//    @objc func tapModifyButton(_ sender: UIButton){
+//        let alert = UIAlertController(title: "글을 관리할 수 있습니다.", message: "글관리 가능", preferredStyle: .actionSheet)
+//        
+//        let delete = UIAlertAction(title: "삭제하기", style: .default){ _ in
+//            print("삭제완료")
+//            
+//        }
+//        
+//        let modify = UIAlertAction(title: "수정하기", style: .default){ _ in
+//            let modifyVC = CreateEachGroupRecordsContentViewController()
+//            
+//            print("수정완료")
+//            
+//        }
+//        
+//        let cancel = UIAlertAction(title: "취소", style: .cancel)
+//        
+//        alert.addAction(delete)
+//        alert.addAction(modify)
+//        alert.addAction(cancel)
+//        
+//        self.present(alert)
+//        
+//    }
     
     let writerLabel: UILabel = {
         let label = UILabel()
@@ -162,6 +197,7 @@ class GroupListCollectionViewCell: UITableViewCell{
         contentView.addSubview(writerLabel)
         contentView.addSubview(imageScrollView)
         contentView.addSubview(pageControl)
+        contentView.addSubview(modifyButton)
         
         
         //        self.addSubview(authImage)
@@ -172,6 +208,7 @@ class GroupListCollectionViewCell: UITableViewCell{
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.7),
             
             
             writerLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -186,6 +223,11 @@ class GroupListCollectionViewCell: UITableViewCell{
             
             pageControl.topAnchor.constraint(equalTo: imageScrollView.bottomAnchor, constant: 10),
             pageControl.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            modifyButton.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor),
+            modifyButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10),
+            modifyButton.widthAnchor.constraint(equalToConstant: 44),
+            modifyButton.heightAnchor.constraint(equalToConstant: 44),
             
             
             startDateLabel.topAnchor.constraint(equalTo: self.pageControl.bottomAnchor, constant: 10),

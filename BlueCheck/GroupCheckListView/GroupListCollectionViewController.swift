@@ -21,6 +21,8 @@ class GroupListCollectionViewController: UIViewController {
     var groupDocumentName = ""
     var groupListArray : [GroupListTask] = []
     
+    var imageArray = [UIImage]()
+    
     lazy var addContentButton: UIBarButtonItem = {
         let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(tapAddContentButton(_:)))
         return button
@@ -31,6 +33,7 @@ class GroupListCollectionViewController: UIViewController {
         let goVC = CreateEachGroupRecordsContentViewController()
         goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
+        goVC.tag = 0
         goVC.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(goVC, animated: true)
     }
@@ -114,8 +117,8 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         cell.contentLabel.text = "내용: " + groupListArray[indexPath.row].content
         cell.startDateLabel.text = "시작 날짜: " + groupListArray[indexPath.row].startDate
         cell.endDateLabel.text = "종료 날짜: " + groupListArray[indexPath.row].endDate
-        cell.writerLabel.text = "작성자:" + groupListArray[indexPath.row].writer
-        cell.lastIndex = groupListArray[indexPath.row].image.count
+        cell.writerLabel.text = "작성자: " + groupListArray[indexPath.row].writer
+        cell.modifyButton.tag = indexPath.row
         
         
         for (index, imageName) in groupListArray[indexPath.row].image.enumerated() {
@@ -178,8 +181,52 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
             
         }
         
+        cell.modifyButton.addTarget(self, action: #selector(tapModifyButton(_:)), for: .touchUpInside)
+        
         
         return cell
+    }
+    
+    @objc func tapModifyButton(_ sender: UIButton){
+        let alert = UIAlertController(title: "글을 관리할 수 있습니다.", message: "글관리 가능", preferredStyle: .actionSheet)
+        
+        let delete = UIAlertAction(title: "삭제하기", style: .default){ _ in
+            print("삭제완료")
+            
+        }
+        
+        let modify = UIAlertAction(title: "수정하기", style: .default){ _ in
+            let modifyVC = CreateEachGroupRecordsContentViewController()
+            modifyVC.tag = 1
+            modifyVC.currentUserEmail = self.currentUserEmail
+            modifyVC.completeButton.title = "수정"
+            modifyVC.titleTextField.text = self.groupListArray[sender.tag].title
+            modifyVC.documentID = self.groupListArray[sender.tag].documentID
+            modifyVC.modifyArray = self.groupListArray[sender.tag].image
+            modifyVC.contentTextView.text = self.groupListArray[sender.tag].content
+        
+                
+            
+            
+            
+            
+            //modifyVC.startDatePicker =
+            //modifyVC.endDatePicker =
+            
+            self.navigationController?.pushViewController(modifyVC, animated: false)
+//            modifyVC.modalPresentationStyle = .fullScreen
+//            self.present(modifyVC, animated: true)
+            
+        }
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        
+        alert.addAction(delete)
+        alert.addAction(modify)
+        alert.addAction(cancel)
+        
+        self.present(alert, animated: false)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
