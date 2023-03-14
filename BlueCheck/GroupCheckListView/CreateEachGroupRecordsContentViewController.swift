@@ -41,6 +41,18 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         view.endEditing(true)
     }
     
+    private let contentScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     let titleTextField: UITextField = {
         let textField = UITextField()
@@ -132,23 +144,23 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         super.viewWillAppear(true)
         
         if tag == 1{
-                userSelectedImages.removeAll()
-                for imageName in modifyArray {
-                    Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
-                        if let error = error {
-                            print(error)
-                        }
-                        else{
-                            let image = UIImage(data: data!)
-                            self.userSelectedImages.append(image!)
-                        }
+            userSelectedImages.removeAll()
+            for imageName in modifyArray {
+                Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    if let error = error {
+                        print(error)
+                    }
+                    else{
+                        let image = UIImage(data: data!)
+                        self.userSelectedImages.append(image!)
                     }
                 }
+            }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
                 self.imageCollectionView.reloadData()
             }
-
+            
         }
     }
     
@@ -184,7 +196,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             }
             
         }
-    }    
+    }
     private func setAttributesDatePicker() {
         startDatePicker.preferredDatePickerStyle = .compact
         startDatePicker.datePickerMode = .dateAndTime
@@ -197,6 +209,27 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         endDatePicker.datePickerMode = .dateAndTime
         endDatePicker.locale = Locale(identifier: "ko-KR")
         endDatePicker.timeZone  = .autoupdatingCurrent
+        
+        // 수정시 DatePicker 전 데이터 불러와 날짜 설정
+        if startDate != ""{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            dateFormatter.timeZone = NSTimeZone(name:"KST") as TimeZone?
+            dateFormatter.locale = Locale(identifier:"ko_KR")
+            guard let date: Date = dateFormatter.date(from: startDate) else {return}
+            startDatePicker.date = date
+            
+            
+        }
+        if endDate != ""{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            dateFormatter.timeZone = NSTimeZone(name:"KST") as TimeZone?
+            dateFormatter.locale = Locale(identifier:"ko_KR")
+            guard let date: Date = dateFormatter.date(from: endDate) else {return}
+            endDatePicker.date = date
+            
+        }
         endDatePicker.addTarget(self, action: #selector(endValueChangedDatePicker(_:)), for: .valueChanged)
     }
     var startDate = ""
@@ -250,7 +283,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
             
             
-            let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : newDoc.documentID] as [String : Any]
+            let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : newDoc.documentID, "writerEmail" : currentUserEmail] as [String : Any]
             
             newDoc.setData(["DocID" : newDoc.documentID])
             
@@ -260,47 +293,48 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         }
         
         if tag == 1{
-            if startDate == "" {
-                let now = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-                dateFormatter.locale = Locale(identifier:"ko_KR")
-                startDate = dateFormatter.string(from: now)
-            }
-            if endDate == "" {
-                let now = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-                dateFormatter.locale = Locale(identifier:"ko_KR")
-                endDate = dateFormatter.string(from: now)
-            }
+            //            if startDate == "" {
+            //                let now = Date()
+            //                let dateFormatter = DateFormatter()
+            //                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            //                dateFormatter.locale = Locale(identifier:"ko_KR")
+            //                startDate = dateFormatter.string(from: now)
+            //            }
+            //            if endDate == "" {
+            //                let now = Date()
+            //                let dateFormatter = DateFormatter()
+            //                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+            //                dateFormatter.locale = Locale(identifier:"ko_KR")
+            //                endDate = dateFormatter.string(from: now)
+            //            }
             
             
             //Stroage 이미지 삭제
-            Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID).getDocument(){ snapShot, error in
-                if let error = error{
-                    print("RemoveFirestore getImageRefError: \(error)")
-                }
-                else{
-                    guard let snapShot = snapShot else {return}
-                    let data = snapShot.data()
-                    guard let imageArray = data?["image"] as? [String] else {return}
-                    for image in imageArray{
-                        let desertRef = Storage.storage().reference().child(image)
-
-                        desertRef.delete { error in
-                          if let error = error {
-                              print("Delete the file error: \(error.localizedDescription)")
-                          } else {
-                            // File deleted successfully
-                          }
-                        }
-                    }
-                    
-                            
-                }
-                
-            }
+//            Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID).getDocument{ snapShot, error in
+//                if let error = error{
+//                    print("RemoveFirestore getImageRefError: \(error)")
+//                }
+//                else{
+//                    guard let snapShot = snapShot else {return}
+//                    print("1")
+//                    let data = snapShot.data()
+//                    guard let imageArray = data?["image"] as? [String] else {return}
+//                    print("2")
+//                    for image in imageArray{
+//                        let desertRef = Storage.storage().reference().child(image)
+//                        print("desertRef")
+//                        desertRef.delete { error in
+//                            if let error = error {
+//                                print("Delete the file error: \(error.localizedDescription)")
+//                            } else {
+//                                print("Storage Delete Success")
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            }
+            
             
             //새로운 내용을 만들때 만드는 문서
             let doc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID)
@@ -319,14 +353,15 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
             doc.updateData(data){ err in
                 if let err = err {
-                       print("Error updating document: \(err)")
-                   } else {
-                       print("Document successfully updated")
-                   }
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
             }
             
+            
+            print("1")
         }
-        
         
         self.navigationController?.popViewController(animated: true)
     }
@@ -348,24 +383,26 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     }
     
     private func setLayoutConstraints(){
+        self.view.addSubview(contentScrollView)
+        contentScrollView.addSubview(contentView)
         
-        self.view.addSubview(titleTextField)
-        self.view.addSubview(titlebarView)
+        contentView.addSubview(titleTextField)
+        contentView.addSubview(titlebarView)
         
-        self.view.addSubview(startLabel)
-        self.view.addSubview(startDatePicker)
+        contentView.addSubview(startLabel)
+        contentView.addSubview(startDatePicker)
         
         
-        self.view.addSubview(endLabel)
-        self.view.addSubview(endDatePicker)
+        contentView.addSubview(endLabel)
+        contentView.addSubview(endDatePicker)
         
-        self.view.addSubview(datebarView)
+        contentView.addSubview(datebarView)
         
-        self.view.addSubview(imageCollectionView)
+        contentView.addSubview(imageCollectionView)
         
-        self.view.addSubview(recordImagebarView)
+        contentView.addSubview(recordImagebarView)
         
-        self.view.addSubview(contentTextView)
+        contentView.addSubview(contentTextView)
         
         
         
@@ -374,40 +411,52 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         startDatePicker.translatesAutoresizingMaskIntoConstraints = false
         endLabel.translatesAutoresizingMaskIntoConstraints = false
         endDatePicker.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        
-        
         contentTextView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        
         
         NSLayoutConstraint.activate([
             
-            titleTextField.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            titleTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            titleTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            
+            contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: contentScrollView.frameLayoutGuide.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: 1000),
+            
+            titleTextField.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            titleTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             titleTextField.heightAnchor.constraint(equalToConstant: 50),
             
             
             titlebarView.topAnchor.constraint(equalTo: self.titleTextField.bottomAnchor,constant: 5),
-            titlebarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            titlebarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            titlebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            titlebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             titlebarView.heightAnchor.constraint(equalToConstant: 2),
             
             startDatePicker.topAnchor.constraint(equalTo: self.titlebarView.bottomAnchor, constant: 5),
-            startDatePicker.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            startDatePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
             startLabel.centerYAnchor.constraint(equalTo: self.startDatePicker.centerYAnchor),
-            startLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            startLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             startLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
             
             //            startDatePicker.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2),
             
             endDatePicker.topAnchor.constraint(equalTo: self.startDatePicker.bottomAnchor, constant: 5),
-            endDatePicker.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            endDatePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
             endLabel.centerYAnchor.constraint(equalTo: self.endDatePicker.centerYAnchor),
-            endLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            endLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             endLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
             
@@ -415,8 +464,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
             
             datebarView.topAnchor.constraint(equalTo: self.endDatePicker.bottomAnchor,constant: 5),
-            datebarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            datebarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            datebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            datebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             datebarView.heightAnchor.constraint(equalToConstant: 2),
             
             
@@ -426,20 +475,21 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             //            recordImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
             
             imageCollectionView.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
-            imageCollectionView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            imageCollectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            imageCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageCollectionView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
             
             recordImagebarView.topAnchor.constraint(equalTo: self.imageCollectionView.bottomAnchor,constant: 5),
-            recordImagebarView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            recordImagebarView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            recordImagebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            recordImagebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             recordImagebarView.heightAnchor.constraint(equalToConstant: 2),
             
             
             contentTextView.topAnchor.constraint(equalTo: self.recordImagebarView.bottomAnchor,constant: 5),
-            contentTextView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            contentTextView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            contentTextView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            contentTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            contentTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            //            contentTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            contentTextView.heightAnchor.constraint(equalToConstant: 500)
             
         ])
         
@@ -549,10 +599,15 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
         if tag == 1{
             cell.imageView.image = userSelectedImages[indexPath.row]
         }
-        
-        
+        cell.cancelButton.tag = indexPath.row
+        cell.cancelButton.addTarget(self, action: #selector(tapCancelButton(_:)), for: .touchUpInside)
         
         return cell
+    }
+    
+    @objc func tapCancelButton(_ sender: UIButton){
+        userSelectedImages.remove(at: sender.tag)
+        imageCollectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

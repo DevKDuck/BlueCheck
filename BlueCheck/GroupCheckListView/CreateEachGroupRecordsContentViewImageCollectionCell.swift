@@ -11,10 +11,18 @@ class CreateEachGroupRecordsContentViewImageCollectionCell: UICollectionViewCell
     
     var imageView: UIImageView = {
         var imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
+    }()
+    
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     override init(frame: CGRect) {
@@ -30,12 +38,19 @@ class CreateEachGroupRecordsContentViewImageCollectionCell: UICollectionViewCell
     
     func setLayoutConstraints() {
         contentView.addSubview(imageView)
+        contentView.addSubview(cancelButton)
         
         NSLayoutConstraint.activate([
-        imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
+        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -22),
+        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
+        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
+        
+        cancelButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+        cancelButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+        cancelButton.heightAnchor.constraint(equalToConstant: 44),
+        cancelButton.widthAnchor.constraint(equalToConstant: 44)
+        
         ])
     }
 }

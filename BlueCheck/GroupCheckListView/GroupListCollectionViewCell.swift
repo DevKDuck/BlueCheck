@@ -136,26 +136,31 @@ class GroupListCollectionViewCell: UITableViewCell{
     let cellimageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     let cellimageView2: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     let cellimageView3: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     let cellimageView4: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     let cellimageView5: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: 0, y: 0 , width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
 

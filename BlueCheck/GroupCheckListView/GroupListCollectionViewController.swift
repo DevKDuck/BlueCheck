@@ -120,7 +120,7 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         cell.writerLabel.text = "작성자: " + groupListArray[indexPath.row].writer
         cell.modifyButton.tag = indexPath.row
         
-        
+            
         for (index, imageName) in groupListArray[indexPath.row].image.enumerated() {
             Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
                 if let error = error {
@@ -186,6 +186,13 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         
         return cell
     }
+    func failDeleteAlert(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .cancel)
+        alert.addAction(confirm
+        )
+        self.present(alert, animated: false)
+    }
     
     @objc func tapModifyButton(_ sender: UIButton){
         let alert = UIAlertController(title: "글을 관리할 수 있습니다.", message: "글관리 가능", preferredStyle: .actionSheet)
@@ -193,29 +200,66 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
         let delete = UIAlertAction(title: "삭제하기", style: .default){ _ in
             print("삭제완료")
             
+            // 자신이 쓴 글이라면 삭제할 수 있는 권한주기
+            if self.groupListArray[sender.tag].writerEmail == self.currentUserEmail{
+                //ALL삭제
+                Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").document(self.groupListArray[sender.tag].documentID).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                    }
+                }
+                //개인 삭제
+                Firestore.firestore().collection(self.groupDocumentName).document(self.currentUserEmail).collection("Group").document(self.groupListArray[sender.tag].documentID).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                        
+                    }
+                }
+                //스토리지 삭제
+                for image in self.groupListArray[sender.tag].image{
+                    let desertRef = Storage.storage().reference().child(image)
+                    
+                    // Delete the file
+                    desertRef.delete { error in
+                        if let error = error {
+                            print("Uh-oh, an error occurred!: \(error.localizedDescription)")
+                        } else {
+                            // File deleted successfully
+                        }
+                    }
+                }
+                self.getFireStoreData()
+                self.groupListTableView.reloadData()
+            }
+            else{
+                self.failDeleteAlert(title: "글을 삭제할 수 없습니다.", message: "작성자만 삭제할 수 있습니다.")
+            }
+
         }
         
         let modify = UIAlertAction(title: "수정하기", style: .default){ _ in
-            let modifyVC = CreateEachGroupRecordsContentViewController()
-            modifyVC.tag = 1
-            modifyVC.currentUserEmail = self.currentUserEmail
-            modifyVC.completeButton.title = "수정"
-            modifyVC.titleTextField.text = self.groupListArray[sender.tag].title
-            modifyVC.documentID = self.groupListArray[sender.tag].documentID
-            modifyVC.modifyArray = self.groupListArray[sender.tag].image
-            modifyVC.contentTextView.text = self.groupListArray[sender.tag].content
-        
-                
             
+            if self.groupListArray[sender.tag].writerEmail == self.currentUserEmail{
+                let modifyVC = CreateEachGroupRecordsContentViewController()
+                modifyVC.tag = 1
+                modifyVC.currentUserEmail = self.currentUserEmail
+                modifyVC.completeButton.title = "수정"
+                modifyVC.titleTextField.text = self.groupListArray[sender.tag].title
+                modifyVC.documentID = self.groupListArray[sender.tag].documentID
+                modifyVC.modifyArray = self.groupListArray[sender.tag].image
+                modifyVC.contentTextView.text = self.groupListArray[sender.tag].content
+                modifyVC.startDate = self.groupListArray[sender.tag].startDate
+                modifyVC.endDate = self.groupListArray[sender.tag].endDate
             
-            
-            
-            //modifyVC.startDatePicker =
-            //modifyVC.endDatePicker =
-            
-            self.navigationController?.pushViewController(modifyVC, animated: false)
-//            modifyVC.modalPresentationStyle = .fullScreen
-//            self.present(modifyVC, animated: true)
+                self.navigationController?.pushViewController(modifyVC, animated: false)
+            }
+            else{
+                self.failDeleteAlert(title: "글을 수정할 수 없습니다.", message: "작성자만 수정할 수 있습니다.")
+            }
             
         }
         
