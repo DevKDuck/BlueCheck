@@ -128,54 +128,39 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
                 }
                 else{
                     let image = UIImage(data: data!)
-                    if index == 0{
+                    guard let image = image else {return}
+                    
+                    switch index {
+                    case 0:
+                        cell.cellimageView.image = image
+                        addImageScrollView(imageView: cell.cellimageView, index: 0)
+                    case 1:
+                        cell.cellimageView2.image = image
+                        addImageScrollView(imageView: cell.cellimageView2, index: 1)
+                    case 2:
+                        cell.cellimageView3.image = image
+                        addImageScrollView(imageView: cell.cellimageView3, index: 2)
+                    case 3:
+                        cell.cellimageView4.image = image
+                        addImageScrollView(imageView: cell.cellimageView4, index: 3)
+                    case 4:
+                        cell.cellimageView5.image = image
+                        addImageScrollView(imageView: cell.cellimageView5, index: 4)
                         
-                        cell.cellimageView.image = image!
-                        cell.imageScrollView.addSubview(cell.cellimageView)
-                        if self.groupListArray[indexPath.row].image.count - 1 == index{
-                            cell.pageControl.numberOfPages = 1
-                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(1), height: UIScreen.main.bounds.width)
-                            
-                        }
-                    }
-                    if index == 1{
-                        cell.cellimageView2.image = image!
-                        cell.imageScrollView.addSubview(cell.cellimageView2)
-                        if self.groupListArray[indexPath.row].image.count - 1 == index{
-                            cell.pageControl.numberOfPages = 2
-                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(2), height: UIScreen.main.bounds.width)
-                            
-                        }
-                    }
-                    if index == 2{
-                        cell.cellimageView3.image = image!
-                        cell.imageScrollView.addSubview(cell.cellimageView3)
-                        if self.groupListArray[indexPath.row].image.count - 1 == index{
-                            cell.pageControl.numberOfPages = 3
-                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(3), height: UIScreen.main.bounds.width)
-                            
-                        }
-                    }
-                    if index == 3{
-                        cell.cellimageView4.image = image!
-                        cell.imageScrollView.addSubview(cell.cellimageView4)
-                        if self.groupListArray[indexPath.row].image.count - 1 == index{
-                            cell.pageControl.numberOfPages = 4
-                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(4), height: UIScreen.main.bounds.width)
-                            
-                        }
-                    }
-                    if index == 4{
-                        cell.cellimageView5.image = image!
-                        cell.imageScrollView.addSubview(cell.cellimageView5)
-                        if self.groupListArray[indexPath.row].image.count - 1 == index{
-                            cell.pageControl.numberOfPages = 5
-                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(5), height: UIScreen.main.bounds.width)
-                            
-                        }
+                    default:
+                        break
+                        
                     }
                     
-                    
+                    func addImageScrollView(imageView: UIImageView, index: Int){
+                        cell.imageScrollView.addSubview(imageView)
+                        if self.groupListArray[indexPath.row].image.count - 1 == index{
+                            cell.pageControl.numberOfPages = index + 1
+                            cell.imageScrollView.contentSize = CGSize(width: UIScreen.main.bounds.width * CGFloat(index+1), height: UIScreen.main.bounds.width)
+                            
+                        }
+                    }
+                   
                 }
             }
             
@@ -246,6 +231,7 @@ extension GroupListCollectionViewController: UITableViewDataSource, UITableViewD
             if self.groupListArray[sender.tag].writerEmail == self.currentUserEmail{
                 let modifyVC = CreateEachGroupRecordsContentViewController()
                 modifyVC.tag = 1
+                modifyVC.groupDocumentName = self.groupDocumentName
                 modifyVC.currentUserEmail = self.currentUserEmail
                 modifyVC.completeButton.title = "수정"
                 modifyVC.titleTextField.text = self.groupListArray[sender.tag].title

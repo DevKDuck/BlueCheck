@@ -144,7 +144,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         super.viewWillAppear(true)
         
         if tag == 1{
-            userSelectedImages.removeAll()
             for imageName in modifyArray {
                 Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
                     if let error = error {
@@ -275,10 +274,10 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
             var imageDocArray : [String] = []
             
-            for image in userSelectedImages {
+            for index in 1..<userSelectedImages.count {
                 let randomNum = newDoc.documentID + String(Float.random(in: 0...10))
                 imageDocArray.append(randomNum)
-                uploadImage(img: image!, randomNum: randomNum)
+                uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
             }
             
             
@@ -293,47 +292,30 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         }
         
         if tag == 1{
-            //            if startDate == "" {
-            //                let now = Date()
-            //                let dateFormatter = DateFormatter()
-            //                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-            //                dateFormatter.locale = Locale(identifier:"ko_KR")
-            //                startDate = dateFormatter.string(from: now)
-            //            }
-            //            if endDate == "" {
-            //                let now = Date()
-            //                let dateFormatter = DateFormatter()
-            //                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-            //                dateFormatter.locale = Locale(identifier:"ko_KR")
-            //                endDate = dateFormatter.string(from: now)
-            //            }
             
-            
-            //Stroage 이미지 삭제
-//            Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID).getDocument{ snapShot, error in
-//                if let error = error{
-//                    print("RemoveFirestore getImageRefError: \(error)")
-//                }
-//                else{
-//                    guard let snapShot = snapShot else {return}
-//                    print("1")
-//                    let data = snapShot.data()
-//                    guard let imageArray = data?["image"] as? [String] else {return}
-//                    print("2")
-//                    for image in imageArray{
-//                        let desertRef = Storage.storage().reference().child(image)
-//                        print("desertRef")
-//                        desertRef.delete { error in
-//                            if let error = error {
-//                                print("Delete the file error: \(error.localizedDescription)")
-//                            } else {
-//                                print("Storage Delete Success")
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }
+            // Stroage 이미지 삭제
+            Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID).getDocument{ snapShot, error in
+                if let error = error{
+                    print("RemoveFirestore getImageRefError: \(error)")
+                }
+                else{
+                    guard let snapShot = snapShot else {return}
+                    let data = snapShot.data()
+                    guard let imageArray = data?["image"] as? [String] else {return}
+
+                    for image in imageArray{
+                        let desertRef = Storage.storage().reference().child(image)
+                        desertRef.delete { error in
+                            if let error = error {
+                                print("Delete the file error: \(error.localizedDescription)")
+                            } else {
+                                print("Storage Delete Success")
+                            }
+                        }
+                    }
+                }
+
+            }
             
             
             //새로운 내용을 만들때 만드는 문서
@@ -341,12 +323,11 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
             var imageDocArray : [String] = []
             
-            for image in userSelectedImages {
+            for index in 1..<userSelectedImages.count {
                 let randomNum = documentID + String(Float.random(in: 0...10))
                 imageDocArray.append(randomNum)
-                uploadImage(img: image!, randomNum: randomNum)
+                uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
             }
-            
             
             
             let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : documentID] as [String : Any]
@@ -359,8 +340,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 }
             }
             
-            
-            print("1")
         }
         
         self.navigationController?.popViewController(animated: true)
@@ -516,7 +495,7 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     
     func pressImageLibrary(){
         let imagePicker = ImagePickerController()
-        imagePicker.settings.selection.max = 5 //최대개수 5
+        imagePicker.settings.selection.max = 6 - userSelectedImages.count //최대개수 5
         imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
         
         presentImagePicker(imagePicker, select: {(assets) in
@@ -526,9 +505,6 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         }, cancel: {(assets) in
             
         }, finish: {(assets) in
-            if assets.count > 0 {
-                self.userSelectedImages.removeAll()
-            }
             //사진을 하나이상 고르면 + 마크 없애기
             
             for asset in 0..<assets.count{
@@ -536,6 +512,7 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
             }
             self.convertAssetToImages()
             self.imageCollectionView.reloadData()
+            self.selectedAssetsArray.removeAll()
             imagePicker.dismiss(animated: false)
         })
     }
@@ -598,6 +575,11 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
         }
         if tag == 1{
             cell.imageView.image = userSelectedImages[indexPath.row]
+        }
+        if indexPath.row == 0{
+            cell.cancelButton.isHidden = true
+        }else{
+            cell.cancelButton.isHidden = false
         }
         cell.cancelButton.tag = indexPath.row
         cell.cancelButton.addTarget(self, action: #selector(tapCancelButton(_:)), for: .touchUpInside)
