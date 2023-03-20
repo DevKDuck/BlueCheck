@@ -10,6 +10,8 @@
 		8C0EDB252989153F007FD35C /* MyAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0EDB242989153F007FD35C /* MyAccountViewController.swift */; };
 		8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */; };
 		8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */; };
+		8C164B2A29C88AB700ED7D90 /* Maplestory OTF Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */; };
+		8C164B2B29C88AB700ED7D90 /* Maplestory OTF Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */; };
 		8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */; };
 		8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDE29939AE8005EBB6A /* LogInViewController.swift */; };
 		8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */; };
@@ -82,6 +84,8 @@
 		8C0EDB242989153F007FD35C /* MyAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountViewController.swift; sourceTree = "<group>"; };
 		8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTableViewCell.swift; sourceTree = "<group>"; };
 		8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Bold.otf"; sourceTree = "<group>"; };
+		8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Light.otf"; sourceTree = "<group>"; };
 		8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRequestViewController.swift; sourceTree = "<group>"; };
 		8C214EDE29939AE8005EBB6A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordViewContoller.swift; sourceTree = "<group>"; };
@@ -177,9 +181,27 @@
 			path = MyAccountView;
 			sourceTree = "<group>";
 		};
+		8C164B2629C88A8B00ED7D90 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8C164B2729C88A9A00ED7D90 /* Font */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8C164B2729C88A9A00ED7D90 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */,
+				8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		8C23EA87296D2B3F0042248F = {
 			isa = PBXGroup;
 			children = (
+				8C164B2629C88A8B00ED7D90 /* Resource */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
 			);
@@ -388,7 +410,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C164B2B29C88AB700ED7D90 /* Maplestory OTF Light.otf in Resources */,
 				8C23EAA0296D2B430042248F /* LaunchScreen.storyboard in Resources */,
+				8C164B2A29C88AB700ED7D90 /* Maplestory OTF Bold.otf in Resources */,
 				8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */,
 				8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */,
 				8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */,
