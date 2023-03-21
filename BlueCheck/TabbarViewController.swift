@@ -27,7 +27,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         
     
         let bucketListViewController = ViewController()
-        let bucketListViewControllerBarItem = UITabBarItem(title: "Bucket List", image: UIImage(systemName: "eye"), selectedImage: UIImage(systemName: "eye.fill"))
+        let bucketListViewControllerBarItem = UITabBarItem(title: "Bucket List", image: UIImage(systemName: "trophy"), selectedImage: UIImage(systemName: "trophy.fill"))
         bucketListViewController.tabBarItem = bucketListViewControllerBarItem
         
         let myCheckListViewController = UINavigationController(rootViewController: MyCheckListViewController())
@@ -38,7 +38,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         
         let groupCheckRootViewController = GroupListViewController()
         let groupCheckListViewController = UINavigationController(rootViewController: groupCheckRootViewController)
-        let groupCheckListViewControllerBarItem = UITabBarItem(title: "Group List", image: UIImage(systemName: "eye"), selectedImage: UIImage(systemName: "rectangle.3.group.bubble.left"))
+        let groupCheckListViewControllerBarItem = UITabBarItem(title: "Group List", image: UIImage(systemName: "person.and.person"), selectedImage: UIImage(systemName: "person.and.person.fill"))
         groupCheckListViewController.tabBarItem = groupCheckListViewControllerBarItem
         groupCheckRootViewController.currentUserEmail = self.currentUserEmail
         
@@ -48,7 +48,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         let myAccountRootViewController = MyAccountViewController()
         let myAccountViewController = UINavigationController(rootViewController: myAccountRootViewController)
         
-        let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "rectangle.3.group.bubble.left"), selectedImage: UIImage(systemName: "ellipsis.circle"))
+        let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "ellipsis.circle"), selectedImage: UIImage(systemName: "ellipsis.circle.fill"))
         myAccountRootViewController.currentUserEmail = self.currentUserEmail
         myAccountViewController.tabBarItem = myAccountViewControllerBarItem
         

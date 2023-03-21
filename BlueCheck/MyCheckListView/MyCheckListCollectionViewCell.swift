@@ -17,6 +17,10 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     private lazy var dayLabel = UILabel()
     
+    private lazy var circleBG = UIView()
+    
+    lazy var haveScheduleCircle = UIView()
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -28,11 +32,12 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     override var isSelected: Bool{
         willSet{
             if newValue{
-                self.backgroundColor = .systemBlue
+                circleBG.layer.backgroundColor = UIColor.systemBlue.cgColor
                 dayLabel.textColor = .white
             }
             else{
-                self.backgroundColor = .clear
+                circleBG.layer.backgroundColor = UIColor.clear.cgColor
+                
                 dayLabel.textColor = .darkGray
             }
         }
@@ -40,13 +45,29 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     
     func configureDayLabel(text: String){
+        self.addSubview(circleBG)
         self.addSubview(dayLabel)
+        self.addSubview(haveScheduleCircle)
+        
+        haveScheduleCircle.frame = CGRect(x: (contentView.bounds.size.width / 2) - ((contentView.bounds.size.height / 8) / 2) , y:contentView.bounds.size.height - (contentView.bounds.size.height / 8) ,width: (contentView.bounds.size.height / 8), height: (contentView.bounds.size.height / 8))
+        haveScheduleCircle.layer.cornerRadius = (contentView.bounds.size.height / 8) / 2
+        
+        
+        circleBG.frame = CGRect(x: (contentView.bounds.size.width / 2) -  (contentView.bounds.size.height / 2) , y:0 ,width: contentView.bounds.size.height , height: contentView.bounds.size.height)
+        circleBG.layer.cornerRadius = contentView.bounds.size.height / 2
+        
+        
+        
+        
+        
         self.dayLabel.text = text
         self.dayLabel.font = .systemFont(ofSize: 12, weight: .bold)
         self.dayLabel.textColor = .darkGray
         
         self.dayLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        
+        haveScheduleCircle.layer.backgroundColor = UIColor.systemOrange.cgColor
         NSLayoutConstraint.activate([
             self.dayLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             self.dayLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor)

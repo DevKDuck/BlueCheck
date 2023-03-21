@@ -64,8 +64,8 @@ class MyCheckListSettingViewController: UIViewController{
     var contentTextView: UITextView = {
         let textView = UITextView()
         
-        textView.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
-        textView.textInputView.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+        textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+        textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
         textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 20)
@@ -76,7 +76,7 @@ class MyCheckListSettingViewController: UIViewController{
     let titleTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목을 작성해보세요"
-        textField.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+        textField.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textField.textColor = .systemBlue
         
         return textField

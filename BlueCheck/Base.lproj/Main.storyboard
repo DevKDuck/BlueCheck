@@ -53,7 +53,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="BucketList" id="VzP-LD-eOt">
-                        <imageReference key="image" image="eye" catalog="system" symbolScale="medium"/>
+                        <imageReference key="image" image="trophy" catalog="system" symbolScale="medium"/>
                     </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -130,7 +130,7 @@
                         <viewLayoutGuide key="safeArea" id="cDz-vH-Kra"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="ETC" image="ellipsis.circle" catalog="system" id="CIC-3W-iBg"/>
+                    <tabBarItem key="tabBarItem" title="ETC" image="ellipsis.circle.fill" catalog="system" id="CIC-3W-iBg"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UlE-Ky-IBC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -206,7 +206,7 @@
                         <viewLayoutGuide key="safeArea" id="HAm-on-Ihn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Group" image="rectangle.3.group.bubble.left" catalog="system" id="YFk-lA-Nwu"/>
+                    <tabBarItem key="tabBarItem" title="Group" image="arrow.right.circle.fill" catalog="system" id="YFk-lA-Nwu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FnM-Vc-Hta" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -267,10 +267,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.right.circle.fill" catalog="system" width="128" height="123"/>
         <image name="checklist.checked" catalog="system" width="128" height="107"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
-        <image name="eye" catalog="system" width="128" height="79"/>
-        <image name="rectangle.3.group.bubble.left" catalog="system" width="128" height="110"/>
+        <image name="ellipsis.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="trophy" catalog="system" width="128" height="128"/>
         <namedColor name="AccentColor">
             <color red="1" green="0.79199999570846558" blue="0.15700000524520874" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

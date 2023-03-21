@@ -72,12 +72,16 @@ class MyCheckListTableViewCell: UITableViewCell{
         NSLayoutConstraint.activate([
             importLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             importLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            importLabel.widthAnchor.constraint(equalToConstant: contentView.bounds.width / 5),
             
             checkButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            checkButton.widthAnchor.constraint(equalToConstant: 44),
+            checkButton.heightAnchor.constraint(equalToConstant: 44),
             
             contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             contentLabel.leadingAnchor.constraint(equalTo: self.importLabel.trailingAnchor, constant: 15),
+            contentLabel.widthAnchor.constraint(equalToConstant: contentView.bounds.width - 50 - (contentView.bounds.width / 5))
 //            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -55)
             
         ])

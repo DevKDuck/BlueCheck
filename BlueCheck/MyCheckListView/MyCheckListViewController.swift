@@ -53,6 +53,8 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         else{
             taskArray = [MyCheckListTask]()
         }
+        checkUserDefaultsTasks()
+        self.collectionView.reloadData()
         self.tableView.reloadData()
     }
     
@@ -65,9 +67,10 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     var days: [String] = []
     var daysCountInMonth = 0
     var weekdayAdding = 0
+    var haveScheduleArray = [Bool]()
     
     var translateObjectKey = ""
-
+    
     var firstDayGapToday: Int = 0
     
     lazy var addTaskButton : UIButton = {
@@ -81,12 +84,12 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     }()
     
     @objc func tapAddTaskButton(_ sender: UIButton){
-       let goMyCheckListSettingViewController = MyCheckListSettingViewController()
+        let goMyCheckListSettingViewController = MyCheckListSettingViewController()
         goMyCheckListSettingViewController.delegate = self
         goMyCheckListSettingViewController.taskAddOrModify = 0 // 추가
         goMyCheckListSettingViewController.objectKey = translateObjectKey
         
-//        self.navigationController?.pushViewController(goMyCheckListSettingViewController, animated: true)
+        //        self.navigationController?.pushViewController(goMyCheckListSettingViewController, animated: true)
         self.present(goMyCheckListSettingViewController, animated: true, completion: nil)
     }
     
@@ -101,7 +104,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     
     lazy var nextMonthButton : UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "arrowshape.turn.up.right.circle.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "arrow.right.circle.fill"), for: .normal)
         button.tintColor = .systemBlue
         button.addTarget(self, action: #selector(tapNextMonthButton(_:)), for: .touchUpInside)
         
@@ -113,6 +116,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         
         
         self.calculation()
+        checkUserDefaultsTasks()
         self.collectionView.reloadData()
     }
     
@@ -120,6 +124,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         components.month = components.month! + 1
         
         self.calculation()
+        checkUserDefaultsTasks()
         self.collectionView.reloadData()
     }
     
@@ -156,9 +161,10 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         self.initView()
         
         //MARK: UserDefualt 모두 삭제
-//        for key in UserDefaults.standard.dictionaryRepresentation().keys {
-//            UserDefaults.standard.removeObject(forKey: key.description)
-//        }
+//                for key in UserDefaults.standard.dictionaryRepresentation().keys {
+//                    UserDefaults.standard.removeObject(forKey: key.description)
+//                }
+//        
         
         getUserDefaultsTasks()
         self.setCollectionView()
@@ -198,6 +204,24 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         else{
             print("getUserDefaultsTasks Data failed")
         }
+        checkUserDefaultsTasks()
+    }
+    
+    
+    func checkUserDefaultsTasks(){
+        
+        haveScheduleArray.removeAll()
+        for day in days{
+            let objectKey: String = "\(components.year!)년 \(components.month!)월 \(day)일"
+            if let savedData = UserDefaults.standard.object(forKey: objectKey) as? Data{
+                if !savedData.isEmpty{
+                    haveScheduleArray.append(false)
+                }
+            }
+            else{
+                haveScheduleArray.append(true)
+            }
+        }
     }
     
     
@@ -229,7 +253,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)
         components.day = 1
-
+        
         self.calculation()
     }
     
@@ -379,8 +403,10 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCheckListCollectionViewCell", for: indexPath) as? MyCheckListCollectionViewCell else {return UICollectionViewCell()}
         
         //MARK: components 전송
-
+        
         cell.configureDayLabel(text: days[indexPath.row])
+
+        cell.haveScheduleCircle.isHidden = haveScheduleArray[indexPath.row]
         
         //오늘 날짜 default Select
         if (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
@@ -484,6 +510,11 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         self.taskArray?.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
         let encoder = JSONEncoder()
+        if self.taskArray?.isEmpty == true{
+            UserDefaults.standard.removeObject(forKey: translateObjectKey)
+            checkUserDefaultsTasks()
+            collectionView.reloadData()
+        }
         if let encoded = try? encoder.encode(taskArray){
             UserDefaults.standard.set(encoded, forKey: translateObjectKey)
         }

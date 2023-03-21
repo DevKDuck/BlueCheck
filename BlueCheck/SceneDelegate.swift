@@ -18,35 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootViewController = LogInViewController()
         // 위에서 생성한 뷰 컨트롤러로 내비게이션 컨트롤러를 생성합니다.
         let navigationController = UINavigationController(rootViewController: rootViewController)
-        
-//        let tabBarController = UITabBarController()
-//        let bucketListViewController = ViewController()
-//        let myCheckListViewController = UINavigationController(rootViewController: MyCheckListViewController())
-//        let groupCheckListViewController = UINavigationController(rootViewController: GroupListViewController())
-//        let myAccountViewController = MyAccountViewController()
-//
-//        tabBarController.setViewControllers([bucketListViewController,myCheckListViewController,groupCheckListViewController,myAccountViewController], animated: true)
-//
-//        if let item = tabBarController.tabBar.items{
-//            item[0].selectedImage = UIImage(systemName: "eye.fill")
-//            item[0].image = UIImage(systemName: "eye")
-//            item[0].title = "Bucket List"
-//
-//            item[1].selectedImage = UIImage(systemName: "checklist.checked")
-//            item[1].image = UIImage(systemName: "checklist")
-//            item[1].title = "Check List"
-//
-//            item[2].selectedImage = UIImage(systemName: "rectangle.3.group.bubble.left")
-//            item[2].image = UIImage(systemName: "rectangle.3.group.bubble.left")
-//            item[2].title = "Group List"
-//
-//            item[3].selectedImage = UIImage(systemName: "ellipsis.circle")
-//            item[3].image = UIImage(systemName: "ellipsis.circle")
-//            item[3].title = "ETC"
-//        }
-        
-        
-
+    
         // 윈도우의 루트 뷰 컨트롤러로 내비게이션 컨트롤러를 설정합니다.
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
