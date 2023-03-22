@@ -40,7 +40,7 @@ class LogInViewController: UIViewController{
     
     let idTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이메일"
+        textField.attributedPlaceholder = NSAttributedString(string: " 이메일", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         textField.textColor = .darkGray
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.layer.borderWidth = 1
@@ -49,8 +49,8 @@ class LogInViewController: UIViewController{
     
     let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "비밀번호"
         textField.textColor = .darkGray
+        textField.attributedPlaceholder = NSAttributedString(string: " 비밀번호", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         textField.layer.borderWidth = 1
         textField.isSecureTextEntry = true

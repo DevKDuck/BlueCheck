@@ -30,7 +30,7 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
     
     let db = Firestore.firestore()
     var currentUserEmail: String = ""
-    var meetObject = ""
+    var meetObject = "기타"
     var userEmailArray: [String] = []
     var userNameArray = [String]()
     
@@ -182,7 +182,7 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
 //        //uid + 랜덤값 으로 collection 만들기
 //        guard let uID = Auth.auth().currentUser?.uid else {return}
         
-        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").document(currentUserEmail + "\(randomNum)").setData(data){ error in
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").document(currentUserEmail + "\(randomNum)").setData(data){ error in
             if let error = error{
                 print("Error:\(error.localizedDescription)")
                 return
@@ -196,15 +196,7 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
                 return
             }
         }
-        
-//        Firestore.firestore().collection(currentUserEmail + "\(randomNum)").document("ALL").collection("Record").setData([:]){error in
-//            if let error = error{
-//                print("RandomNumCollectionCreateError: \(error.localizedDescription)")
-//                return
-//            }
-//        }
-//        
-        
+
         //MARK: 초대
         let inviteData = ["groupName": titleText,"object" : meetObject, "content" : contentText, "status": "hold", "groupNumber" : currentUserEmail + "\(randomNum)"]
         userEmailArray.forEach{
@@ -285,6 +277,8 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         }
         config.title = title
         config.image = UIImage(systemName: imageSystemName)
+//        config.image = UIImage(named: "맛집")
+        
         config.imagePlacement = .bottom
         
         //        config.baseForegroundColor = .systemBlue

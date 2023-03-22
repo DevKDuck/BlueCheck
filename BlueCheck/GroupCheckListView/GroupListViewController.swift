@@ -65,10 +65,10 @@ class GroupListViewController: UIViewController{
     }
     
     func getFireStoreData() {
-        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").getDocuments { querySnapshot, error in
-            for document in querySnapshot!.documents{
-                print(document.documentID)
-                print(document.data())
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
+            
+            guard let querySnapshot = querySnapshot else {return}
+            for document in querySnapshot.documents{
                 let data = document.data()
                 guard let groupName = data["groupName"] as? String else {return}
                 guard let groupObject = data["object"] as? String else {return}

@@ -175,6 +175,9 @@ class JoinTheMembershipViewController: UIViewController{
                                     print("DEBUG:\(error.localizedDescription)")
                                     return
                                 }
+                                else{
+                                    print("Firestore \(emailText) SetData Success")
+                                }
                             }
                             
                             self.navigationController?.popViewController(animated: true)

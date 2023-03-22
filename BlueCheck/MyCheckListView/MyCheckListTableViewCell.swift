@@ -13,13 +13,14 @@ class MyCheckListTableViewCell: UITableViewCell{
     var contentLabel: UILabel = {
         var label = UILabel()
         label.textColor = .darkGray
-        label.textAlignment = .center
+        label.textAlignment = .left
         return label
     }()
     
     var importLabel: UILabel = {
         var label = UILabel()
         label.textColor = .darkGray
+        label.textAlignment = .center
         return label
     }()
     var checkOrNoCheck = true

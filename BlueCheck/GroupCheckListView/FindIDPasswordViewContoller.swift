@@ -34,7 +34,8 @@ class FindIDPasswordViewContoller: UIViewController{
     
     let idPartNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이름"
+        textField.attributedPlaceholder = NSAttributedString(string: " 이름", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
@@ -42,7 +43,8 @@ class FindIDPasswordViewContoller: UIViewController{
 
     let idPartEmailField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이메일"
+        textField.attributedPlaceholder = NSAttributedString(string: " 이메일", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
@@ -50,7 +52,8 @@ class FindIDPasswordViewContoller: UIViewController{
     
     let passwordPartNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이름"
+        textField.attributedPlaceholder = NSAttributedString(string: " 이름", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
@@ -58,7 +61,8 @@ class FindIDPasswordViewContoller: UIViewController{
     
     let passwordPartEmailField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이메일"
+        textField.attributedPlaceholder = NSAttributedString(string: " 이메일", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
         return textField
@@ -178,6 +182,10 @@ class FindIDPasswordViewContoller: UIViewController{
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,6 +194,8 @@ class FindIDPasswordViewContoller: UIViewController{
         setLayoutConstraints()
         
     }
+    
+    
     
     private func setLayoutConstraints(){
         self.view.addSubview(backButton)

@@ -12,6 +12,9 @@
 		8C0EDB29298928AC007FD35C /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */; };
 		8C164B2A29C88AB700ED7D90 /* Maplestory OTF Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */; };
 		8C164B2B29C88AB700ED7D90 /* Maplestory OTF Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */; };
+		8C164B2E29CB2A6800ED7D90 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8C164B2D29CB2A6800ED7D90 /* Lottie */; };
+		8C164B3029CB2AC300ED7D90 /* StartAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */; };
+		8C164B3229CB2B9400ED7D90 /* BlueCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B3129CB2B9400ED7D90 /* BlueCheck.json */; };
 		8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */; };
 		8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDE29939AE8005EBB6A /* LogInViewController.swift */; };
 		8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */; };
@@ -86,6 +89,8 @@
 		8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
 		8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Bold.otf"; sourceTree = "<group>"; };
 		8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Light.otf"; sourceTree = "<group>"; };
+		8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAnimationViewController.swift; sourceTree = "<group>"; };
+		8C164B3129CB2B9400ED7D90 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
 		8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRequestViewController.swift; sourceTree = "<group>"; };
 		8C214EDE29939AE8005EBB6A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordViewContoller.swift; sourceTree = "<group>"; };
@@ -143,6 +148,7 @@
 				8C4874D929A6194400FD871B /* Kingfisher in Frameworks */,
 				8C508AF429A30F2800EF29B8 /* FirebaseMLModelDownloader in Frameworks */,
 				8C508AD229A30F2800EF29B8 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				8C164B2E29CB2A6800ED7D90 /* Lottie in Frameworks */,
 				8C508ACC29A30F2800EF29B8 /* FirebaseAnalytics in Frameworks */,
 				8C508AE829A30F2800EF29B8 /* FirebaseFirestoreSwift in Frameworks */,
 				8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */,
@@ -234,6 +240,8 @@
 				8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */,
 				8C23EAA1296D2B430042248F /* Info.plist */,
 				8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */,
+				8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */,
+				8C164B3129CB2B9400ED7D90 /* BlueCheck.json */,
 			);
 			path = BlueCheck;
 			sourceTree = "<group>";
@@ -361,6 +369,7 @@
 				8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */,
 				8C4874D829A6194400FD871B /* Kingfisher */,
 				8C83508B29B3582000C1033F /* BSImagePicker */,
+				8C164B2D29CB2A6800ED7D90 /* Lottie */,
 			);
 			productName = BlueCheck;
 			productReference = 8C23EA90296D2B3F0042248F /* BlueCheck.app */;
@@ -395,6 +404,7 @@
 				8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				8C4874D729A6194400FD871B /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				8C83508A29B3582000C1033F /* XCRemoteSwiftPackageReference "BSImagePicker" */,
+				8C164B2C29CB2A6700ED7D90 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 8C23EA91296D2B3F0042248F /* Products */;
 			projectDirPath = "";
@@ -415,6 +425,7 @@
 				8C164B2A29C88AB700ED7D90 /* Maplestory OTF Bold.otf in Resources */,
 				8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */,
 				8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */,
+				8C164B3229CB2B9400ED7D90 /* BlueCheck.json in Resources */,
 				8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,6 +467,7 @@
 				8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */,
 				8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */,
 				8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */,
+				8C164B3029CB2AC300ED7D90 /* StartAnimationViewController.swift in Sources */,
 				8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */,
 				8C23EAB2296D47130042248F /* MyCheckListViewController.swift in Sources */,
 				8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */,
@@ -702,6 +714,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8C164B2C29CB2A6700ED7D90 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -737,6 +757,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8C164B2D29CB2A6800ED7D90 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C164B2C29CB2A6700ED7D90 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		8C23EAB4296D485C0042248F /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8C23EAB3296D485C0042248F /* XCRemoteSwiftPackageReference "SnapKit" */;

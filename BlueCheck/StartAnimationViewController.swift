@@ -1,0 +1,41 @@
+//
+//  StartAnimationViewController.swift
+//  BlueCheck
+//
+//  Created by duck on 2023/03/22.
+//
+
+import UIKit
+import Lottie
+
+class StartAnimationViewController: UIViewController{
+    
+    private var animationView: LottieAnimationView = .init(name:"BlueCheck.json")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let time = DispatchTime.now() + 5.0
+        DispatchQueue.main.asyncAfter(deadline: time){ [weak self] in
+            self?.goTabBarViewController()
+            
+        }
+        
+        
+        self.view.backgroundColor = .white
+        self.view.addSubview(animationView)
+        animationView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3)
+        animationView.center = self.view.center
+        animationView.contentMode = .scaleAspectFill
+        animationView.animationSpeed = 40
+        animationView.play()
+    }
+    
+    func goTabBarViewController()
+    {
+        let rootVC = LogInViewController()
+        
+        let navigation = UINavigationController(rootViewController: rootVC)
+        navigation.modalPresentationStyle = .fullScreen
+        self.present(navigation, animated: true)
+    }
+}
