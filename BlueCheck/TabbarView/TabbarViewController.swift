@@ -26,7 +26,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         super.viewWillAppear(true)
         
     
-        let bucketListViewController = ViewController()
+        let bucketListViewController = BucketListViewController()
         let bucketListViewControllerBarItem = UITabBarItem(title: "Bucket List", image: UIImage(systemName: "trophy"), selectedImage: UIImage(systemName: "trophy.fill"))
         bucketListViewController.tabBarItem = bucketListViewControllerBarItem
         

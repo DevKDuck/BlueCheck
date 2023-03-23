@@ -11,9 +11,9 @@ import FirebaseStorage
 import Kingfisher
 
 
-class GroupListCollectionViewCell: UITableViewCell{
+class EachGroupRecordsTableViewCell: UITableViewCell{
     
-    static let identifier = "GroupListCollectionViewCell"
+    static let identifier = "EachGroupRecordsTableViewCell"
     
     
     var imageArray: [GroupListTask] = []
@@ -254,7 +254,7 @@ class GroupListCollectionViewCell: UITableViewCell{
     }
 }
 
-extension GroupListCollectionViewCell: UIScrollViewDelegate{
+extension EachGroupRecordsTableViewCell: UIScrollViewDelegate{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(Float(scrollView.contentOffset.x / UIScreen.main.bounds.width))
     }

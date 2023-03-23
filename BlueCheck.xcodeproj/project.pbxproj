@@ -14,14 +14,12 @@
 		8C164B2B29C88AB700ED7D90 /* Maplestory OTF Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */; };
 		8C164B2E29CB2A6800ED7D90 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8C164B2D29CB2A6800ED7D90 /* Lottie */; };
 		8C164B3029CB2AC300ED7D90 /* StartAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */; };
-		8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */; };
 		8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDE29939AE8005EBB6A /* LogInViewController.swift */; };
 		8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */; };
 		8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */; };
 		8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA93296D2B3F0042248F /* AppDelegate.swift */; };
 		8C23EA96296D2B3F0042248F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA95296D2B3F0042248F /* SceneDelegate.swift */; };
-		8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA97296D2B3F0042248F /* ViewController.swift */; };
-		8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA99296D2B3F0042248F /* Main.storyboard */; };
+		8C23EA98296D2B3F0042248F /* BucketListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EA97296D2B3F0042248F /* BucketListViewController.swift */; };
 		8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA9C296D2B430042248F /* Assets.xcassets */; };
 		8C23EAA0296D2B430042248F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */; };
 		8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C23EAAF296D46DE0042248F /* GroupListViewController.swift */; };
@@ -58,8 +56,8 @@
 		8C508B0029A30F2800EF29B8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */; };
 		8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */; };
 		8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61C95029A35ED500701799 /* TabbarViewController.swift */; };
-		8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */; };
-		8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */; };
+		8C70CA4129A5CC6A005F5A0D /* EachGroupRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* EachGroupRecordsViewController.swift */; };
+		8C70CA4329A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */; };
 		8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */; };
 		8C74C24E29CC44A400267152 /* BlueCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C74C24D29CC44A400267152 /* BlueCheck.json */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
@@ -72,7 +70,7 @@
 		8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */; };
 		8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */; };
 		8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */; };
-		8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */; };
+		8C9A6B422991092E0093D90A /* EachGroupRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */; };
 		8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */; };
 		8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */; };
 		8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */; };
@@ -90,15 +88,13 @@
 		8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Bold.otf"; sourceTree = "<group>"; };
 		8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Light.otf"; sourceTree = "<group>"; };
 		8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAnimationViewController.swift; sourceTree = "<group>"; };
-		8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRequestViewController.swift; sourceTree = "<group>"; };
 		8C214EDE29939AE8005EBB6A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordViewContoller.swift; sourceTree = "<group>"; };
 		8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTheMembershipViewController.swift; sourceTree = "<group>"; };
 		8C23EA90296D2B3F0042248F /* BlueCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlueCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C23EA93296D2B3F0042248F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C23EA95296D2B3F0042248F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8C23EA97296D2B3F0042248F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8C23EA9A296D2B3F0042248F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8C23EA97296D2B3F0042248F /* BucketListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListViewController.swift; sourceTree = "<group>"; };
 		8C23EA9C296D2B430042248F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C23EA9F296D2B430042248F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C23EAA1296D2B430042248F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,8 +104,8 @@
 		8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationGroupContentViewController.swift; sourceTree = "<group>"; };
 		8C527A9329AF4C990076EA0C /* BlueCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlueCheck.entitlements; sourceTree = "<group>"; };
 		8C61C95029A35ED500701799 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
-		8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewController.swift; sourceTree = "<group>"; };
-		8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
+		8C70CA4029A5CC6A005F5A0D /* EachGroupRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsViewController.swift; sourceTree = "<group>"; };
+		8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
 		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
 		8C74C24D29CC44A400267152 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
@@ -121,7 +117,7 @@
 		8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationStatusViewController.swift; sourceTree = "<group>"; };
 		8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsStatusTableViewCell.swift; sourceTree = "<group>"; };
-		8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
+		8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewController.swift; sourceTree = "<group>"; };
 		8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTableViewCell.swift; sourceTree = "<group>"; };
 		8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListSettingViewController.swift; sourceTree = "<group>"; };
@@ -177,12 +173,10 @@
 		8C0EDB2329891502007FD35C /* MyAccountView */ = {
 			isa = PBXGroup;
 			children = (
-				8C0EDB242989153F007FD35C /* MyAccountViewController.swift */,
-				8CB9D95229B0734300799495 /* MyProfileSettingController.swift */,
-				8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */,
-				8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */,
-				8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */,
-				8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */,
+				8C74C27729CC72F100267152 /* TableViewCell */,
+				8C74C27529CC72D600267152 /* InvitationStatusView */,
+				8C74C27429CC72B900267152 /* MyProfileSettingView */,
+				8C74C27329CC728200267152 /* ViewController */,
 			);
 			path = MyAccountView;
 			sourceTree = "<group>";
@@ -224,18 +218,16 @@
 		8C23EA92296D2B3F0042248F /* BlueCheck */ = {
 			isa = PBXGroup;
 			children = (
-				8C74C24F29CC4CAA00267152 /* LoadingView */,
 				8C527A9329AF4C990076EA0C /* BlueCheck.entitlements */,
-				8C23EAA8296D3D280042248F /* LoginView */,
+				8C74C24F29CC4CAA00267152 /* LoadingView */,
+				8C74C25229CC4EB300267152 /* TabbarView */,
+				8C74C25329CC4FC400267152 /* AuthView */,
 				8C23EAAA296D3DD80042248F /* BucketListView */,
 				8C23EAAB296D3E160042248F /* MyCheckListView */,
-				8C23EAAC296D3E260042248F /* GroupCheckListView */,
+				8C23EAAC296D3E260042248F /* GroupListView */,
 				8C0EDB2329891502007FD35C /* MyAccountView */,
 				8C23EA93296D2B3F0042248F /* AppDelegate.swift */,
 				8C23EA95296D2B3F0042248F /* SceneDelegate.swift */,
-				8C61C95029A35ED500701799 /* TabbarViewController.swift */,
-				8C23EA97296D2B3F0042248F /* ViewController.swift */,
-				8C23EA99296D2B3F0042248F /* Main.storyboard */,
 				8C23EA9C296D2B430042248F /* Assets.xcassets */,
 				8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */,
 				8C23EAA1296D2B430042248F /* Info.plist */,
@@ -244,25 +236,11 @@
 			path = BlueCheck;
 			sourceTree = "<group>";
 		};
-		8C23EAA8296D3D280042248F /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-				8C23EAA9296D3D5F0042248F /* JoinMembershipView */,
-			);
-			path = LoginView;
-			sourceTree = "<group>";
-		};
-		8C23EAA9296D3D5F0042248F /* JoinMembershipView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = JoinMembershipView;
-			sourceTree = "<group>";
-		};
 		8C23EAAA296D3DD80042248F /* BucketListView */ = {
 			isa = PBXGroup;
 			children = (
-				8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */,
+				8C74C25B29CC52A900267152 /* BucketListTableViewCell */,
+				8C74C25A29CC529400267152 /* ViewController */,
 			);
 			path = BucketListView;
 			sourceTree = "<group>";
@@ -270,37 +248,27 @@
 		8C23EAAB296D3E160042248F /* MyCheckListView */ = {
 			isa = PBXGroup;
 			children = (
-				8C23EAB1296D47130042248F /* MyCheckListViewController.swift */,
-				8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */,
-				8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */,
-				8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */,
-				8C779724296EEFA800E11294 /* BucketListTask.swift */,
-				8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */,
+				8C74C26129CC547900267152 /* MyCheckListTaskMadeOfStruct */,
+				8C74C25E29CC53E200267152 /* MyCheckListSettingView */,
+				8C74C25C29CC52CD00267152 /* MyCheckListView */,
 			);
 			path = MyCheckListView;
 			sourceTree = "<group>";
 		};
-		8C23EAAC296D3E260042248F /* GroupCheckListView */ = {
+		8C23EAAC296D3E260042248F /* GroupListView */ = {
 			isa = PBXGroup;
 			children = (
-				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
-				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
-				8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */,
-				8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */,
-				8C9A6B412991092E0093D90A /* EachGroupRecordsTableViewCell.swift */,
-				8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */,
-				8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */,
-				8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */,
-				8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */,
-				8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */,
+				8C74C27029CC6D5300267152 /* EachGroupRecordsView */,
+				8C74C26B29CC6A6A00267152 /* GroupListTaskMadeofStruct */,
+				8C74C26929CC6A2900267152 /* CreateGroupView */,
+				8C74C26729CC69D400267152 /* FirebaseStorageManager */,
+				8C74C26429CC68F100267152 /* CreateEachGroupRecordsContentView */,
+				8C74C26229CC67EB00267152 /* GroupListView */,
+				8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */,
 				8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */,
 				8C9A6B38298BB0780093D90A /* InviteListView */,
-				8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */,
-				8C214EDE29939AE8005EBB6A /* LogInViewController.swift */,
-				8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */,
-				8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */,
 			);
-			path = GroupCheckListView;
+			path = GroupListView;
 			sourceTree = "<group>";
 		};
 		8C74C24F29CC4CAA00267152 /* LoadingView */ = {
@@ -328,12 +296,334 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		8C9A6B38298BB0780093D90A /* InviteListView */ = {
+		8C74C25229CC4EB300267152 /* TabbarView */ = {
+			isa = PBXGroup;
+			children = (
+				8C61C95029A35ED500701799 /* TabbarViewController.swift */,
+			);
+			path = TabbarView;
+			sourceTree = "<group>";
+		};
+		8C74C25329CC4FC400267152 /* AuthView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C25829CC51E200267152 /* JoinTheMembershipView */,
+				8C74C25629CC513400267152 /* FindIDPasswordView */,
+				8C74C25429CC502100267152 /* LogInView */,
+			);
+			path = AuthView;
+			sourceTree = "<group>";
+		};
+		8C74C25429CC502100267152 /* LogInView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C25529CC510E00267152 /* ViewController */,
+			);
+			path = LogInView;
+			sourceTree = "<group>";
+		};
+		8C74C25529CC510E00267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C214EDE29939AE8005EBB6A /* LogInViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25629CC513400267152 /* FindIDPasswordView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C25729CC515E00267152 /* ViewController */,
+			);
+			path = FindIDPasswordView;
+			sourceTree = "<group>";
+		};
+		8C74C25729CC515E00267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25829CC51E200267152 /* JoinTheMembershipView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C25929CC521D00267152 /* ViewController */,
+			);
+			path = JoinTheMembershipView;
+			sourceTree = "<group>";
+		};
+		8C74C25929CC521D00267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25A29CC529400267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EA97296D2B3F0042248F /* BucketListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25B29CC52A900267152 /* BucketListTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */,
+			);
+			path = BucketListTableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C25C29CC52CD00267152 /* MyCheckListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26029CC542E00267152 /* CollectionViewCell */,
+				8C74C25F29CC53FD00267152 /* TableViewCell */,
+				8C74C25D29CC53C800267152 /* ViewController */,
+			);
+			path = MyCheckListView;
+			sourceTree = "<group>";
+		};
+		8C74C25D29CC53C800267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAB1296D47130042248F /* MyCheckListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25E29CC53E200267152 /* MyCheckListSettingView */ = {
+			isa = PBXGroup;
+			children = (
+				8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */,
+			);
+			path = MyCheckListSettingView;
+			sourceTree = "<group>";
+		};
+		8C74C25F29CC53FD00267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C26029CC542E00267152 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C26129CC547900267152 /* MyCheckListTaskMadeOfStruct */ = {
+			isa = PBXGroup;
+			children = (
+				8C779724296EEFA800E11294 /* BucketListTask.swift */,
+				8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */,
+			);
+			path = MyCheckListTaskMadeOfStruct;
+			sourceTree = "<group>";
+		};
+		8C74C26229CC67EB00267152 /* GroupListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26829CC6A0900267152 /* TableViewCell */,
+				8C74C26329CC68A600267152 /* ViewController */,
+			);
+			path = GroupListView;
+			sourceTree = "<group>";
+		};
+		8C74C26329CC68A600267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C23EAAF296D46DE0042248F /* GroupListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C26429CC68F100267152 /* CreateEachGroupRecordsContentView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26629CC695F00267152 /* CollectionViewCell */,
+				8C74C26529CC693400267152 /* ViewController */,
+			);
+			path = CreateEachGroupRecordsContentView;
+			sourceTree = "<group>";
+		};
+		8C74C26529CC693400267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C26629CC695F00267152 /* CollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */,
+			);
+			path = CollectionViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C26729CC69D400267152 /* FirebaseStorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */,
+			);
+			path = FirebaseStorageManager;
+			sourceTree = "<group>";
+		};
+		8C74C26829CC6A0900267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C0EDB2629891D61007FD35C /* GroupListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C26929CC6A2900267152 /* CreateGroupView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26A29CC6A3900267152 /* ViewController */,
+			);
+			path = CreateGroupView;
+			sourceTree = "<group>";
+		};
+		8C74C26A29CC6A3900267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C0EDB28298928AC007FD35C /* CreateGroupViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C26B29CC6A6A00267152 /* GroupListTaskMadeofStruct */ = {
+			isa = PBXGroup;
+			children = (
+				8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */,
+			);
+			path = GroupListTaskMadeofStruct;
+			sourceTree = "<group>";
+		};
+		8C74C26C29CC6BE700267152 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				8C9A6B32298A6F820093D90A /* InviteListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C26D29CC6BF300267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
 				8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C26E29CC6BFE00267152 /* InvitePersonalInforamtionView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26F29CC6C1B00267152 /* ViewController */,
+			);
+			path = InvitePersonalInforamtionView;
+			sourceTree = "<group>";
+		};
+		8C74C26F29CC6C1B00267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
 				8C9A6B36298BB0610093D90A /* InvitePersonalInformationViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C27029CC6D5300267152 /* EachGroupRecordsView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C27229CC70A500267152 /* TableViewCell */,
+				8C74C27129CC6DD800267152 /* ViewController */,
+			);
+			path = EachGroupRecordsView;
+			sourceTree = "<group>";
+		};
+		8C74C27129CC6DD800267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C70CA4029A5CC6A005F5A0D /* EachGroupRecordsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C27229CC70A500267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C27329CC728200267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C0EDB242989153F007FD35C /* MyAccountViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C27429CC72B900267152 /* MyProfileSettingView */ = {
+			isa = PBXGroup;
+			children = (
+				8CB9D95229B0734300799495 /* MyProfileSettingController.swift */,
+			);
+			path = MyProfileSettingView;
+			sourceTree = "<group>";
+		};
+		8C74C27529CC72D600267152 /* InvitationStatusView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C27829CC731500267152 /* TableViewCell */,
+				8C74C27629CC72E000267152 /* ViewController */,
+			);
+			path = InvitationStatusView;
+			sourceTree = "<group>";
+		};
+		8C74C27629CC72E000267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */,
+				8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C27729CC72F100267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C74C27829CC731500267152 /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8C9A6B38298BB0780093D90A /* InviteListView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C26E29CC6BFE00267152 /* InvitePersonalInforamtionView */,
+				8C74C26D29CC6BF300267152 /* TableViewCell */,
+				8C74C26C29CC6BE700267152 /* ViewController */,
 			);
 			path = InviteListView;
 			sourceTree = "<group>";
@@ -442,7 +732,6 @@
 				8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */,
 				8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */,
 				8C74C24E29CC44A400267152 /* BlueCheck.json in Resources */,
-				8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,7 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C23EA98296D2B3F0042248F /* ViewController.swift in Sources */,
+				8C23EA98296D2B3F0042248F /* BucketListViewController.swift in Sources */,
 				8C23EAB0296D46DE0042248F /* GroupListViewController.swift in Sources */,
 				8C83508E29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift in Sources */,
 				8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */,
@@ -465,16 +754,15 @@
 				8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */,
 				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
-				8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */,
-				8C9A6B422991092E0093D90A /* EachGroupRecordsTableViewCell.swift in Sources */,
-				8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */,
+				8C70CA4129A5CC6A005F5A0D /* EachGroupRecordsViewController.swift in Sources */,
+				8C9A6B422991092E0093D90A /* EachGroupRecordTableViewCell.swift in Sources */,
 				8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */,
 				8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */,
 				8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */,
 				8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */,
 				8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */,
 				8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */,
-				8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */,
+				8C70CA4329A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift in Sources */,
 				8CB9D95329B0734300799495 /* MyProfileSettingController.swift in Sources */,
 				8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */,
 				8C23EAB7296D526F0042248F /* BucketListTableViewCell.swift in Sources */,
@@ -495,14 +783,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8C23EA99296D2B3F0042248F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8C23EA9A296D2B3F0042248F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -644,12 +924,11 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "~를 사용하기 위해서 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "~를 사용하기 위해서 사진첩 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -683,12 +962,11 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "~를 사용하기 위해서 카메라 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "~를 사용하기 위해서 사진첩 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -16,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         // 루트 뷰 컨트롤러가 될 뷰 컨트롤러를 생성합니다.
 //        let rootViewController = LogInViewController()
+        
+        let window = UIWindow(windowScene: windowScene)
         let rootViewController = StartAnimationViewController()
         
         // 위에서 생성한 뷰 컨트롤러로 내비게이션 컨트롤러를 생성합니다.
@@ -23,9 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //
 //        // 윈도우의 루트 뷰 컨트롤러로 내비게이션 컨트롤러를 설정합니다.
 //        self.window?.rootViewController = navigationController
-                self.window?.rootViewController = rootViewController
-        self.window?.makeKeyAndVisible()
-        self.window?.windowScene = windowScene
+        window.rootViewController = rootViewController
+        window.makeKeyAndVisible()
+//        window.windowScene = windowScene
+        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

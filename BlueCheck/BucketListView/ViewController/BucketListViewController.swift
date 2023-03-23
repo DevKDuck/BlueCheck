@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class BucketListViewController: UIViewController {
     
     //MARK: 변수 설정 
     var tableView: UITableView!
@@ -125,7 +125,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource{
+extension BucketListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.tasks.count

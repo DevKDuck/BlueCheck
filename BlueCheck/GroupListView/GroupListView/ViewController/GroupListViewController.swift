@@ -170,7 +170,7 @@ extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let goGroupListCollectionViewController = GroupListCollectionViewController()
+        let goGroupListCollectionViewController = EachGroupRecordsViewController()
         goGroupListCollectionViewController.modalPresentationStyle = .fullScreen
         goGroupListCollectionViewController.currentUserEmail = self.currentUserEmail
         goGroupListCollectionViewController.groupDocumentName = self.groupDocumentsArray[indexPath.row]

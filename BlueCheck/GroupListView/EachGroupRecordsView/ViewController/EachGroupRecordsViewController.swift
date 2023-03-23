@@ -14,7 +14,7 @@ import Kingfisher
 
 
 
-class GroupListCollectionViewController: UIViewController {
+class EachGroupRecordsViewController: UIViewController {
     
     
     var currentUserEmail: String = ""
@@ -46,7 +46,7 @@ class GroupListCollectionViewController: UIViewController {
     
     let groupListTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(GroupListCollectionViewCell.self, forCellReuseIdentifier: "GroupListCollectionViewCell")
+        tableView.register(EachGroupRecordsTableViewCell.self, forCellReuseIdentifier: "EachGroupRecordsTableViewCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .white
         return tableView
@@ -105,13 +105,13 @@ class GroupListCollectionViewController: UIViewController {
     
 }
 
-extension GroupListCollectionViewController: UITableViewDataSource, UITableViewDelegate{
+extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupListArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupListCollectionViewCell", for: indexPath) as? GroupListCollectionViewCell else {return UITableViewCell()}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "EachGroupRecordsTableViewCell", for: indexPath) as? EachGroupRecordsTableViewCell else {return UITableViewCell()}
         cell.backgroundColor = .white
         cell.titleLabel.text = "제목: " + groupListArray[indexPath.row].title
         cell.contentLabel.text = "내용: " + groupListArray[indexPath.row].content

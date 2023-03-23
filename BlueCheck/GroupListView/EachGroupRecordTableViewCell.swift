@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EachGroupRecordsTableViewCell: UITableViewCell{
+class EachGroupRecordTableViewCell: UITableViewCell{
     
     let writerNameLabel: UILabel = {
         let label = UILabel()
