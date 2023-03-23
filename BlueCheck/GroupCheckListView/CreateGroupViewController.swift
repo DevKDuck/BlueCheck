@@ -45,10 +45,10 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
     
     let groupTitleTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "  그룹명을 작성해주세요."
         textField.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textField.layer.cornerRadius = 5
-        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: " 그룹명을 작성해주세요.", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         return textField
     }()
     
@@ -129,9 +129,9 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
         textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 20)
-        textView.textColor = .lightGray
         textView.layer.cornerRadius = 20
-        textView.text = "\n 시기 - ex)일주일에 몇번 \n \n \n 내용 - ex)운동 인증과 식단을 올리는 목적"
+        
+        textView.text = "\n 시기 - ex)일주일에 3번 \n \n \n 내용 - ex)운동 인증과 식단을 올리는 모임입니다.💪"
         return textView
     }()
     

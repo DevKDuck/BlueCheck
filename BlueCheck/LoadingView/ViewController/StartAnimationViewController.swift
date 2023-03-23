@@ -26,7 +26,7 @@ class StartAnimationViewController: UIViewController{
         animationView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3)
         animationView.center = self.view.center
         animationView.contentMode = .scaleAspectFill
-        animationView.animationSpeed = 40
+//        animationView.animationSpeed = 1
         animationView.play()
     }
     

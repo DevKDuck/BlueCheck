@@ -50,9 +50,9 @@ class InvitePersonalInformationViewController: UIViewController{
     
     let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "이메일을 작성해주세요"
         textField.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
-        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: "이메일을 작성해주세요", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        textField.textColor = .darkGray
         return textField
     }()
     

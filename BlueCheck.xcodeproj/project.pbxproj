@@ -14,7 +14,6 @@
 		8C164B2B29C88AB700ED7D90 /* Maplestory OTF Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */; };
 		8C164B2E29CB2A6800ED7D90 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8C164B2D29CB2A6800ED7D90 /* Lottie */; };
 		8C164B3029CB2AC300ED7D90 /* StartAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */; };
-		8C164B3229CB2B9400ED7D90 /* BlueCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C164B3129CB2B9400ED7D90 /* BlueCheck.json */; };
 		8C214EDD299393D1005EBB6A /* LogInRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */; };
 		8C214EDF29939AE8005EBB6A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EDE29939AE8005EBB6A /* LogInViewController.swift */; };
 		8C214EE12994D55E005EBB6A /* FindIDPasswordViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */; };
@@ -62,6 +61,7 @@
 		8C70CA4129A5CC6A005F5A0D /* GroupListCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */; };
 		8C70CA4329A5CD6C005F5A0D /* GroupListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */; };
 		8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */; };
+		8C74C24E29CC44A400267152 /* BlueCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C74C24D29CC44A400267152 /* BlueCheck.json */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
 		8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */; };
 		8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 8C83508B29B3582000C1033F /* BSImagePicker */; };
@@ -90,7 +90,6 @@
 		8C164B2829C88AB600ED7D90 /* Maplestory OTF Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Bold.otf"; sourceTree = "<group>"; };
 		8C164B2929C88AB700ED7D90 /* Maplestory OTF Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Light.otf"; sourceTree = "<group>"; };
 		8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAnimationViewController.swift; sourceTree = "<group>"; };
-		8C164B3129CB2B9400ED7D90 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
 		8C214EDC299393D1005EBB6A /* LogInRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInRequestViewController.swift; sourceTree = "<group>"; };
 		8C214EDE29939AE8005EBB6A /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C214EE02994D55D005EBB6A /* FindIDPasswordViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindIDPasswordViewContoller.swift; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		8C70CA4029A5CC6A005F5A0D /* GroupListCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewController.swift; sourceTree = "<group>"; };
 		8C70CA4229A5CD6C005F5A0D /* GroupListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
+		8C74C24D29CC44A400267152 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
 		8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewImageCollectionCell.swift; sourceTree = "<group>"; };
@@ -224,8 +224,8 @@
 		8C23EA92296D2B3F0042248F /* BlueCheck */ = {
 			isa = PBXGroup;
 			children = (
+				8C74C24F29CC4CAA00267152 /* LoadingView */,
 				8C527A9329AF4C990076EA0C /* BlueCheck.entitlements */,
-				8C23EAA7296D3D0C0042248F /* LoadingView */,
 				8C23EAA8296D3D280042248F /* LoginView */,
 				8C23EAAA296D3DD80042248F /* BucketListView */,
 				8C23EAAB296D3E160042248F /* MyCheckListView */,
@@ -240,17 +240,8 @@
 				8C23EA9E296D2B430042248F /* LaunchScreen.storyboard */,
 				8C23EAA1296D2B430042248F /* Info.plist */,
 				8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */,
-				8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */,
-				8C164B3129CB2B9400ED7D90 /* BlueCheck.json */,
 			);
 			path = BlueCheck;
-			sourceTree = "<group>";
-		};
-		8C23EAA7296D3D0C0042248F /* LoadingView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LoadingView;
 			sourceTree = "<group>";
 		};
 		8C23EAA8296D3D280042248F /* LoginView */ = {
@@ -310,6 +301,31 @@
 				8C214EE22994E02F005EBB6A /* JoinTheMembershipViewController.swift */,
 			);
 			path = GroupCheckListView;
+			sourceTree = "<group>";
+		};
+		8C74C24F29CC4CAA00267152 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C25129CC4D1100267152 /* Resource */,
+				8C74C25029CC4CDB00267152 /* ViewController */,
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
+		8C74C25029CC4CDB00267152 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8C164B2F29CB2AC300ED7D90 /* StartAnimationViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8C74C25129CC4D1100267152 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C24D29CC44A400267152 /* BlueCheck.json */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		8C9A6B38298BB0780093D90A /* InviteListView */ = {
@@ -425,7 +441,7 @@
 				8C164B2A29C88AB700ED7D90 /* Maplestory OTF Bold.otf in Resources */,
 				8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */,
 				8C23EA9D296D2B430042248F /* Assets.xcassets in Resources */,
-				8C164B3229CB2B9400ED7D90 /* BlueCheck.json in Resources */,
+				8C74C24E29CC44A400267152 /* BlueCheck.json in Resources */,
 				8C23EA9B296D2B3F0042248F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
