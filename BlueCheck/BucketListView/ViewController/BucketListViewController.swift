@@ -11,7 +11,9 @@ class BucketListViewController: UIViewController {
     
     //MARK: 변수 설정 
     var tableView: UITableView!
-    var tasks: [String] = ["🔥이 곳에 여러분의 꿈을 적어보아요🔥"]
+    
+    //MARK: 추가
+    var task: [BucketListTask] = [BucketListTask(title: "🔥이 곳에 여러분의 꿈을 적어보아요🔥", done: false)]
 
     let topView: UIView = {
        let topview = UIView()
@@ -21,8 +23,6 @@ class BucketListViewController: UIViewController {
     
     lazy var addButton: UIButton = {
         let button = UIButton()
-//        button.setTitle("+", for: .normal)
-//        button.setTitleColor(.systemBlue, for: .normal)
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.tintColor = .systemBlue
         button.addTarget(self, action: #selector(showAlert(_:)), for: .touchUpInside)
@@ -35,11 +35,18 @@ class BucketListViewController: UIViewController {
         let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
             guard let title = alert.textFields?[0].text else {return}
-//            let task = BucketListTasks(title: title, done: false)
-            self?.tasks.append(title)
-            UserDefaults.standard.set(self?.tasks, forKey: "BucketListTasks UserDefaults")
-            self?.tableView.reloadData()
-        }
+            
+            //TextField가 비어있지 않을때만 저장하도록함
+            if title != ""{
+                self?.task.append(BucketListTask(title: title, done: true))
+                let encoder = JSONEncoder()
+                
+                if let encoded = try? encoder.encode(self?.task){
+                    UserDefaults.standard.setValue(encoded, forKey: "BucketListTasks UserDefaults")
+                }
+
+            }
+            self?.tableView.reloadData()        }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel){ (cancel) in
             //취소 눌렀을때
@@ -77,16 +84,26 @@ class BucketListViewController: UIViewController {
         tableView.delegate = self
         tableView.register(BucketListTableViewCell.self, forCellReuseIdentifier: "BucketListTableViewCell")
         
-        if let task = UserDefaults.standard.object(forKey: "BucketListTasks UserDefaults") as? [String] {
-            tasks = task
-        }
+        //MARK: UserDefualt 모두 삭제
+//                for key in UserDefaults.standard.dictionaryRepresentation().keys {
+//                    UserDefaults.standard.removeObject(forKey: key.description)
+//                }
         
-        
+        getBucketListUserDefaultData()
         setConstraint()
 
         
         //크기와 위치 CGRect를 이용하여 지정, 테이블 뷰의 데이터와 화면변화를 VC에서 처리할 것이기 때문에 self 로 지정
         //register 메서드를 이용하여 재사용할 셀을 등록해줌
+    }
+    
+    func getBucketListUserDefaultData(){
+        if let savedData = UserDefaults.standard.object(forKey: "BucketListTasks UserDefaults") as? Data {
+            let decoder = JSONDecoder()
+            if let savedObject = try? decoder.decode([BucketListTask].self, from: savedData){
+                task = savedObject
+            }
+        }
     }
     
     //MARK: AutoLayout 지정
@@ -128,42 +145,68 @@ class BucketListViewController: UIViewController {
 extension BucketListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.tasks.count
+        return self.task.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BucketListTableViewCell", for: indexPath) as? BucketListTableViewCell else {return UITableViewCell()}
         
-//        guard let t = UserDefaults.standard.array(forKey: "BucketListTasks UserDefaults") as? [String] else {return cell}
+        cell.label.text = task[indexPath.row].title
+        task[indexPath.row].done ? cell.checkButton.setImage(UIImage(systemName: "squareshape"), for: .normal) : cell.checkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         
-        cell.label.text = tasks[indexPath.row]
-        cell.label.textColor = .darkGray
+        cell.contentView.backgroundColor = task[indexPath.row].done ? .white : UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+        
+        
+        cell.checkButton.addTarget(self, action: #selector(pressedCheckButton(_:)), for: .touchUpInside)
+        cell.checkButton.tag = indexPath.row
+        
+        
         
         return cell
+    }
+    
+    @objc func pressedCheckButton(_ sender: UIButton){
+        switch task[sender.tag].done{
+        case true:
+            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            task[sender.tag].done = false
+        case false:
+            sender.setImage(UIImage(systemName: "squareshape"), for: .normal)
+            task[sender.tag].done = true
+        }
+    
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(self.task) {
+            UserDefaults.standard.setValue(encoded, forKey: "BucketListTasks UserDefaults")
+        }
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "버킷 리스트", message: "올해 이루고 싶은 목표를 적어보세요", preferredStyle: .alert)
         
-        guard let task = UserDefaults.standard.object(forKey: "BucketListTasks UserDefaults") as? [String] else {return}
-        
         let confirm = UIAlertAction(title: "확인", style: .default){ [weak self] _ in
             guard let title = alert.textFields?[0].text else {return}
-            self?.tasks[indexPath.row] = title
+            self?.task[indexPath.row].title = title
 
-            if self?.tasks[indexPath.row] == ""{
-                self?.tasks.remove(at: indexPath.row)
+            if self?.task[indexPath.row].title == ""{
+                self?.task.remove(at: indexPath.row)
             }
-            UserDefaults.standard.set(self?.tasks, forKey: "BucketListTasks UserDefaults")
+            
+            let encoder = JSONEncoder()
+            if let encoded = try? encoder.encode(self?.task) {
+                UserDefaults.standard.setValue(encoded, forKey: "BucketListTasks UserDefaults")
+            }
+            
             self?.tableView.reloadData()
         }
         
-        let cancel = UIAlertAction(title: "취소", style: .cancel){ (cancel) in
+        let cancel = UIAlertAction(title: "취소", style: .cancel){ _ in
             //취소 눌렀을때
         }
         
         alert.addTextField{ textField in
-            textField.text = task[indexPath.row]
+            textField.text = self.task[indexPath.row].title
             textField.textColor = .systemBlue
         }
         
@@ -175,6 +218,9 @@ extension BucketListViewController: UITableViewDelegate, UITableViewDataSource{
         self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
+    
+    
+    
     //Row 선택시
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -185,9 +231,13 @@ extension BucketListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        self.tasks.remove(at: indexPath.row)
+        self.task.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        UserDefaults.standard.set(self.tasks, forKey: "BucketListTasks UserDefaults")
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(self.task) {
+            UserDefaults.standard.setValue(encoded, forKey: "BucketListTasks UserDefaults")
+        }
+        
     }
 }
 

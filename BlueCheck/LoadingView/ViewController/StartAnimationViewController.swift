@@ -23,7 +23,7 @@ class StartAnimationViewController: UIViewController{
         
         self.view.backgroundColor = .white
         self.view.addSubview(animationView)
-        animationView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3)
+        animationView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/2)
         animationView.center = self.view.center
         animationView.contentMode = .scaleAspectFill
 //        animationView.animationSpeed = 1

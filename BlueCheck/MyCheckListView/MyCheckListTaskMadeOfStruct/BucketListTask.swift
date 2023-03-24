@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BucketListTasks{
+struct BucketListTask: Codable{
     var title: String
     var done: Bool
 }

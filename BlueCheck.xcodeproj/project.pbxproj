@@ -108,7 +108,7 @@
 		8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
 		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
 		8C74C24D29CC44A400267152 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
-		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTask.swift; sourceTree = "<group>"; };
+		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BucketListTask.swift; path = ../MyCheckListView/MyCheckListTaskMadeOfStruct/BucketListTask.swift; sourceTree = "<group>"; };
 		8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewImageCollectionCell.swift; sourceTree = "<group>"; };
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +239,7 @@
 		8C23EAAA296D3DD80042248F /* BucketListView */ = {
 			isa = PBXGroup;
 			children = (
+				8C779724296EEFA800E11294 /* BucketListTask.swift */,
 				8C74C25B29CC52A900267152 /* BucketListTableViewCell */,
 				8C74C25A29CC529400267152 /* ViewController */,
 			);
@@ -423,7 +424,6 @@
 		8C74C26129CC547900267152 /* MyCheckListTaskMadeOfStruct */ = {
 			isa = PBXGroup;
 			children = (
-				8C779724296EEFA800E11294 /* BucketListTask.swift */,
 				8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */,
 			);
 			path = MyCheckListTaskMadeOfStruct;
