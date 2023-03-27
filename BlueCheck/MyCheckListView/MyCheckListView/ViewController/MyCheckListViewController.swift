@@ -8,30 +8,13 @@
 import UIKit
 
 
-protocol TableViewCellDelegate: AnyObject{
+protocol MyCheckListTableViewDelegate: AnyObject{
     func delegateFunction()
 }
 
-struct CalendarCollectionLayout {
-    
-    func create() -> NSCollectionLayoutSection? {
-        let itemFractionalSize: CGFloat = 1.0 / 7.0
-        
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(itemFractionalSize), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/6))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 3, trailing: 0)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 0)
-        
-        return section
-    }
-}
 
-class MyCheckListViewController: UIViewController, TableViewCellDelegate{
+
+class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
     
     func delegateFunction(){
         if let savedData = UserDefaults.standard.object(forKey: translateObjectKey) as? Data{
@@ -158,7 +141,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        self.initView()
+        self.setComponentDate()
         
         //MARK: UserDefualt 모두 삭제
 //                for key in UserDefaults.standard.dictionaryRepresentation().keys {
@@ -248,7 +231,7 @@ class MyCheckListViewController: UIViewController, TableViewCellDelegate{
         configureAddTaskButton()
     }
     
-    private func initView() {
+    private func setComponentDate() {
         dateFormatter.dateFormat = "yyyy년 MM월"
         components.year = cal.component(.year, from: now)
         components.month = cal.component(.month, from: now)

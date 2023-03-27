@@ -12,6 +12,7 @@ class BucketListTableViewCell: UITableViewCell{
     var label: UILabel = {
         var label = UILabel()
         label.textColor = .darkGray
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 14)
         return label
     }()
     

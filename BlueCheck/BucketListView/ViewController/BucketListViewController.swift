@@ -13,7 +13,7 @@ class BucketListViewController: UIViewController {
     var tableView: UITableView!
     
     //MARK: 추가
-    var task: [BucketListTask] = [BucketListTask(title: "🔥이 곳에 여러분의 꿈을 적어보아요🔥", done: false)]
+    var task: [BucketListTask] = [BucketListTask(title: "🔥이 곳에 여러분의 꿈을 적어보아요🔥", done: true),BucketListTask(title: "블루체크 앱을 이용해 더 멋진 사람되기 달성👋👋👋", done: false)]
 
     let topView: UIView = {
        let topview = UIView()
@@ -67,6 +67,7 @@ class BucketListViewController: UIViewController {
         let label = UILabel()
         label.text = "버킷 리스트"
         label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 14)
         return label
     }()
     
@@ -84,7 +85,7 @@ class BucketListViewController: UIViewController {
         tableView.delegate = self
         tableView.register(BucketListTableViewCell.self, forCellReuseIdentifier: "BucketListTableViewCell")
         
-        //MARK: UserDefualt 모두 삭제
+//        MARK: UserDefualt 모두 삭제
 //                for key in UserDefaults.standard.dictionaryRepresentation().keys {
 //                    UserDefaults.standard.removeObject(forKey: key.description)
 //                }

@@ -60,6 +60,7 @@
 		8C70CA4329A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */; };
 		8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */; };
 		8C74C24E29CC44A400267152 /* BlueCheck.json in Resources */ = {isa = PBXBuildFile; fileRef = 8C74C24D29CC44A400267152 /* BlueCheck.json */; };
+		8C74C27D29D1940D00267152 /* CalendarColelctionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C74C27C29D1940D00267152 /* CalendarColelctionLayout.swift */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
 		8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */; };
 		8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 8C83508B29B3582000C1033F /* BSImagePicker */; };
@@ -108,6 +109,7 @@
 		8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
 		8C70CA4429A5DE25005F5A0D /* GroupListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTask.swift; sourceTree = "<group>"; };
 		8C74C24D29CC44A400267152 /* BlueCheck.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BlueCheck.json; sourceTree = "<group>"; };
+		8C74C27C29D1940D00267152 /* CalendarColelctionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarColelctionLayout.swift; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BucketListTask.swift; path = ../MyCheckListView/MyCheckListTaskMadeOfStruct/BucketListTask.swift; sourceTree = "<group>"; };
 		8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewImageCollectionCell.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 		8C74C25C29CC52CD00267152 /* MyCheckListView */ = {
 			isa = PBXGroup;
 			children = (
+				8C74C27B29D193F300267152 /* CalendarCollectionLayout */,
 				8C74C26029CC542E00267152 /* CollectionViewCell */,
 				8C74C25F29CC53FD00267152 /* TableViewCell */,
 				8C74C25D29CC53C800267152 /* ViewController */,
@@ -618,6 +621,14 @@
 			path = TableViewCell;
 			sourceTree = "<group>";
 		};
+		8C74C27B29D193F300267152 /* CalendarCollectionLayout */ = {
+			isa = PBXGroup;
+			children = (
+				8C74C27C29D1940D00267152 /* CalendarColelctionLayout.swift */,
+			);
+			path = CalendarCollectionLayout;
+			sourceTree = "<group>";
+		};
 		8C9A6B38298BB0780093D90A /* InviteListView */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +762,7 @@
 				8C214EE32994E02F005EBB6A /* JoinTheMembershipViewController.swift in Sources */,
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
 				8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */,
+				8C74C27D29D1940D00267152 /* CalendarColelctionLayout.swift in Sources */,
 				8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */,
 				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,

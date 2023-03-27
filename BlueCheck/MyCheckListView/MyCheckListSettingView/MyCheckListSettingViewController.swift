@@ -11,7 +11,7 @@ class MyCheckListSettingViewController: UIViewController{
     
     
     var taskIndex = 0
-    weak var delegate: TableViewCellDelegate?
+    weak var delegate: MyCheckListTableViewDelegate?
     var taskArray: [MyCheckListTask]?
     var taskImportance: Importance = .normal
     var objectKey = ""

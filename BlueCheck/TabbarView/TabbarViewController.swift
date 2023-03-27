@@ -27,11 +27,11 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         
     
         let bucketListViewController = BucketListViewController()
-        let bucketListViewControllerBarItem = UITabBarItem(title: "Bucket List", image: UIImage(systemName: "trophy"), selectedImage: UIImage(systemName: "trophy.fill"))
+        let bucketListViewControllerBarItem = UITabBarItem(title: "Bucket List", image: UIImage(systemName: "checklist"), selectedImage: UIImage(systemName: "checklist.checked"))
         bucketListViewController.tabBarItem = bucketListViewControllerBarItem
         
         let myCheckListViewController = UINavigationController(rootViewController: MyCheckListViewController())
-        let myCheckListViewControllerBarItem = UITabBarItem(title: "Check List", image: UIImage(systemName: "checklist"), selectedImage: UIImage(systemName: "checklist.checked"))
+        let myCheckListViewControllerBarItem = UITabBarItem(title: "Calendar", image: UIImage(systemName: "calendar.circle"), selectedImage: UIImage(systemName: "calendar.circle.fill"))
         myCheckListViewController.tabBarItem = myCheckListViewControllerBarItem
         
         
