@@ -15,7 +15,7 @@ class JoinTheMembershipViewController: UIViewController{
     let blueCheckLabel : UILabel = {
         let label = UILabel()
         label.text = "Blue Check"
-        label.textColor = .white
+        label.textColor = .systemBlue
         label.font = .systemFont(ofSize: 30, weight: .bold)
         return label
     }()
@@ -23,11 +23,11 @@ class JoinTheMembershipViewController: UIViewController{
     
     let joinRequestPhrasesLabel : UILabel = {
         let label = UILabel()
-        label.text = "지인들과 리스트를 \n 공유하면서 목표에 도전해보세요!."
+        label.text = "지인들과 리스트를 \n 공유하면서 목표에 도전해보세요 💪"
         label.numberOfLines = 2
         label.textAlignment = .center
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -35,7 +35,7 @@ class JoinTheMembershipViewController: UIViewController{
     let errorLabel : UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -44,8 +44,8 @@ class JoinTheMembershipViewController: UIViewController{
     let emailLabel : UILabel = {
         let label = UILabel()
         label.text = "이메일"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -62,8 +62,8 @@ class JoinTheMembershipViewController: UIViewController{
     let nameLabel : UILabel = {
         let label = UILabel()
         label.text = "이름"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -79,8 +79,8 @@ class JoinTheMembershipViewController: UIViewController{
     let nickNameLabel: UILabel = {
         let label = UILabel()
         label.text = "닉네임"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -98,8 +98,8 @@ class JoinTheMembershipViewController: UIViewController{
     let passwordLabel : UILabel = {
         let label = UILabel()
         label.text = "비밀번호"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -116,8 +116,8 @@ class JoinTheMembershipViewController: UIViewController{
     let passwordConfirmLabel : UILabel = {
         let label = UILabel()
         label.text = "비밀번호 확인"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.textColor = .systemBlue
+        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -135,7 +135,7 @@ class JoinTheMembershipViewController: UIViewController{
         button.setTitle("가입하기", for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.titleLabel?.font = UIFont.init(name: "Maplestory OTF Bold.otf", size: 20)
         button.addTarget(self, action: #selector(tapJointheMembershipButton(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 10
         return button
@@ -218,7 +218,7 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "이미 가입하셨다면 로그인버튼을 눌러주세요!"
         label.textColor = .systemBlue
-        label.font = .systemFont(ofSize: 10)
+        label.font = .systemFont(ofSize: 13)
         return label
     }()
     
@@ -227,9 +227,9 @@ class JoinTheMembershipViewController: UIViewController{
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 5
+        button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        button.titleLabel?.font = UIFont.init(name: "Maplestory OTF Bold.otf", size: 13)
         button.addTarget(self, action: #selector(tapLogInButton(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 2
         return button
@@ -238,17 +238,17 @@ class JoinTheMembershipViewController: UIViewController{
     lazy var logInStackView : UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.logInLabel,self.logInButton])
         stackView.axis = .horizontal
-        stackView.spacing = 5
+        stackView.spacing = 10
         return stackView
     }()
     
     @objc func tapLogInButton(_ sender: UIButton){
-        self.navigationController?.popToViewController(LogInViewController(), animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+//        self.view.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
         
         setLayoutConstraints()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -281,7 +281,25 @@ class JoinTheMembershipViewController: UIViewController{
         
     }
     
+    private let contentScrollView: UIScrollView = {
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+            scrollView.showsVerticalScrollIndicator = false
+            
+            return scrollView
+    }()
+    
+    private let contentView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            return view
+    }()
+    
     private func setLayoutConstraints(){
+        
+        view.addSubview(contentScrollView)
+        contentScrollView.addSubview(contentView)
         
         view.addSubview(blueCheckLabel)
         view.addSubview(joinRequestPhrasesLabel)
@@ -318,72 +336,88 @@ class JoinTheMembershipViewController: UIViewController{
         logInBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         logInStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let safeArea = view.safeAreaLayoutGuide
+//        let contentView = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            blueCheckLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            blueCheckLabel.topAnchor.constraint(equalTo: safeArea.topAnchor,constant: 10),
+            
+            contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: view.bounds.height * 2),
+            
+            
+            
+            
+            blueCheckLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10),
             
             joinRequestPhrasesLabel.topAnchor.constraint(equalTo: self.blueCheckLabel.bottomAnchor,constant: 20),
-            joinRequestPhrasesLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            joinRequestPhrasesLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 10),
-            emailLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            emailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
-            emailTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            emailTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             emailTextField.topAnchor.constraint(equalTo: self.emailLabel.bottomAnchor,constant: 10),
-            emailTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            emailTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             emailTextField.heightAnchor.constraint(equalToConstant: 44),
             
             nameLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor,constant: 10),
-            nameLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
-            nameTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             nameTextField.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor,constant: 10),
-            nameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             nameTextField.heightAnchor.constraint(equalToConstant: 44),
             
             
             nickNameLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 10),
-            nickNameLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            nickNameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
-            nickNameTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            nickNameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             nickNameTextField.topAnchor.constraint(equalTo: self.nickNameLabel.bottomAnchor,constant: 10),
-            nickNameTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            nickNameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             nickNameTextField.heightAnchor.constraint(equalToConstant: 44),
             
             passwordLabel.topAnchor.constraint(equalTo: nickNameTextField.bottomAnchor,constant: 10),
-            passwordLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            passwordLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
-            passwordTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            passwordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             passwordTextField.topAnchor.constraint(equalTo: self.passwordLabel.bottomAnchor,constant: 10),
-            passwordTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            passwordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             passwordTextField.heightAnchor.constraint(equalToConstant: 44),
             
             passwordConfirmLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor,constant: 10),
-            passwordConfirmLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            passwordConfirmLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
-            passwordConfirmTextField.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            passwordConfirmTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             passwordConfirmTextField.topAnchor.constraint(equalTo: self.passwordConfirmLabel.bottomAnchor,constant: 10),
-            passwordConfirmTextField.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            passwordConfirmTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             passwordConfirmTextField.heightAnchor.constraint(equalToConstant: 44),
             
             errorLabel.topAnchor.constraint(equalTo: passwordConfirmTextField.bottomAnchor,constant: 10),
-            errorLabel.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
+            errorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
             jointheMembershipButton.topAnchor.constraint(equalTo: self.errorLabel.bottomAnchor,constant: 10),
-            jointheMembershipButton.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 40),
-            jointheMembershipButton.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -40),
+            jointheMembershipButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
+            jointheMembershipButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
             jointheMembershipButton.heightAnchor.constraint(equalToConstant: 50),
             
             
             logInBoundaryView.topAnchor.constraint(equalTo: self.jointheMembershipButton.bottomAnchor,constant: 10),
-            logInBoundaryView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor,constant: 40),
-            logInBoundaryView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor,constant: -40),
+            logInBoundaryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 40),
+            logInBoundaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -40),
             logInBoundaryView.heightAnchor.constraint(equalToConstant: 2),
             
             logInStackView.topAnchor.constraint(equalTo: self.logInBoundaryView.bottomAnchor,constant: 15),
-            logInStackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
+            logInStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
             
         ])
         

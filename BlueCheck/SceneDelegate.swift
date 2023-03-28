@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let rootViewController = StartAnimationViewController()
         
+        
         // 위에서 생성한 뷰 컨트롤러로 내비게이션 컨트롤러를 생성합니다.
 //        let navigationController = UINavigationController(rootViewController: rootViewController)
 //

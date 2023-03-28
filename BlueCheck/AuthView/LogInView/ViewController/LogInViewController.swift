@@ -24,9 +24,9 @@ class LogInViewController: UIViewController{
     let blueCheckMainLabel: UILabel = {
         let label = UILabel()
         label.text = "Blue Check"
+        label.font = UIFont.MaplestoryFont(type: .Bold, size: 30)
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 1)
-        label.font = UIFont.systemFont(ofSize: CGFloat(50))
+
         return label
     }()
     
@@ -179,21 +179,13 @@ class LogInViewController: UIViewController{
     }
     
     
-    let logInAnonouncementButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("로그인에 어려움이 있으신가요?", for: .normal)
-        button.setTitleColor(.lightGray, for: .normal)
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = .systemFont(ofSize: 13)
-        return button
-    }()
     
     
     lazy var findIDButton:  UIButton = {
         let button = UIButton()
         button.setTitle("아이디 찾기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .light)
         button.addTarget(self, action: #selector(tapFindIDorPassword(_:)), for: .touchUpInside)
         return button
     }()
@@ -202,7 +194,7 @@ class LogInViewController: UIViewController{
         let button = UIButton()
         button.setTitle("비밀번호 찾기", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 15)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .light)
         button.addTarget(self, action: #selector(tapFindIDorPassword(_:)), for: .touchUpInside)
         return button
     }()
@@ -229,7 +221,7 @@ class LogInViewController: UIViewController{
         let label = UILabel()
         label.text = "|"
         label.textColor = .black
-        label.font = .systemFont(ofSize: 15)
+        label.font = UIFont.MaplestoryFont(type: .Light, size: 15)
         return label
     }()
     
@@ -237,7 +229,7 @@ class LogInViewController: UIViewController{
         let label = UILabel()
         label.text = "|"
         label.textColor = .black
-        label.font = .systemFont(ofSize: 15)
+        label.font = UIFont.MaplestoryFont(type: .Light, size: 15)
         return label
     }()
     
@@ -297,6 +289,7 @@ class LogInViewController: UIViewController{
         setLayoutConstraints()
         autoLogin()
         
+        
     }
     
     func buttonConfiguration(){
@@ -318,6 +311,7 @@ class LogInViewController: UIViewController{
     
     
     private func setLayoutConstraints(){
+        
         self.view.addSubview(blueCheckMainLabel)
         self.view.addSubview(logInLabel)
         self.view.addSubview(idTextField)
@@ -326,7 +320,7 @@ class LogInViewController: UIViewController{
         self.view.addSubview(autoLogInCheckButton)
         self.view.addSubview(logInErrorLabel)
         self.view.addSubview(logInbutton)
-        self.view.addSubview(logInAnonouncementButton)
+
         self.view.addSubview(findIdPassWordAndJoinMembershipStackView)
         self.view.addSubview(sNSLeftLineView)
         self.view.addSubview(sNSRightLineView)
@@ -343,7 +337,7 @@ class LogInViewController: UIViewController{
         autoLogInCheckButton.translatesAutoresizingMaskIntoConstraints = false
         logInErrorLabel.translatesAutoresizingMaskIntoConstraints = false
         logInbutton.translatesAutoresizingMaskIntoConstraints = false
-        logInAnonouncementButton.translatesAutoresizingMaskIntoConstraints = false
+
         findIdPassWordAndJoinMembershipStackView.translatesAutoresizingMaskIntoConstraints = false
         sNSLeftLineView.translatesAutoresizingMaskIntoConstraints = false
         sNSRightLineView.translatesAutoresizingMaskIntoConstraints = false
@@ -383,19 +377,28 @@ class LogInViewController: UIViewController{
             autoLogInCheckButton.heightAnchor.constraint(equalToConstant: 30),
         
             
-            logInAnonouncementButton.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-            logInAnonouncementButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+//            logInAnonouncementButton.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+//            logInAnonouncementButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             
             
             logInbutton.topAnchor.constraint(equalTo: self.autoLogInCheckButton.bottomAnchor, constant: 10),
             logInbutton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             logInbutton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            logInbutton.bottomAnchor.constraint(equalTo: self.logInAnonouncementButton.topAnchor,constant: -15),
+//            logInbutton.bottomAnchor.constraint(equalTo: self.logInAnonouncementButton.topAnchor,constant: -15),
+            logInbutton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            logInbutton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            logInbutton.heightAnchor.constraint(equalToConstant: 44),
             
-            findIdPassWordAndJoinMembershipStackView.topAnchor.constraint(equalTo: self.logInAnonouncementButton.bottomAnchor, constant: 20),
+
+            logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            logInErrorLabel.topAnchor.constraint(equalTo: logInbutton.bottomAnchor,constant: 10),
+            logInErrorLabel.heightAnchor.constraint(equalToConstant: 44),
+            
+            
+            findIdPassWordAndJoinMembershipStackView.topAnchor.constraint(equalTo: self.logInErrorLabel.bottomAnchor, constant: 20),
             findIdPassWordAndJoinMembershipStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            findIdPassWordAndJoinMembershipStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
-            findIdPassWordAndJoinMembershipStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
+            findIdPassWordAndJoinMembershipStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: view.bounds.width / 10),
+            findIdPassWordAndJoinMembershipStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -(view.bounds.width / 10)),
             
             sNSLogInLable.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             sNSLogInLable.topAnchor.constraint(equalTo: self.findIdPassWordAndJoinMembershipStackView.bottomAnchor, constant: 30),
@@ -411,15 +414,15 @@ class LogInViewController: UIViewController{
             sNSLeftLineView.centerYAnchor.constraint(equalTo: self.sNSLogInLable.centerYAnchor),
             sNSLeftLineView.heightAnchor.constraint(equalToConstant: 2),
             
-            appleButton.topAnchor.constraint(equalTo: self.sNSLeftLineView.bottomAnchor,constant: 20),
+            appleButton.topAnchor.constraint(equalTo: self.sNSLogInLable.bottomAnchor,constant: 20),
             appleButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             appleButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             appleButton.heightAnchor.constraint(equalToConstant: 44),
             
-            logInErrorLabel.topAnchor.constraint(equalTo: appleButton.bottomAnchor, constant: 15),
-            logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            logInErrorLabel.heightAnchor.constraint(equalToConstant: 30),
-            
+//            logInErrorLabel.topAnchor.constraint(equalTo: appleButton.bottomAnchor, constant: 15),
+//            logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+//            logInErrorLabel.heightAnchor.constraint(equalToConstant: 30),
+//
             
         ])
     }

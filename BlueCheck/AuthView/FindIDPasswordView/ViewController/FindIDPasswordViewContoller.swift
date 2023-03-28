@@ -12,9 +12,9 @@ import FirebaseAuth
 class FindIDPasswordViewContoller: UIViewController{
     
     //MARK: 임시 뒤로가기 버튼
-    lazy var backButton: UIButton = {
+    lazy var dismissButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.setTitleColor(UIColor.systemBlue, for: .normal)
         button.addTarget(self, action: #selector(tapBackButton(_:)), for: .touchUpInside)
         return button
@@ -38,6 +38,7 @@ class FindIDPasswordViewContoller: UIViewController{
         textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.font = .systemFont(ofSize: 18, weight: .light)
         return textField
     }()
 
@@ -47,6 +48,7 @@ class FindIDPasswordViewContoller: UIViewController{
         textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.font = .systemFont(ofSize: 18, weight: .light)
         return textField
     }()
     
@@ -56,6 +58,7 @@ class FindIDPasswordViewContoller: UIViewController{
         textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.font = .systemFont(ofSize: 18, weight: .light)
         return textField
     }()
     
@@ -65,6 +68,7 @@ class FindIDPasswordViewContoller: UIViewController{
         textField.textColor = .darkGray
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemBlue.cgColor
+        textField.font = .systemFont(ofSize: 18, weight: .light)
         return textField
     }()
     
@@ -82,6 +86,7 @@ class FindIDPasswordViewContoller: UIViewController{
         button.setTitle("아이디 찾기", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemBlue
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .light)
         button.addTarget(self, action: #selector(tapidPartSearchButton(_:)), for: .touchUpInside)
         return button
     }()
@@ -129,6 +134,7 @@ class FindIDPasswordViewContoller: UIViewController{
         button.setTitle("비밀번호 찾기", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = .systemBlue
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .light)
         button.addTarget(self, action: #selector(tapPasswordPartSearchButton(_:)), for: .touchUpInside)
         return button
     }()
@@ -198,7 +204,7 @@ class FindIDPasswordViewContoller: UIViewController{
     
     
     private func setLayoutConstraints(){
-        self.view.addSubview(backButton)
+        self.view.addSubview(dismissButton)
         
         self.view.addSubview(findIDLabel)
         self.view.addSubview(idPartNameTextField)
@@ -212,7 +218,7 @@ class FindIDPasswordViewContoller: UIViewController{
         self.view.addSubview(passwordPartSearchButton)
         
        
-        backButton.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
         
         findIDLabel.translatesAutoresizingMaskIntoConstraints = false
         idPartNameTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -226,13 +232,15 @@ class FindIDPasswordViewContoller: UIViewController{
         
         NSLayoutConstraint.activate([
             
-            backButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            backButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            dismissButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            dismissButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            dismissButton.heightAnchor.constraint(equalToConstant: 44),
+            dismissButton.widthAnchor.constraint(equalToConstant: 44),
             
             
             
             
-            findIDLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 90),
+            findIDLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: view.bounds.height / 5),
             findIDLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             
             idPartNameTextField.topAnchor.constraint(equalTo: self.findIDLabel.bottomAnchor, constant: 20),
