@@ -115,7 +115,7 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
         //자신의 groupList에 추가
         let data = ["groupName" : inviteGroupList[sender.tag].groupName, "groupNumber" :inviteGroupList[sender.tag].groupNumber,"object" :inviteGroupList[sender.tag].object, "content" : inviteGroupList[sender.tag].content]
         
-        Firestore.firestore().collection("user").document(currentUserEmail).collection("group").document(inviteGroupList[sender.tag].groupNumber).setData(data){ error in
+        Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").document(inviteGroupList[sender.tag].groupNumber).setData(data){ error in
             if let error = error{
                 print("Error:\(error.localizedDescription)")
                 return

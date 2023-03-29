@@ -16,18 +16,18 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "Blue Check"
         label.textColor = .systemBlue
-        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = UIFont.MaplestoryFont(type: .Bold, size: 30)
         return label
     }()
     
     
     let joinRequestPhrasesLabel : UILabel = {
         let label = UILabel()
+        label.font = UIFont.MaplestoryFont(type: .Light, size: 13)
         label.text = "지인들과 리스트를 \n 공유하면서 목표에 도전해보세요 💪"
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -35,7 +35,6 @@ class JoinTheMembershipViewController: UIViewController{
     let errorLabel : UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -45,7 +44,6 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "이메일"
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -63,7 +61,6 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "이름"
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -80,7 +77,7 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "닉네임"
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
+        
         return label
     }()
     
@@ -99,7 +96,7 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "비밀번호"
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
+        
         return label
     }()
     
@@ -117,7 +114,6 @@ class JoinTheMembershipViewController: UIViewController{
         let label = UILabel()
         label.text = "비밀번호 확인"
         label.textColor = .systemBlue
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 18)
         return label
     }()
     
@@ -135,7 +131,6 @@ class JoinTheMembershipViewController: UIViewController{
         button.setTitle("가입하기", for: .normal)
         button.backgroundColor = .systemBlue
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.init(name: "Maplestory OTF Bold.otf", size: 20)
         button.addTarget(self, action: #selector(tapJointheMembershipButton(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 10
         return button
@@ -254,6 +249,7 @@ class JoinTheMembershipViewController: UIViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -296,6 +292,26 @@ class JoinTheMembershipViewController: UIViewController{
             return view
     }()
     
+    
+    lazy var sendEmailButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("인증", for: .normal)
+        button.addTarget(self, action: #selector(tapSendEmailButton(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func tapSendEmailButton(_ sender: UIButton){
+        let currentUser = emailTextField.text!
+        Auth.auth().currentUser?.sendEmailVerification{  err in
+            if let error = err {
+                print("-----Verify Email ERROR \(error.localizedDescription)-----")
+            }
+            else{
+                print("success")
+            }
+        }
+    }
+    
     private func setLayoutConstraints(){
         
         view.addSubview(contentScrollView)
@@ -318,6 +334,8 @@ class JoinTheMembershipViewController: UIViewController{
         view.addSubview(logInBoundaryView)
         view.addSubview(logInStackView)
         
+        view.addSubview(sendEmailButton)
+        
         
         blueCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         joinRequestPhrasesLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -336,6 +354,8 @@ class JoinTheMembershipViewController: UIViewController{
         logInBoundaryView.translatesAutoresizingMaskIntoConstraints = false
         logInStackView.translatesAutoresizingMaskIntoConstraints = false
         
+        sendEmailButton.translatesAutoresizingMaskIntoConstraints = false
+        
 //        let contentView = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
@@ -350,18 +370,18 @@ class JoinTheMembershipViewController: UIViewController{
             contentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: view.bounds.height * 2),
+            contentView.heightAnchor.constraint(equalToConstant: view.bounds.height * 1.2),
             
             
             
             
             blueCheckLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10),
+            blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: view.bounds.height / 10),
             
             joinRequestPhrasesLabel.topAnchor.constraint(equalTo: self.blueCheckLabel.bottomAnchor,constant: 20),
             joinRequestPhrasesLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 10),
+            emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 30),
             emailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
             emailTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
@@ -417,7 +437,12 @@ class JoinTheMembershipViewController: UIViewController{
             logInBoundaryView.heightAnchor.constraint(equalToConstant: 2),
             
             logInStackView.topAnchor.constraint(equalTo: self.logInBoundaryView.bottomAnchor,constant: 15),
-            logInStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            logInStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            sendEmailButton.topAnchor.constraint(equalTo: logInStackView.bottomAnchor, constant: 10),
+            sendEmailButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            sendEmailButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            sendEmailButton.heightAnchor.constraint(equalToConstant: 44)
             
         ])
         

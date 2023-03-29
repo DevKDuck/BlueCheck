@@ -16,7 +16,7 @@ class MyProfileSettingController: UIViewController{
     let profileImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .white
-        image.image = UIImage(systemName: "xmark")
+        image.image = UIImage(imageLiteralResourceName: "RepresentativeImage")
     
         return image
     }()

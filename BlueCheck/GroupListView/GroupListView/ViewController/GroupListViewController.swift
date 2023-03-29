@@ -61,6 +61,10 @@ class GroupListViewController: UIViewController{
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = true
+        groupNameArray.removeAll()
+        groupDocumentsArray.removeAll()
+        groupContentArray.removeAll()
+        getFireStoreData()
         
     }
     
@@ -110,7 +114,6 @@ class GroupListViewController: UIViewController{
         tableView.dataSource = self
         tableView.delegate = self
         
-        getFireStoreData()
         setAutolayoutConstraint()
     }
     

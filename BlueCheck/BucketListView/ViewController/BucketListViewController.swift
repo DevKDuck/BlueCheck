@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class BucketListViewController: UIViewController {
     
@@ -76,6 +77,7 @@ class BucketListViewController: UIViewController {
     //MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.view.backgroundColor = .white
         //MARK: TableView 설정

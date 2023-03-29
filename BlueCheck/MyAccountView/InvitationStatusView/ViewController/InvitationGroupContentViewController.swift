@@ -38,21 +38,21 @@ class InvitationGroupContentViewController: UIViewController{
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 30, weight: .bold)
+        label.font = UIFont.MaplestoryFont(type: .Bold, size: 30)
         label.textColor = .darkGray
         return label
     }()
     
     let objectLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 25)
+        label.font = UIFont.MaplestoryFont(type: .Bold, size: 25)
         label.textColor = .darkGray
         return label
     }()
     
     let contentLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = UIFont.MaplestoryFont(type: .Light, size: 20)
         label.textColor = .darkGray
         label.numberOfLines = 0
         return label

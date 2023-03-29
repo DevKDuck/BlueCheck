@@ -92,27 +92,35 @@ class FindIDPasswordViewContoller: UIViewController{
     }()
     
     @objc func tapidPartSearchButton(_ sender: UIButton){
+        
         guard let emailText = idPartEmailField.text else {return}
-        Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
-            
-            if let error = error{
-                print("GetDocument user Error: \(error.localizedDescription)")
-            }
-            else{
-                if document?.exists == false{
-                    self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+        guard let name = idPartNameTextField.text else {return}
+        
+        if emailText.isEmpty || name.isEmpty{
+            executeAlertController("이름과 이메일을 모두 작성해주세요", "이름과 이메일을 확인해주세요")
+        }
+        else{
+            Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
+                
+                if let error = error{
+                    print("GetDocument user Error: \(error.localizedDescription)")
                 }
                 else{
-                    guard let document = document else{return}
-                    guard let data = document.data() else {return}
-                    guard let firestoreName = data["name"] as? String else {return}
-                    guard let name = self.idPartNameTextField.text else {return}
-                    
-                    if firestoreName != name{
-                        self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                    if document?.exists == false{
+                        self.executeAlertController("잘못된 정보입니다.", "이름과 이메일을 확인해주세요")
                     }
                     else{
-                        self.executeAlertController(emailText, "존재하는 이메일입니다.")
+                        guard let document = document else{return}
+                        guard let data = document.data() else {return}
+                        guard let firestoreName = data["name"] as? String else {return}
+                        
+                        
+                        if firestoreName != name{
+                            self.executeAlertController("잘못된 정보입니다.", "이름과 이메일을 확인해주세요")
+                        }
+                        else{
+                            self.executeAlertController(emailText, "존재하는 이메일입니다.")
+                        }
                     }
                 }
             }
@@ -141,50 +149,46 @@ class FindIDPasswordViewContoller: UIViewController{
     
     @objc func tapPasswordPartSearchButton(_ sender: UIButton){
         guard let emailText = passwordPartEmailField.text else {return}
+        guard let name = self.passwordPartNameTextField.text else {return}
         
-        Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
-            
-            if let error = error{
-                print("GetDocument user Error: \(error.localizedDescription)")
-            }
-            else{
-                if document?.exists == false{
-                    self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+        
+        if emailText.isEmpty || name.isEmpty{
+            executeAlertController("이름과 이메일을 모두 작성해주세요", "이름과 이메일을 확인해주세요")
+        }
+        else{
+            Firestore.firestore().collection("user").document(emailText).getDocument{ document, error in
+                
+                if let error = error{
+                    print("GetDocument user Error: \(error.localizedDescription)")
                 }
                 else{
-                    guard let document = document else{return}
-                    guard let data = document.data() else {return}
-                    guard let firestoreName = data["name"] as? String else {return}
-                    guard let name = self.passwordPartNameTextField.text else {return}
-                    
-                    if firestoreName != name{
-                        self.executeAlertController("잘못된 정보입니다.", "이메일과 이름을 확인해주세요")
+                    if document?.exists == false{
+                        self.executeAlertController("잘못된 정보입니다.", "이름과 이메일을 확인해주세요")
                     }
                     else{
-                        Auth.auth().sendPasswordReset(withEmail: emailText){ error in
-                            if let error = error{
-                                print("SendPasswordReset Email Error: \(error.localizedDescription)")
-                            }
-                            else{
-                                self.executeAlertController("비밀번호 변경 메일전송 완료", "이메일에서 비밀번호를 변경해주세요.")
-                            }
-                        }
+                        guard let document = document else{return}
+                        guard let data = document.data() else {return}
+                        guard let firestoreName = data["name"] as? String else {return}
                         
+                        
+                        if firestoreName != name{
+                            self.executeAlertController("잘못된 정보입니다.", "이름과 이메일을 확인해주세요")
+                        }
+                        else{
+                            Auth.auth().sendPasswordReset(withEmail: emailText){ error in
+                                if let error = error{
+                                    print("SendPasswordReset Email Error: \(error.localizedDescription)")
+                                }
+                                else{
+                                    self.executeAlertController("비밀번호 변경 메일전송 완료", "이메일에서 비밀번호를 변경해주세요.")
+                                }
+                            }
+                            
+                        }
                     }
                 }
+                
             }
-        }
-        
-        
-        Auth.auth().sendPasswordReset(withEmail: emailText){ error in
-            let alert = UIAlertController(title: "비밀번호 변경 메일전송 완료", message: "이메일에서 비밀번호를 변경해주세요.", preferredStyle: .alert)
-
-            let confirm = UIAlertAction(title: "확인", style: .cancel){ cancel in
-                alert.dismiss(animated: true)
-            }
-            alert.addAction(confirm)
-
-            self.present(alert, animated: true)
         }
     }
     

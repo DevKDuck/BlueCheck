@@ -12,7 +12,8 @@ class BucketListTableViewCell: UITableViewCell{
     var label: UILabel = {
         var label = UILabel()
         label.textColor = .darkGray
-        label.font = UIFont(name: "Maplestory OTF Bold.otf", size: 14)
+        label.font = .systemFont(ofSize: 14, weight: .light)
+        label.textAlignment = .left
         return label
     }()
     
@@ -33,6 +34,7 @@ class BucketListTableViewCell: UITableViewCell{
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            label.trailingAnchor.constraint(equalTo: checkButton.leadingAnchor, constant: -2),
             
             checkButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -15),

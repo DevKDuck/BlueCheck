@@ -95,8 +95,8 @@ class LogInViewController: UIViewController{
                 self.logInErrorLabel.text = "아이디,비밀번호를 입력해주세요!!"
             }
             else{
-                Auth.auth().signIn(withEmail: idText, password: passwordText){ (result, error) in
-                    
+                Auth.auth().signIn(withEmail: idText, password: passwordText){ [weak self](result, error) in
+                    guard let self = self else {return}
                     if result != nil{
                         print("success")
                         
