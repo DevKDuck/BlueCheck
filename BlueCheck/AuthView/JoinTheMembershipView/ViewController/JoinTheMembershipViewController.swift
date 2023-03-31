@@ -301,14 +301,25 @@ class JoinTheMembershipViewController: UIViewController{
     }()
     
     @objc func tapSendEmailButton(_ sender: UIButton){
-        let currentUser = emailTextField.text!
-        Auth.auth().currentUser?.sendEmailVerification{  err in
-            if let error = err {
-                print("-----Verify Email ERROR \(error.localizedDescription)-----")
+        let actionCodeSettings = ActionCodeSettings()
+        actionCodeSettings.handleCodeInApp = true
+        guard let email = emailTextField.text else {return}
+        Auth.auth().sendSignInLink(toEmail: email,
+                                   actionCodeSettings: actionCodeSettings) { error in
+          // ...
+            if let error = error {
+               print(error.localizedDescription)
+              return
             }
-            else{
-                print("success")
-            }
+            print(email)
+            // The link was successfully sent. Inform the user.
+            // Save the email locally so you don't need to ask the user for it again
+            // if they open the link on the same device.
+//            UserDefaults.standard.set(email, forKey: "Email")
+//            self.showMessagePrompt("Check your email for link")
+            // ...
+            
+            //MARK: 동적링크 생성해서 해야될듯
         }
     }
     
