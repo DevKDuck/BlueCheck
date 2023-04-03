@@ -11,6 +11,7 @@ struct MyCheckListTask: Codable{
     var title: String
     var content: String
     var importance: String
+    var check: Bool
 }
 
 

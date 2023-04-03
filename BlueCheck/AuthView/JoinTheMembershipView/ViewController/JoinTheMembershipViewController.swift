@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseDynamicLinks
 import FirebaseAuth
 
 
@@ -102,7 +103,7 @@ class JoinTheMembershipViewController: UIViewController{
     
     let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "비밀번호"
+        textField.placeholder = "6글자 이상"
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
@@ -119,7 +120,7 @@ class JoinTheMembershipViewController: UIViewController{
     
     let passwordConfirmTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "비밀번호 확인"
+        textField.placeholder = "6글자 이상"
         textField.textColor = .black
         textField.backgroundColor = .white
         textField.layer.cornerRadius = 10
@@ -137,14 +138,20 @@ class JoinTheMembershipViewController: UIViewController{
     }()
     
     @objc func tapJointheMembershipButton(_ sender: UIButton){
-        //MARK: 이메일 조건 비밀번호 조건을 만들어야 될듯
         
         if let emailText = emailTextField.text, let passwordText = passwordTextField.text, let passwordConfirmText = passwordConfirmTextField.text, let nameText = nameTextField.text, let nickNmaeText = nickNameTextField.text {
             
-            if emailText.isEmpty || passwordText.isEmpty || passwordConfirmText.isEmpty{
+            if emailText.isEmpty || passwordText.isEmpty || passwordConfirmText.isEmpty || nameText.isEmpty || nickNmaeText.isEmpty{
                 if emailText.isEmpty{
                     self.errorLabel.text = "이메일을 작성해주세요"
                 }
+                else if nameText.isEmpty{
+                    self.errorLabel.text = "이름을 작성해주세요"
+                }
+                else if nickNmaeText.isEmpty{
+                    self.errorLabel.text = "닉네임을 작성해주세요"
+                }
+                
                 else if passwordText.isEmpty {
                     self.errorLabel.text = "비밀번호을 작성해주세요"
                 }
@@ -155,50 +162,63 @@ class JoinTheMembershipViewController: UIViewController{
             else{
                 if passwordTextField.text == passwordConfirmTextField.text{
                     
-                    Auth.auth().createUser(withEmail: emailText, password: passwordText){ (result,error) in
-                        if result != nil {
-                            print("register success")
-                            
-                            guard let user = result?.user else {return} //유저 객체를 가져옴
-                            
-                            //전달할 데이터
-                            let data = ["email": emailText, "name": nameText, "uid": user.uid, "nickName": nickNmaeText ]
-                            
-                            
-                            Firestore.firestore().collection("user").document(emailText).setData(data){ error in
-                                if let error = error{
-                                    print("DEBUG:\(error.localizedDescription)")
-                                    return
+                    if let link = UserDefaults.standard.string(forKey: "Link"){
+                        if Auth.auth().isSignIn(withEmailLink: link){
+                            Auth.auth().createUser(withEmail: emailText, password: passwordText){ (result,error) in
+                                if result != nil {
+                                    print("register success")
+                                    
+                                    guard let user = result?.user else {return} //유저 객체를 가져옴
+                                    
+                                    //전달할 데이터
+                                    let data = ["email": emailText, "name": nameText, "uid": user.uid, "nickName": nickNmaeText ]
+                                    
+                                    
+                                    Firestore.firestore().collection("user").document(emailText).setData(data){ error in
+                                        if let error = error{
+                                            print("DEBUG:\(error.localizedDescription)")
+                                            return
+                                        }
+                                        else{
+                                            print("Firestore \(emailText) SetData Success")
+                                        }
+                                    }
+                                    
+                                    self.navigationController?.popViewController(animated: true)
+                                    
                                 }
                                 else{
-                                    print("Firestore \(emailText) SetData Success")
+                                    if let maybeError = error{
+                                        let err = maybeError as NSError
+                                        switch err.code{
+                                        case AuthErrorCode.invalidEmail.rawValue:
+                                            self.errorLabel.text = "이메일 형식이 잘못되었습니다."
+                                        case AuthErrorCode.emailAlreadyInUse.rawValue:
+                                            self.errorLabel.text = "이미 사용중인 이메일입니다."
+                                        case AuthErrorCode.weakPassword.rawValue:
+                                            self.errorLabel.text = "암호는 6글자 이상이어야 합니다"
+                                        default:
+                                            print("unknow error:\(err.localizedDescription)")
+                                        }
+                                    }
                                 }
                             }
-                            
-                            self.navigationController?.popViewController(animated: true)
-                            
                         }
                         else{
-                            if let maybeError = error{
-                                let err = maybeError as NSError
-                                switch err.code{
-                                case AuthErrorCode.invalidEmail.rawValue:
-                                    self.errorLabel.text = "이메일 형식이 잘못되었습니다."
-                                case AuthErrorCode.emailAlreadyInUse.rawValue:
-                                    self.errorLabel.text = "이미 사용중인 이메일입니다."
-                                case AuthErrorCode.weakPassword.rawValue:
-                                    self.errorLabel.text = "암호는 6글자 이상이어야 합니다"
-                                default:
-                                    print("unknow error:\(err.localizedDescription)")
-                                }
-                            }
+                            self.errorLabel.text = "비밀번호가 같지 않습니다."
                         }
                     }
-                    
+                    else{
+                        let alert = UIAlertController(title: "이메일 인증 필요", message: "이메일 인증을 누르시고 \n 작성하신 이메일에서 인증을 완료해주세요!!", preferredStyle: .alert)
+                        let confirm = UIAlertAction(title: "확인", style: .cancel)
+                        
+                        alert.addAction(confirm)
+                        
+                        present(alert, animated: false)
+                        
+                    }
                 }
-                else{
-                    self.errorLabel.text = "비밀번호가 같지 않습니다."
-                }
+                
             }
         }
     }
@@ -221,12 +241,11 @@ class JoinTheMembershipViewController: UIViewController{
     lazy var logInButton : UIButton = {
         let button = UIButton()
         button.setTitle("로그인", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         button.layer.cornerRadius = 10
-        button.backgroundColor = .systemBlue
-        button.titleLabel?.font = UIFont.init(name: "Maplestory OTF Bold.otf", size: 13)
+        button.backgroundColor = .white
         button.addTarget(self, action: #selector(tapLogInButton(_:)), for: .touchUpInside)
-        button.layer.cornerRadius = 2
         return button
     }()
     
@@ -243,7 +262,7 @@ class JoinTheMembershipViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+        //        self.view.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
         
         setLayoutConstraints()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -278,48 +297,55 @@ class JoinTheMembershipViewController: UIViewController{
     }
     
     private let contentScrollView: UIScrollView = {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
-            scrollView.showsVerticalScrollIndicator = false
-            
-            return scrollView
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
+        scrollView.showsVerticalScrollIndicator = false
+        
+        return scrollView
     }()
     
     private let contentView: UIView = {
-            let view = UIView()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     
     lazy var sendEmailButton: UIButton = {
         let button = UIButton()
         button.setTitle("인증", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(tapSendEmailButton(_:)), for: .touchUpInside)
         return button
     }()
     
     @objc func tapSendEmailButton(_ sender: UIButton){
-        let actionCodeSettings = ActionCodeSettings()
-        actionCodeSettings.handleCodeInApp = true
+        
         guard let email = emailTextField.text else {return}
-        Auth.auth().sendSignInLink(toEmail: email,
-                                   actionCodeSettings: actionCodeSettings) { error in
-          // ...
-            if let error = error {
-               print(error.localizedDescription)
-              return
-            }
-            print(email)
-            // The link was successfully sent. Inform the user.
-            // Save the email locally so you don't need to ask the user for it again
-            // if they open the link on the same device.
-//            UserDefaults.standard.set(email, forKey: "Email")
-//            self.showMessagePrompt("Check your email for link")
-            // ...
+        
+        if email.isEmpty {
+            self.errorLabel.text = "이메일 작성 후 인증버튼을 눌러주세요"
+        }
+        else{
+            let actionCodeSettings = ActionCodeSettings()
+            actionCodeSettings.url = URL(string:"https://bluecheck-b090c.firebaseapp.com/?email=\(email)")
+            actionCodeSettings.handleCodeInApp = true
+            actionCodeSettings.setIOSBundleID(Bundle.main.bundleIdentifier!)
             
-            //MARK: 동적링크 생성해서 해야될듯
+            Auth.auth().sendSignInLink(toEmail: email,
+                                       actionCodeSettings: actionCodeSettings) { error in
+                // ...
+                if let error = error {
+                    print(error.localizedDescription)
+                    self.errorLabel.text = "잘못된 이메일입니다."
+                    return
+                }
+                print("To: \(email) send Email Success")
+            }
         }
     }
     
@@ -367,7 +393,7 @@ class JoinTheMembershipViewController: UIViewController{
         
         sendEmailButton.translatesAutoresizingMaskIntoConstraints = false
         
-//        let contentView = view.safeAreaLayoutGuide
+        //        let contentView = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
             
@@ -387,12 +413,12 @@ class JoinTheMembershipViewController: UIViewController{
             
             
             blueCheckLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: view.bounds.height / 10),
+            blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: view.bounds.height / 12),
             
             joinRequestPhrasesLabel.topAnchor.constraint(equalTo: self.blueCheckLabel.bottomAnchor,constant: 20),
             joinRequestPhrasesLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 30),
+            emailLabel.topAnchor.constraint(equalTo: joinRequestPhrasesLabel.bottomAnchor,constant: 50),
             emailLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
             
             emailTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 40),
@@ -447,13 +473,18 @@ class JoinTheMembershipViewController: UIViewController{
             logInBoundaryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -40),
             logInBoundaryView.heightAnchor.constraint(equalToConstant: 2),
             
+            logInButton.heightAnchor.constraint(equalToConstant: 44),
+            logInButton.widthAnchor.constraint(equalToConstant: 75),
+            
+            
             logInStackView.topAnchor.constraint(equalTo: self.logInBoundaryView.bottomAnchor,constant: 15),
             logInStackView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            sendEmailButton.topAnchor.constraint(equalTo: logInStackView.bottomAnchor, constant: 10),
-            sendEmailButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            sendEmailButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            sendEmailButton.heightAnchor.constraint(equalToConstant: 44)
+            
+            sendEmailButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
+            sendEmailButton.bottomAnchor.constraint(equalTo: emailTextField.topAnchor, constant: -10),
+            sendEmailButton.heightAnchor.constraint(equalToConstant: 44),
+            sendEmailButton.widthAnchor.constraint(equalToConstant: 75),
             
         ])
         

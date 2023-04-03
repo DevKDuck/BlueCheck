@@ -136,18 +136,23 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
         return tableView
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
+        
         self.setComponentDate()
         
         //MARK: UserDefualt 모두 삭제
 //                for key in UserDefaults.standard.dictionaryRepresentation().keys {
 //                    UserDefaults.standard.removeObject(forKey: key.description)
 //                }
-//        
+
         
         getUserDefaultsTasks()
         self.setCollectionView()
@@ -194,6 +199,7 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
     func checkUserDefaultsTasks(){
         
         haveScheduleArray.removeAll()
+        
         for day in days{
             let objectKey: String = "\(components.year!)년 \(components.month!)월 \(day)일"
             if let savedData = UserDefaults.standard.object(forKey: objectKey) as? Data{
@@ -391,6 +397,7 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
 
         cell.haveScheduleCircle.isHidden = haveScheduleArray[indexPath.row]
         
+        
         //오늘 날짜 default Select
         if (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
@@ -461,6 +468,8 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
                 MyCheckListTableViewCell else {return UITableViewCell()}
         if let taskArray = taskArray {
             cell.contentLabel.text = taskArray[indexPath.row].title
+            cell.checkOrNoCheck = taskArray[indexPath.row].check
+            
             cell.importLabel.text = taskArray[indexPath.row].importance
             switch taskArray[indexPath.row].importance{
             case "매우 중요":
@@ -472,6 +481,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
             default:
                 break
             }
+            
             
         }
         
@@ -492,15 +502,15 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         
         self.taskArray?.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
-        let encoder = JSONEncoder()
         if self.taskArray?.isEmpty == true{
             UserDefaults.standard.removeObject(forKey: translateObjectKey)
+
             checkUserDefaultsTasks()
             collectionView.reloadData()
         }
-        if let encoded = try? encoder.encode(taskArray){
-            UserDefaults.standard.set(encoded, forKey: translateObjectKey)
-        }
+//        if let encoded = try? encoder.encode(taskArray){
+//            UserDefaults.standard.set(encoded, forKey: translateObjectKey)
+//        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -14,6 +14,7 @@ class StartAnimationViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         let time = DispatchTime.now() + 5.0
         DispatchQueue.main.asyncAfter(deadline: time){ [weak self] in
             self?.goTabBarViewController()

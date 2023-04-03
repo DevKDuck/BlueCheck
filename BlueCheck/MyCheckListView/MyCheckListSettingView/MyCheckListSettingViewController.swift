@@ -93,18 +93,19 @@ class MyCheckListSettingViewController: UIViewController{
         
         if taskAddOrModify == 0{
             if taskArray != nil {
-                taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue))
+                taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false))
             }
             else{
-                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)]
+                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)]
             }
+            
         }//추가
         else if taskAddOrModify == 1{
             if taskArray != nil {
-                taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)
+                taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)
             }
             else{
-                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue)]
+                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)]
             }
         }
         

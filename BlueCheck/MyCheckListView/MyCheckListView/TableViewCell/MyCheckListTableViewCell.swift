@@ -23,7 +23,7 @@ class MyCheckListTableViewCell: UITableViewCell{
         label.textAlignment = .center
         return label
     }()
-    var checkOrNoCheck = true
+    var checkOrNoCheck = false
     
     
     lazy var checkButton: UIButton = {

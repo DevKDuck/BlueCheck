@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -30,6 +31,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
 //        window.windowScene = windowScene
         self.window = window
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        guard let webpageURL = userActivity.webpageURL else {return}
+        let link = webpageURL.absoluteString
+        if Auth.auth().isSignIn(withEmailLink: link){
+            UserDefaults.standard.set(link, forKey: "Link")
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
