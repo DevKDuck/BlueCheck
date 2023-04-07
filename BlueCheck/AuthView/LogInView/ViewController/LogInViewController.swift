@@ -283,7 +283,10 @@ class LogInViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        for key in UserDefaults.standard.dictionaryRepresentation().keys {
+//            UserDefaults.standard.removeObject(forKey: key.description)
+//        }
+
         self.view.backgroundColor = .white
         buttonConfiguration()
         setLayoutConstraints()

@@ -550,9 +550,14 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
             checkUserDefaultsTasks()
             collectionView.reloadData()
         }
-//        if let encoded = try? encoder.encode(taskArray){
-//            UserDefaults.standard.set(encoded, forKey: translateObjectKey)
-//        }
+        else{
+            if let task = taskArray{
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(task){
+                    UserDefaults.standard.set(encoded, forKey: translateObjectKey)
+                }
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
