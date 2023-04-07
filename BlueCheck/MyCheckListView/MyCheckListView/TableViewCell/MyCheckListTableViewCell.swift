@@ -10,14 +10,13 @@ import UIKit
 
 class MyCheckListTableViewCell: UITableViewCell{
     
-    var contentLabel: UILabel = {
+    lazy var contentLabel: UILabel = {
         var label = UILabel()
-        label.textColor = .darkGray
         label.textAlignment = .left
         return label
     }()
     
-    var importLabel: UILabel = {
+     var importLabel: UILabel = {
         var label = UILabel()
         label.textColor = .darkGray
         label.textAlignment = .center
@@ -28,35 +27,9 @@ class MyCheckListTableViewCell: UITableViewCell{
     
     lazy var checkButton: UIButton = {
         var button = UIButton()
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
-        button.setImage(UIImage(systemName: "squareshape", withConfiguration: imageConfig), for: .normal)
-        button.tintColor = .systemBlue
-        button.addTarget(self, action: #selector(tapRemoveButton(_:)), for: .touchUpInside)
         return button
     }()
-    
-    
-    @objc func tapRemoveButton(_ sender: UITapGestureRecognizer){
-        if checkOrNoCheck == true {
-            let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
-            checkButton.setImage(UIImage(systemName: "checkmark.square",withConfiguration: imageConfig), for: .normal)
-            checkOrNoCheck = false
-            contentView.backgroundColor = .systemBlue
-            contentLabel.textColor = .white
-            importLabel.textColor = .black
-            checkButton.tintColor = .white
-        }
-        else{
-            let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
-            checkButton.setImage(UIImage(systemName: "squareshape", withConfiguration: imageConfig), for: .normal)
-            checkOrNoCheck = true
-            contentView.backgroundColor = .white
-            contentLabel.textColor = .darkGray
-            importLabel.textColor = .darkGray
-            checkButton.tintColor = .systemBlue
-        }
-    }
-    
+  
     
     private func setConstraint(){
         contentView.addSubview(importLabel)
@@ -94,6 +67,8 @@ class MyCheckListTableViewCell: UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         setConstraint()
+        
+
     }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
     
     

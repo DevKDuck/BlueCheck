@@ -167,7 +167,7 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
         
     }
     
-    func getUserDefaultsTasks(){
+    func        getUserDefaultsTasks(){
         let objectKey: String = "\(components.year!)년 \(components.month!)월 \(cal.component(.day, from: now))일"
         //        MARK: 제거
         //                UserDefaults.standard.removeObject(forKey: objectKey)
@@ -467,8 +467,28 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
                 MyCheckListTableViewCell else {return UITableViewCell()}
         if let taskArray = taskArray {
+            
+            
             cell.contentLabel.text = taskArray[indexPath.row].title
-            cell.checkOrNoCheck = taskArray[indexPath.row].check
+            
+            if taskArray[indexPath.row].check == true{
+                let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
+                cell.checkButton.setImage(UIImage(systemName: "checkmark.square", withConfiguration: imageConfig), for: .normal)
+                cell.checkButton.tintColor = .white
+                cell.contentLabel.textColor = .white
+                cell.contentView.backgroundColor = .systemBlue
+            }
+            
+            else{
+                let imageConfig = UIImage.SymbolConfiguration(pointSize: 35)
+                cell.checkButton.setImage(UIImage(systemName: "squareshape", withConfiguration: imageConfig), for: .normal)
+                cell.checkButton.tintColor = .systemBlue
+                cell.contentLabel.textColor = .darkGray
+                cell.contentView.backgroundColor = .white
+            }
+            
+            cell.checkButton.tag = indexPath.row
+            cell.checkButton.addTarget(self, action: #selector(tapCheckButton(_:)), for: .touchUpInside)
             
             cell.importLabel.text = taskArray[indexPath.row].importance
             switch taskArray[indexPath.row].importance{
@@ -487,6 +507,28 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         
         return cell
     }
+    
+    
+    
+    
+    @objc func tapCheckButton(_ sender: UIButton){
+        guard var task = taskArray else {return}
+        if task[sender.tag].check == true {
+            taskArray?[sender.tag].check = false
+        }
+        else{
+            taskArray?[sender.tag].check = true
+            
+        }
+
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(taskArray){
+            UserDefaults.standard.set(encoded, forKey: translateObjectKey)
+        }
+        tableView.reloadData()
+        
+    }
+  
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let goMyCheckListSettingViewController = MyCheckListSettingViewController()
