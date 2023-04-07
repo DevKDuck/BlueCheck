@@ -90,23 +90,16 @@ class MyCheckListSettingViewController: UIViewController{
         
         guard let title = titleTextField.text else {return}
         guard let content = contentTextView.text else {return}
+        guard let task = taskArray else {return}
         
         if taskAddOrModify == 0{
-            if taskArray != nil {
-                taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false))
-            }
-            else{
-                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)]
-            }
+            taskArray?.append(MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false))
+        
             
         }//추가
         else if taskAddOrModify == 1{
-            if taskArray != nil {
-                taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)
-            }
-            else{
-                taskArray = [MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: false)]
-            }
+            taskArray?[taskIndex] = MyCheckListTask(title: title, content: content, importance: taskImportance.rawValue, check: task[taskIndex].check)
+            
         }
         
         let MyCheckListTableViewTasks = taskArray

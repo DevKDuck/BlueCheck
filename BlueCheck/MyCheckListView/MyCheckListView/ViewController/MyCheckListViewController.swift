@@ -512,7 +512,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
     
     
     @objc func tapCheckButton(_ sender: UIButton){
-        guard var task = taskArray else {return}
+        guard let task = taskArray else {return}
         if task[sender.tag].check == true {
             taskArray?[sender.tag].check = false
         }
