@@ -7,13 +7,9 @@
 
 import UIKit
 import Firebase
-import FirebaseAuth
 import FirebaseFirestore
 
 class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
-    
-    
-    var currentUserEmail: String = ""
     
     
     override func viewDidLoad() {
@@ -24,6 +20,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         
     
         let bucketListViewController = BucketListViewController()
@@ -40,7 +37,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         let groupCheckListViewController = UINavigationController(rootViewController: groupCheckRootViewController)
         let groupCheckListViewControllerBarItem = UITabBarItem(title: "Group List", image: UIImage(systemName: "person.and.person"), selectedImage: UIImage(systemName: "person.and.person.fill"))
         groupCheckListViewController.tabBarItem = groupCheckListViewControllerBarItem
-        groupCheckRootViewController.currentUserEmail = self.currentUserEmail
+//        groupCheckRootViewController.currentUserEmail = self.currentUserEmail
         
         
         
@@ -49,7 +46,7 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate{
         let myAccountViewController = UINavigationController(rootViewController: myAccountRootViewController)
         
         let myAccountViewControllerBarItem = UITabBarItem(title: "ETC", image:UIImage(systemName: "ellipsis.circle"), selectedImage: UIImage(systemName: "ellipsis.circle.fill"))
-        myAccountRootViewController.currentUserEmail = self.currentUserEmail
+//        myAccountRootViewController.currentUserEmail = self.currentUserEmail
         myAccountViewController.tabBarItem = myAccountViewControllerBarItem
         
         self.viewControllers = [bucketListViewController,myCheckListViewController,groupCheckListViewController,myAccountViewController]

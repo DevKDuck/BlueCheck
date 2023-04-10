@@ -17,7 +17,7 @@ class LogInViewController: UIViewController{
     
     
     var userSession: FirebaseAuth.User?
-    var currentUser: User?
+//    var currentUser: User?
     
     static let shared = LogInViewController() //싱글톤..... 추후에 구성해보자
     
@@ -110,7 +110,8 @@ class LogInViewController: UIViewController{
                         
                         let vc = TabbarViewController()
                         
-                        vc.currentUserEmail = idText
+                        //MARK: currenUserEmail
+//                        vc.currentUserEmail = idText
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                         
@@ -133,7 +134,8 @@ class LogInViewController: UIViewController{
                     
                     let vc = TabbarViewController()
                     
-                    vc.currentUserEmail = userid
+                    //MARK: currenUserEmail
+//                    vc.currentUserEmail = userid
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                     
@@ -151,7 +153,14 @@ class LogInViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
         navigationController?.navigationBar.isHidden = true
+        if  Auth.auth().currentUser != nil{
+            
+            let tabbarVC = TabbarViewController()
+            tabbarVC.modalPresentationStyle = .fullScreen
+            self.present(tabbarVC, animated: false)
+        }
         
     }
     
@@ -482,12 +491,16 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                 }
                 
                 
+                //MARK: 애플로그인
+                Auth.auth().addStateDidChangeListener{auth, user in
+                }
+                
                 goTabbarViewController()
                 
                 
                 func goTabbarViewController(){
                     let tabbarViewController = TabbarViewController()
-                    tabbarViewController.currentUserEmail = authResult?.user.email ?? ""
+//                    tabbarViewController.currentUserEmail = authResult?.user.email ?? ""
                     tabbarViewController.modalPresentationStyle = .fullScreen
                     self.present(tabbarViewController, animated: true)
                 }

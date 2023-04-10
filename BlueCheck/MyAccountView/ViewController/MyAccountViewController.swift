@@ -56,10 +56,18 @@ class MyAccountViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        getFirebaseAuth()
         self.navigationController?.navigationBar.isHidden = false
         setNavigationBar()
         getFireStoreData()
         
+    }
+    
+    func getFirebaseAuth(){
+        let user = Auth.auth().currentUser
+        if let user = user{
+            currentUserEmail = user.email!
+        }
     }
     
     func setNavigationBar(){
@@ -173,9 +181,18 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         if indexPath.row == 2 {
-            UserDefaults.standard.removeObject(forKey: "id")
-            UserDefaults.standard.removeObject(forKey: "pw")
+//            UserDefaults.standard.removeObject(forKey: "id")
+//            UserDefaults.standard.removeObject(forKey: "pw")
+            let firebaseAuth = Auth.auth()
+            do {
+              try firebaseAuth.signOut()
+            } catch let signOutError as NSError {
+              print("Error signing out: %@", signOutError)
+            }
+            
             self.dismiss(animated: true)
+            LogInViewController().modalPresentationStyle = .fullScreen
+            self.present(LogInViewController(), animated: false)
         }
     }
     

@@ -344,6 +344,12 @@ class JoinTheMembershipViewController: UIViewController{
                     self.errorLabel.text = "잘못된 이메일입니다."
                     return
                 }
+                let alert = UIAlertController(title: "이메일 전송 완료", message: "작성하신 이메일에서 인증해주세요", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "확인", style: .cancel)
+                
+                alert.addAction(cancel)
+                
+                self.present(alert, animated: false)
                 print("To: \(email) send Email Success")
             }
         }

@@ -7,6 +7,7 @@
 
 import UIKit
 import Lottie
+import FirebaseAuth
 
 class StartAnimationViewController: UIViewController{
     
@@ -17,7 +18,8 @@ class StartAnimationViewController: UIViewController{
         
         let time = DispatchTime.now() + 5.0
         DispatchQueue.main.asyncAfter(deadline: time){ [weak self] in
-            self?.goTabBarViewController()
+                self?.goViewController()
+            
             
         }
         
@@ -31,12 +33,17 @@ class StartAnimationViewController: UIViewController{
         animationView.play()
     }
     
-    func goTabBarViewController()
+    func goViewController()
     {
         let rootVC = LogInViewController()
         
         let navigation = UINavigationController(rootViewController: rootVC)
         navigation.modalPresentationStyle = .fullScreen
         self.present(navigation, animated: true)
+        
+//        rootVC.modalPresentationStyle = .fullScreen
+//        self.present(rootVC, animated: true)
     }
+    
+    
 }

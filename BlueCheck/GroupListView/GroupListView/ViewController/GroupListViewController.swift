@@ -60,6 +60,7 @@ class GroupListViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        getFirebaseAuth()
         self.navigationController?.navigationBar.isHidden = true
         groupNameArray.removeAll()
         groupDocumentsArray.removeAll()
@@ -67,6 +68,14 @@ class GroupListViewController: UIViewController{
         getFireStoreData()
         
     }
+    
+    func getFirebaseAuth(){
+        let user = Auth.auth().currentUser
+        if let user = user{
+            currentUserEmail = user.email!
+        }
+    }
+    
     
     func getFireStoreData() {
         Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
