@@ -96,10 +96,8 @@ class EachGroupRecordsViewController: UIViewController {
                 }
                 
             }
-            
-                self.groupListTableView.reloadData()
+            self.groupListTableView.reloadData()
         }
-        
     }
     
     
@@ -123,6 +121,7 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
             
         for (index, imageName) in groupListArray[indexPath.row].image.enumerated() {
             Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
+                print("몇번 소환 되는지")
                 if let error = error {
                     print(error)
                 }
@@ -130,8 +129,11 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
                     let image = UIImage(data: data!)
                     guard let image = image else {return}
                     
+                    
+                    
                     switch index {
                     case 0:
+                        
                         cell.cellimageView.image = image
                         addImageScrollView(imageView: cell.cellimageView, index: 0)
                     case 1:
@@ -187,6 +189,19 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
             
             // 자신이 쓴 글이라면 삭제할 수 있는 권한주기
             if self.groupListArray[sender.tag].writerEmail == self.currentUserEmail{
+                //스토리지 삭제
+                for image in self.groupListArray[sender.tag].image{
+                    let desertRef = Storage.storage().reference().child(image)
+                    
+                    // Delete the file
+                    desertRef.delete { error in
+                        if let error = error {
+                            print("Uh-oh, an error occurred!: \(error.localizedDescription)")
+                        } else {
+                            print("Storage successfully removed!")
+                        }
+                    }
+                }
                 //ALL삭제
                 Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").document(self.groupListArray[sender.tag].documentID).delete() { err in
                     if let err = err {
@@ -202,19 +217,6 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
                     } else {
                         print("Document successfully removed!")
                         
-                    }
-                }
-                //스토리지 삭제
-                for image in self.groupListArray[sender.tag].image{
-                    let desertRef = Storage.storage().reference().child(image)
-                    
-                    // Delete the file
-                    desertRef.delete { error in
-                        if let error = error {
-                            print("Uh-oh, an error occurred!: \(error.localizedDescription)")
-                        } else {
-                            // File deleted successfully
-                        }
                     }
                 }
                 self.getFireStoreData()

@@ -294,29 +294,17 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         if tag == 1{
             
             // Stroage 이미지 삭제
-            Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID).getDocument{ snapShot, error in
-                if let error = error{
-                    print("RemoveFirestore getImageRefError: \(error)")
-                }
-                else{
-                    guard let snapShot = snapShot else {return}
-                    let data = snapShot.data()
-                    guard let imageArray = data?["image"] as? [String] else {return}
-
-                    for image in imageArray{
-                        let desertRef = Storage.storage().reference().child(image)
-                        desertRef.delete { error in
-                            if let error = error {
-                                print("Delete the file error: \(error.localizedDescription)")
-                            } else {
-                                print("Storage Delete Success")
-                            }
-                        }
+            for image in modifyArray{
+                let desertRef = Storage.storage().reference().child(image)
+                desertRef.delete { error in
+                    if let error = error {
+                        print("Delete the file error: \(error.localizedDescription)")
+                    } else {
+                        print("Storage Delete Success")
                     }
                 }
-
             }
-            
+
             
             //새로운 내용을 만들때 만드는 문서
             let doc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID)
