@@ -77,6 +77,7 @@ class EachGroupRecordsViewController: UIViewController {
     
     func getFireStoreData() {
         
+        LoadingIndicator.showLoading()
         Firestore.firestore().collection(self.groupDocumentName).document("ALL").collection("Record").getDocuments { querySnapshot, error in
             if let error = error {
                 print("GroupListCollectionView - GetFireStoreDataError: \(error.localizedDescription)")
@@ -96,6 +97,7 @@ class EachGroupRecordsViewController: UIViewController {
                 }
                 
             }
+            LoadingIndicator.hideLoading()
             self.groupListTableView.reloadData()
         }
     }
@@ -118,10 +120,9 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
         cell.writerLabel.text = "작성자: " + groupListArray[indexPath.row].writer
         cell.modifyButton.tag = indexPath.row
         
-            
+        
         for (index, imageName) in groupListArray[indexPath.row].image.enumerated() {
             Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
-                print("몇번 소환 되는지")
                 if let error = error {
                     print(error)
                 }

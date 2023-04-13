@@ -53,6 +53,7 @@
 		8C508AFE29A30F2800EF29B8 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFD29A30F2800EF29B8 /* FirebaseStorage */; };
 		8C508B0029A30F2800EF29B8 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 8C508AFF29A30F2800EF29B8 /* FirebaseStorageCombine-Community */; };
 		8C527A9229AE010F0076EA0C /* InvitationGroupContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */; };
+		8C53A51229E7F54900605189 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C53A51129E7F54800605189 /* LoadingIndicator.swift */; };
 		8C61C95129A35ED500701799 /* TabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C61C95029A35ED500701799 /* TabbarViewController.swift */; };
 		8C70CA4129A5CC6A005F5A0D /* EachGroupRecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4029A5CC6A005F5A0D /* EachGroupRecordsViewController.swift */; };
 		8C70CA4329A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */; };
@@ -103,6 +104,7 @@
 		8C23EAB6296D526F0042248F /* BucketListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BucketListTableViewCell.swift; sourceTree = "<group>"; };
 		8C527A9129AE010F0076EA0C /* InvitationGroupContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationGroupContentViewController.swift; sourceTree = "<group>"; };
 		8C527A9329AF4C990076EA0C /* BlueCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BlueCheck.entitlements; sourceTree = "<group>"; };
+		8C53A51129E7F54800605189 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		8C61C95029A35ED500701799 /* TabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarViewController.swift; sourceTree = "<group>"; };
 		8C70CA4029A5CC6A005F5A0D /* EachGroupRecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsViewController.swift; sourceTree = "<group>"; };
 		8C70CA4229A5CD6C005F5A0D /* EachGroupRecordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordsTableViewCell.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		8C23EA87296D2B3F0042248F = {
 			isa = PBXGroup;
 			children = (
+				8C53A51129E7F54800605189 /* LoadingIndicator.swift */,
 				8C164B2629C88A8B00ED7D90 /* Resource */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
@@ -766,6 +769,7 @@
 				8C0EDB2729891D61007FD35C /* GroupListTableViewCell.swift in Sources */,
 				8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */,
 				8C74C27D29D1940D00267152 /* CalendarColelctionLayout.swift in Sources */,
+				8C53A51229E7F54900605189 /* LoadingIndicator.swift in Sources */,
 				8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */,
 				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,

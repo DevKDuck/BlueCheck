@@ -144,6 +144,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         super.viewWillAppear(true)
         
         if tag == 1{
+            LoadingIndicator.showLoading()
             for imageName in modifyArray {
                 Storage.storage().reference().child(imageName).getData(maxSize: 1 * 1024 * 1024) { data, error in
                     if let error = error {
@@ -155,8 +156,9 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                     }
                 }
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0){
+                        
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                LoadingIndicator.hideLoading()
                 self.imageCollectionView.reloadData()
             }
             
@@ -293,6 +295,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         
         if tag == 1{
             
+            LoadingIndicator.showLoading()
             // Stroage 이미지 삭제
             for image in modifyArray{
                 let desertRef = Storage.storage().reference().child(image)
@@ -330,7 +333,10 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             
         }
         
-        self.navigationController?.popViewController(animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+            LoadingIndicator.hideLoading()
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     
