@@ -78,6 +78,7 @@ class GroupListViewController: UIViewController{
     
     
     func getFireStoreData() {
+        LoadingIndicator.showLoading()
         Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").getDocuments { querySnapshot, error in
             
             guard let querySnapshot = querySnapshot else {return}
@@ -108,6 +109,7 @@ class GroupListViewController: UIViewController{
                 }
                 
             }
+            LoadingIndicator.hideLoading()
             self.tableView.reloadData()
         }
     }

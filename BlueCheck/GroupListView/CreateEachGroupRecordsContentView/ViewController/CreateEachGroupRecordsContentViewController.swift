@@ -475,8 +475,11 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     func openCamera(){
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .camera
+        imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        present(imagePicker, animated: true)
+        imagePicker.modalPresentationStyle = .fullScreen
+
+        self.present(imagePicker, animated: true)
         
     }
     
@@ -535,6 +538,10 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
                 self.userSelectedImages.append(newImage! as UIImage)
             }
         }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     
@@ -622,6 +629,7 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
         else {
             self.present(alert, animated: true)
         }
+        
         
     }
     
