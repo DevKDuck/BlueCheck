@@ -477,7 +477,7 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-        imagePicker.modalPresentationStyle = .fullScreen
+        imagePickerControllerDidCancel(imagePicker)
 
         self.present(imagePicker, animated: true)
         

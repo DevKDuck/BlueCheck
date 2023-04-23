@@ -52,22 +52,29 @@ class EachGroupRecordsViewController: UIViewController {
         return tableView
     }()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         groupListTableView.delegate = self
         groupListTableView.dataSource = self
-        self.navigationItem.rightBarButtonItem = self.addContentButton
+
+        self.navigationController?.navigationItem.rightBarButtonItem = self.addContentButton
+        
         setTableViewLayoutConstraints()
+        
+        navigationController?.hidesBarsOnSwipe = true
+        
+        
         
         
     }
     
     func setTableViewLayoutConstraints(){
         self.view.addSubview(groupListTableView)
-        
-        groupListTableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+
+        groupListTableView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
         groupListTableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         groupListTableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         groupListTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -264,6 +271,23 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return groupListTableView.bounds.height
+    }
+    
+    //TabBar 사라지게 하기
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard velocity.y != 0 else { return }
+            if velocity.y < 0 {
+                let height = self?.tabBarController?.tabBar.frame.height ?? 0.0
+                self?.tabBarController?.tabBar.alpha = 1.0
+                self?.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY - height)
+                
+            } else {
+                self?.tabBarController?.tabBar.alpha = 0.0
+                self?.tabBarController?.tabBar.frame.origin = CGPoint(x: 0, y: UIScreen.main.bounds.maxY)
+                
+            }
+        }
     }
     
 }
