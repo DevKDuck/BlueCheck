@@ -541,7 +541,7 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     

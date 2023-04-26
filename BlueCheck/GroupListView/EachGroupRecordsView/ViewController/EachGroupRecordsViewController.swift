@@ -60,8 +60,10 @@ class EachGroupRecordsViewController: UIViewController {
         groupListTableView.delegate = self
         groupListTableView.dataSource = self
 
-        self.navigationController?.navigationItem.rightBarButtonItem = self.addContentButton
-        
+//        self.navigationController?.navigationItem.rightBarButtonItem = self.addContentButton
+//        self.navigationController?.navigationBar.backItem?.title = "뒤로가기"
+//        self.navigationController?.navigationBar.topItem?.title = "그룹 리스트"
+        self.navigationItem.rightBarButtonItem = self.addContentButton
         setTableViewLayoutConstraints()
         
         navigationController?.hidesBarsOnSwipe = true
@@ -270,7 +272,7 @@ extension EachGroupRecordsViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return groupListTableView.bounds.height
+        return groupListTableView.bounds.height - 50
     }
     
     //TabBar 사라지게 하기

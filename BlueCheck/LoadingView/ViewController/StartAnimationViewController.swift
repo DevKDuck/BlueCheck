@@ -19,8 +19,6 @@ class StartAnimationViewController: UIViewController{
         let time = DispatchTime.now() + 5.0
         DispatchQueue.main.asyncAfter(deadline: time){ [weak self] in
                 self?.goViewController()
-            
-            
         }
         
         
