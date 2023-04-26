@@ -34,7 +34,7 @@ class EachGroupRecordsViewController: UIViewController {
         goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
         goVC.tag = 0
-        goVC.modalPresentationStyle = .fullScreen
+//        goVC.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(goVC, animated: true)
     }
     
@@ -60,9 +60,6 @@ class EachGroupRecordsViewController: UIViewController {
         groupListTableView.delegate = self
         groupListTableView.dataSource = self
 
-//        self.navigationController?.navigationItem.rightBarButtonItem = self.addContentButton
-//        self.navigationController?.navigationBar.backItem?.title = "뒤로가기"
-//        self.navigationController?.navigationBar.topItem?.title = "그룹 리스트"
         self.navigationItem.rightBarButtonItem = self.addContentButton
         setTableViewLayoutConstraints()
         
