@@ -472,15 +472,15 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
 
 extension CreateEachGroupRecordsContentViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     
-//    func openCamera(){
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.sourceType = .camera
-//        imagePicker.delegate = self
-//        imagePicker.allowsEditing = false
-//
-//        present(imagePicker, animated: false)
-//
-//    }
+    func openCamera(){
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = false
+
+        present(imagePicker, animated: false)
+
+    }
     
     func openLibrary(){
         //        self.picker.sourceType = .photoLibrary
@@ -490,15 +490,15 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     }
     
     
-//    func testLibrary(){
-//        let imagePicker = UIImagePickerController()
-//        imagePicker.sourceType = .photoLibrary
-//        imagePicker.delegate = self
-//
-////        imagePicker.modalPresentationStyle = .fullScreen
-//        present(imagePicker, animated: false)
-//
-//    }
+    func testLibrary(){
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+
+        imagePicker.modalPresentationStyle = .fullScreen
+        present(imagePicker, animated: false)
+
+    }
     
     func pressImageLibrary(){
         let imagePicker = ImagePickerController()
@@ -565,8 +565,7 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
             print("\(selectedImage)사진은 정상적으로 찍힘")
             self.userSelectedImages.append(selectedImage)
             self.imageCollectionView.reloadData()
-//            dismiss(animated: true)
-//            picker.dismiss(animated: true)
+            picker.dismiss(animated: true)
         }
     }
 }
@@ -607,15 +606,18 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "인증 사진 찾기", message: "자랑스럽게 이루어낸 사진을 공유하세요!", preferredStyle: .actionSheet)
         
-//        let camera = UIAlertAction(title: "카메라", style: .default) { camera in
-//            self.openCamera()
-//        }
-//
+        let camera = UIAlertAction(title: "카메라", style: .default) { camera in
+            self.openCamera()
+        }
+
         let album = UIAlertAction(title: "앨범", style: .default) { album in
             self.openLibrary()
         }
         
-
+        let test = UIAlertAction(title: "test", style: .default) { album in
+            self.testLibrary()
+        }
+        
         
         let cancel = UIAlertAction(title: "취소", style: .cancel) { cancel in
             alert.dismiss(animated: true)
@@ -624,6 +626,8 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
 //        alert.addAction(camera)
         alert.addAction(album)
         alert.addAction(cancel)
+        
+//        alert.addAction(test)
         
         
         //MARK: ActionSheet의 모달스타일은 UIModalPresentationPopover라고 설명을 해주면서 UIModalPresentationPopover을 사용 할 때는 barButtonItem 또는 팝업에 대한 위치를 설정해줘야 되어 패드와 아이폰 나눔

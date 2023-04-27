@@ -22,6 +22,7 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
             
             do{
                 let saveObject = try decoder.decode([MyCheckListTask].self, from:savedData)
+                
                 if saveObject.isEmpty{
                     print("tableView를 재설정했을 경우 인스턴스는 생성했지만 비어있습니다.")
                 }

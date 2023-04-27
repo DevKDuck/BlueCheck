@@ -121,17 +121,20 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         return label
     }()
     
+    let textViewPlaceHolder = "\n 시기 - ex)일주일에 3번 \n \n \n 내용 - ex)운동 인증과 식단을 올리는 모임입니다.💪"
+    
     lazy var contentTextView: UITextView = {
         let textView = UITextView()
-        
+        textView.font = .systemFont(ofSize: 18)
         textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
         textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 20)
         textView.layer.cornerRadius = 20
-        
-        textView.text = "\n 시기 - ex)일주일에 3번 \n \n \n 내용 - ex)운동 인증과 식단을 올리는 모임입니다.💪"
+        textView.text = textViewPlaceHolder
+        textView.delegate = self
+        textView.textColor = .lightGray
         return textView
     }()
     
@@ -383,16 +386,19 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
 }
 
 extension CreateGroupViewController: UITextViewDelegate{
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if contentTextView.text.isEmpty {
-            contentTextView.text = "\n 시기 - ex)일주일에 몇번 \n \n \n  내용 - ex)운동 인증과 식단을 올리는 목적"
-            contentTextView.textColor = UIColor.lightGray
-        }
-    }
+
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if contentTextView.textColor == UIColor.lightGray {
-            contentTextView.text = nil
-            contentTextView.textColor = UIColor.black
+            if textView.text == textViewPlaceHolder {
+                textView.text = nil
+                textView.textColor = .black
+            }
         }
-    }
+
+        func textViewDidEndEditing(_ textView: UITextView) {
+            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                textView.text = textViewPlaceHolder
+                textView.textColor = .lightGray
+
+            }
+        }
 }
