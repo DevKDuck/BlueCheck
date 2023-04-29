@@ -57,7 +57,7 @@ class GroupListTableViewCell: UITableViewCell{
             titleLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             
-            contentLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor,constant: 10),
+            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 10),
             contentLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
             contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -10)

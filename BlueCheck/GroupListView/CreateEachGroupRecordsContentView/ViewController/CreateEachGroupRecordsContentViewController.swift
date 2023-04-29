@@ -253,88 +253,101 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     
     @objc func tapCompleteButton(_ sender: UIButton){
         
-        if tag == 0{
-            if startDate == "" {
-                let now = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-                dateFormatter.locale = Locale(identifier:"ko_KR")
-                startDate = dateFormatter.string(from: now)
-            }
-            if endDate == "" {
-                let now = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
-                dateFormatter.locale = Locale(identifier:"ko_KR")
-                endDate = dateFormatter.string(from: now)
-            }
+        if titleTextField.text!.isEmpty || contentTextView.text.isEmpty || userSelectedImages.count == 1{
+            let alert = UIAlertController(title: "빈곳을 채워주세요!!", message: "제목, 내용, 사진을 꼭 입력해주세요☺️", preferredStyle: .alert)
             
-            
-            //새로운 내용을 만들때 만드는 문서
-            let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
-            
-            var imageDocArray : [String] = []
-            
-            for index in 1..<userSelectedImages.count {
-                let randomNum = newDoc.documentID + String(Float.random(in: 0...10))
-                imageDocArray.append(randomNum)
-                uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
-            }
-            
-            
-            
-            let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : newDoc.documentID, "writerEmail" : currentUserEmail] as [String : Any]
-            
-            newDoc.setData(["DocID" : newDoc.documentID])
-            
-            //        //그룹 -> Record -> 난수이미지 : data 로 업데이트
-            let groupDoc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(newDoc.documentID)
-            groupDoc.setData(data)
+            let cancel = UIAlertAction(title: "닫기", style: .cancel)
+            alert.addAction(cancel)
+            present(alert, animated: false)
         }
         
-        if tag == 1{
+        
+        else{
             
-            LoadingIndicator.showLoading()
-            // Stroage 이미지 삭제
-            for image in modifyArray{
-                let desertRef = Storage.storage().reference().child(image)
-                desertRef.delete { error in
-                    if let error = error {
-                        print("Delete the file error: \(error.localizedDescription)")
-                    } else {
-                        print("Storage Delete Success")
+            if tag == 0{
+                if startDate == "" {
+                    let now = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+                    dateFormatter.locale = Locale(identifier:"ko_KR")
+                    startDate = dateFormatter.string(from: now)
+                }
+                if endDate == "" {
+                    let now = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy년 MM월 dd일 HH시 mm분"
+                    dateFormatter.locale = Locale(identifier:"ko_KR")
+                    endDate = dateFormatter.string(from: now)
+                }
+                
+                
+                //새로운 내용을 만들때 만드는 문서
+                let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
+                
+                var imageDocArray : [String] = []
+                
+                
+                for index in 1..<userSelectedImages.count {
+                    let randomNum = newDoc.documentID + String(Float.random(in: 0...10))
+                    imageDocArray.append(randomNum)
+                    uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
+                }
+                
+                
+                
+                let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : newDoc.documentID, "writerEmail" : currentUserEmail] as [String : Any]
+                
+                newDoc.setData(["DocID" : newDoc.documentID])
+                
+                //        //그룹 -> Record -> 난수이미지 : data 로 업데이트
+                let groupDoc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(newDoc.documentID)
+                groupDoc.setData(data)
+            }
+            
+            if tag == 1{
+                
+                LoadingIndicator.showLoading()
+                // Stroage 이미지 삭제
+                for image in modifyArray{
+                    let desertRef = Storage.storage().reference().child(image)
+                    desertRef.delete { error in
+                        if let error = error {
+                            print("Delete the file error: \(error.localizedDescription)")
+                        } else {
+                            print("Storage Delete Success")
+                        }
                     }
                 }
-            }
-
-            
-            //새로운 내용을 만들때 만드는 문서
-            let doc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID)
-            
-            var imageDocArray : [String] = []
-            
-            for index in 1..<userSelectedImages.count {
-                let randomNum = documentID + String(Float.random(in: 0...10))
-                imageDocArray.append(randomNum)
-                uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
-            }
-            
-            
-            let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : documentID] as [String : Any]
-            
-            doc.updateData(data){ err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
+                
+                
+                //새로운 내용을 만들때 만드는 문서
+                let doc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID)
+                
+                var imageDocArray : [String] = []
+                
+                for index in 1..<userSelectedImages.count {
+                    let randomNum = documentID + String(Float.random(in: 0...10))
+                    imageDocArray.append(randomNum)
+                    uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
                 }
+                
+                
+                let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : documentID] as [String : Any]
+                
+                doc.updateData(data){ err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                }
+                
             }
             
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
-            LoadingIndicator.hideLoading()
-            self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+                LoadingIndicator.hideLoading()
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     
