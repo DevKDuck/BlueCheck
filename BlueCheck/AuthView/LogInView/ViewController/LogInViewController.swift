@@ -125,42 +125,69 @@ class LogInViewController: UIViewController{
     }
     
     func autoLogin(){
-        if let userid = UserDefaults.standard.string(forKey: "id"), let userpw = UserDefaults.standard.string(forKey: "password"){
-            Auth.auth().signIn(withEmail: userid, password: userpw){ (result, error) in
-                
-                if result != nil{
-                    
-                    //                    guard let user = result?.user else {return}
-                    
-                    let vc = TabbarViewController()
-                    
-                    //MARK: currenUserEmail
-//                    vc.currentUserEmail = userid
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                    
-                }
-                else{
-                    self.logInErrorLabel.text = "자동 로그인 실패 - 아이디,비밀번호를 확인해주세요!!"
-                }
-            }
-            
-            
-        }else{
-            print("AutoLogin failed")
-        }
+        
+//        if let autoLogInCheck = UserDefaults.standard.string(forKey: "LogIncheck"){
+//            if autoLogInCheck == "check"{
+//                if  Auth.auth().currentUser != nil{
+//
+//                    let tabbarVC = TabbarViewController()
+//                    tabbarVC.modalPresentationStyle = .fullScreen
+//                    self.present(tabbarVC, animated: false)
+//                }
+//            }
+//        }
+//
+//
+//
+//        if let userid = UserDefaults.standard.string(forKey: "id"), let userpw = UserDefaults.standard.string(forKey: "password"){
+//            Auth.auth().signIn(withEmail: userid, password: userpw){ (result, error) in
+//
+//                if result != nil{
+//
+//                    //                    guard let user = result?.user else {return}
+//
+//                    let vc = TabbarViewController()
+//
+//                    //MARK: currenUserEmail
+////                    vc.currentUserEmail = userid
+//                    vc.modalPresentationStyle = .fullScreen
+//                    self.present(vc, animated: true)
+//
+//                }
+//                else{
+//                    self.logInErrorLabel.text = "자동 로그인 실패 - 아이디,비밀번호를 확인해주세요!!"
+//                }
+//            }
+//
+//
+//        }else{
+//            print("AutoLogin failed")
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         navigationController?.navigationBar.isHidden = true
-        if  Auth.auth().currentUser != nil{
-            
-            let tabbarVC = TabbarViewController()
-            tabbarVC.modalPresentationStyle = .fullScreen
-            self.present(tabbarVC, animated: false)
+        
+        
+        //자동로그인의 값이 체크이고 최근 유저가 있을 경우 tabbar 자동으로 이동
+        if let autoLogInCheck = UserDefaults.standard.string(forKey: "LogIncheck"){
+            if autoLogInCheck == "check"{
+                if  Auth.auth().currentUser != nil{
+                    
+                    let tabbarVC = TabbarViewController()
+                    tabbarVC.modalPresentationStyle = .fullScreen
+                    self.present(tabbarVC, animated: false)
+                }
+            }
         }
+//        if  Auth.auth().currentUser != nil{
+//
+//            let tabbarVC = TabbarViewController()
+//            tabbarVC.modalPresentationStyle = .fullScreen
+//            self.present(tabbarVC, animated: false)
+//        }
         
     }
     
@@ -318,6 +345,7 @@ class LogInViewController: UIViewController{
     @objc func tapAutoLogInButton(_ sender: UIButton){
         autoLogInCheckButton.isSelected.toggle()
         let autoLogInImage = autoLogInCheckButton.isSelected ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+        autoLogInCheckButton.isSelected ? UserDefaults.standard.set("check", forKey: "LogIncheck") : UserDefaults.standard.set("Noncheck", forKey: "LogIncheck")
         autoLogInCheckButton.setImage(autoLogInImage, for: .normal)
     }
     

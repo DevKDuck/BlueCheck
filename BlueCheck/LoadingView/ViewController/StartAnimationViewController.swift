@@ -39,8 +39,7 @@ class StartAnimationViewController: UIViewController{
         navigation.modalPresentationStyle = .fullScreen
         self.present(navigation, animated: true)
         
-//        rootVC.modalPresentationStyle = .fullScreen
-//        self.present(rootVC, animated: true)
+
     }
     
     

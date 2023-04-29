@@ -55,8 +55,9 @@ class MyAccountViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        LoadingIndicator.showLoading()
         getFirebaseAuth()
+        LoadingIndicator.hideLoading()
         self.navigationController?.navigationBar.isHidden = false
         setNavigationBar()
         getFireStoreData()
