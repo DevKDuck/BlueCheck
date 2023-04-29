@@ -90,12 +90,11 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         let layout = UICollectionViewFlowLayout()
         
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 20, height: UIScreen.main.bounds.height / 3)
-        
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 80, height: UIScreen.main.bounds.height / 4)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
         collectionView.register(CreateEachGroupRecordsContentViewImageCollectionCell.self, forCellWithReuseIdentifier: "CreateEachGroupRecordsContentViewImageCollectionCell")
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 20)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -423,8 +422,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             startLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
             
-            //            startDatePicker.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2),
-            
             endDatePicker.topAnchor.constraint(equalTo: self.startDatePicker.bottomAnchor, constant: 5),
             endDatePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
@@ -433,8 +430,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             endLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
             
-            //            endDatePicker.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 3),
-            
             
             datebarView.topAnchor.constraint(equalTo: self.endDatePicker.bottomAnchor,constant: 5),
             datebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
@@ -442,15 +437,12 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             datebarView.heightAnchor.constraint(equalToConstant: 2),
             
             
-            //            recordImage.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
-            //            recordImage.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            //            recordImage.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            //            recordImage.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
-            
+      
             imageCollectionView.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
-            imageCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             imageCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageCollectionView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
+
             
             recordImagebarView.topAnchor.constraint(equalTo: self.imageCollectionView.bottomAnchor,constant: 5),
             recordImagebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
@@ -605,19 +597,19 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "인증 사진 찾기", message: "자랑스럽게 이루어낸 사진을 공유하세요!", preferredStyle: .actionSheet)
-        
-        let camera = UIAlertAction(title: "카메라", style: .default) { camera in
-            self.openCamera()
-        }
+//
+//        let camera = UIAlertAction(title: "카메라", style: .default) { camera in
+//            self.openCamera()
+//        }
 
         let album = UIAlertAction(title: "앨범", style: .default) { album in
             self.openLibrary()
         }
-        
-        let test = UIAlertAction(title: "test", style: .default) { album in
-            self.testLibrary()
-        }
-        
+//        
+//        let test = UIAlertAction(title: "test", style: .default) { album in
+//            self.testLibrary()
+//        }
+//        
         
         let cancel = UIAlertAction(title: "취소", style: .cancel) { cancel in
             alert.dismiss(animated: true)

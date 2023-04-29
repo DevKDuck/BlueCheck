@@ -87,16 +87,28 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let contentLabel: UILabel = {
-        let label = UILabel()
+//    let contentLabel: UILabel = {
+//        let label = UILabel()
+//
+//        label.textColor = .darkGray
+//        label.font = .systemFont(ofSize: 13, weight: .bold)
+//        label.numberOfLines = 0
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
+    let contentLabel: UITextView = {
+        let textView = UITextView()
         
-        label.textColor = .darkGray
-        label.font = .systemFont(ofSize: 13, weight: .bold)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+        textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+        textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+        textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+        textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
+        textView.textColor = .darkGray
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
-    
     
     let recorImage: UIImageView = {
         var imageView = UIImageView()
@@ -245,6 +257,8 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
             
             contentLabel.topAnchor.constraint(equalTo: self.endDateLabel.bottomAnchor, constant: 10),
             contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:  -5)
             
         ])
         
