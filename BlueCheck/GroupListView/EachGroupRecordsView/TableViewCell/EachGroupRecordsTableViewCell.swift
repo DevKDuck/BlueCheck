@@ -75,7 +75,7 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         let label = UILabel()
         
         label.textColor = .systemRed
-        label.font = .systemFont(ofSize: 10, weight: .bold)
+        label.font = .systemFont(ofSize: 13, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -83,7 +83,7 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         let label = UILabel()
         
         label.textColor = .systemBlue
-        label.font = .systemFont(ofSize: 10, weight: .bold)
+        label.font = .systemFont(ofSize: 13, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -91,7 +91,8 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         let label = UILabel()
         
         label.textColor = .darkGray
-        label.font = .systemFont(ofSize: 10, weight: .bold)
+        label.font = .systemFont(ofSize: 13, weight: .bold)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -248,7 +249,7 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         ])
         
         contentView.layer.cornerRadius = 3.0
-        contentView.layer.borderWidth = 1
+        contentView.layer.borderWidth = 2
         contentView.layer.borderColor = UIColor.systemBlue.cgColor
         
     }

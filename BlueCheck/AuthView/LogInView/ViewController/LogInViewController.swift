@@ -282,6 +282,7 @@ class LogInViewController: UIViewController{
     lazy var appleButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
         button.addTarget(self, action: #selector(tapAppleButton(_:)), for: .touchUpInside)
+        
         return button
     }()
     
@@ -427,16 +428,21 @@ class LogInViewController: UIViewController{
             sNSLeftLineView.heightAnchor.constraint(equalToConstant: 2),
             
             appleButton.topAnchor.constraint(equalTo: self.sNSLogInLable.bottomAnchor,constant: 20),
-            appleButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            appleButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            appleButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             appleButton.heightAnchor.constraint(equalToConstant: 44),
-            
+                
 //            logInErrorLabel.topAnchor.constraint(equalTo: appleButton.bottomAnchor, constant: 15),
 //            logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
 //            logInErrorLabel.heightAnchor.constraint(equalToConstant: 30),
 //
             
         ])
+        
+        if view.bounds.width > 415{
+            appleButton.widthAnchor.constraint(equalToConstant: 375).isActive = true
+        }else{
+            appleButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 40).isActive = true
+        }
     }
     fileprivate var currentNonce: String?
 }
