@@ -80,12 +80,12 @@ class MyAccountViewController: UIViewController{
 
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
-        title = "더보기"
         
     }
 
     override func viewDidLoad(){
         super.viewDidLoad()
+        navigationItem.title = "더보기"
         
         self.view.backgroundColor = .white
         tableView.backgroundColor = .white
