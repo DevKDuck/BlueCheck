@@ -81,10 +81,7 @@ class InvitationStatusViewController: UIViewController{
     
     private func setLayoutConstraints(){
         self.view.addSubview(tableView)
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         NSLayoutConstraint.activate([            
             tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -103,7 +100,6 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "InvitationsStatusTableViewCell") as? InvitationsStatusTableViewCell else {return UITableViewCell()}
         cell.groupNameLabel.text = inviteGroupList[indexPath.row].groupName
         cell.objectiveLabel.text = inviteGroupList[indexPath.row].object
-        
         cell.acceptButton.tag = indexPath.row
         cell.acceptButton.addTarget(self, action: #selector(tapAcceptButton(_:)), for: .touchUpInside)
         cell.rejectButton.tag = indexPath.row
@@ -133,7 +129,6 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
         }
         
         let alert = UIAlertController(title: "초대에 수락하였습니다", message: "그룹리스트를 확인해보세요", preferredStyle: .alert)
-        
         let confirm = UIAlertAction(title: "확인", style: .cancel){ _ in
             self.getFirebaseGroupInvitationStatus()
         }
@@ -142,7 +137,6 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     @objc func tapRejectButton (_ sender: UIButton){
-        
         //Invite Status의 document 삭제
         Firestore.firestore().collection("user").document(currentUserEmail).collection("Invite status").document(inviteGroupList[sender.tag].groupNumber).delete(){ err in
             if let err = err{
@@ -173,8 +167,6 @@ extension InvitationStatusViewController: UITableViewDelegate, UITableViewDataSo
         invitationGroupContentView.titleLabel.text = "그룹명: " + inviteGroupList[indexPath.row].groupName
         invitationGroupContentView.objectLabel.text = "목적: " + inviteGroupList[indexPath.row].object
         invitationGroupContentView.contentLabel.text = "자세한 내용 : " + inviteGroupList[indexPath.row].content
-        
-        
         present(invitationGroupContentView, animated: true)
     }
     

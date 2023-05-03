@@ -21,7 +21,6 @@ class InvitationsStatusTableViewCell: UITableViewCell{
         label.textColor = .darkGray
         return label
     }()
-
     
     let acceptButton: UIButton = {
         let button = UIButton()
@@ -31,7 +30,6 @@ class InvitationsStatusTableViewCell: UITableViewCell{
         button.layer.cornerRadius = 5
         return button
     }()
-    
     
     let rejectButton: UIButton = {
         let button = UIButton()
@@ -56,11 +54,9 @@ class InvitationsStatusTableViewCell: UITableViewCell{
         contentView.addSubview(groupNameLabel)
         contentView.addSubview(acceptAndRejectButtonStackView)
         
-        
         objectiveLabel.translatesAutoresizingMaskIntoConstraints = false
         groupNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+    
         contentView.backgroundColor = .white
         
         NSLayoutConstraint.activate([
@@ -77,24 +73,15 @@ class InvitationsStatusTableViewCell: UITableViewCell{
             acceptAndRejectButtonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             groupNameLabel.trailingAnchor.constraint(equalTo: self.acceptAndRejectButtonStackView.leadingAnchor, constant: -10)
-
         ])
-        
+    }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setLayoutConstraints()
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        setLayoutConstraints()
-        
-    }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
-    
-    
-    
     required init?(coder aDecoder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
-        
     }
 }

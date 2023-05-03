@@ -18,30 +18,22 @@ class MyAccountTableViewCell: UITableViewCell {
     
     private func setLayoutConstraints() {
         contentView.addSubview(namingLabel)
-        
         contentView.backgroundColor = .white
-        namingLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        namingLabel.translatesAutoresizingMaskIntoConstraints = false
+    
         NSLayoutConstraint.activate([
-            
             namingLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             namingLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20)
         ])
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setLayoutConstraints()
-        
-    }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
-    
-    
+    }
     
     required init?(coder aDecoder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
-        
     }
 }

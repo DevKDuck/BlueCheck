@@ -9,7 +9,6 @@ import UIKit
 
 class GroupListTableViewCell: UITableViewCell{
     
-    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
@@ -45,13 +44,11 @@ class GroupListTableViewCell: UITableViewCell{
         objectGroupImage.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        
         NSLayoutConstraint.activate([
             objectGroupImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             objectGroupImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             objectGroupImage.heightAnchor.constraint(equalToConstant: 50),
             objectGroupImage.widthAnchor.constraint(equalToConstant: 50),
-            
             
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 15),
             titleLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
@@ -61,26 +58,15 @@ class GroupListTableViewCell: UITableViewCell{
             contentLabel.leadingAnchor.constraint(equalTo: self.objectGroupImage.trailingAnchor, constant: 20),
             contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
             contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -10)
-            
-            
-
-        
         ])
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setLayoutConstraint()
-        
     }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
     
-    
-    
     required init?(coder aDecoder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
-        
     }
 }

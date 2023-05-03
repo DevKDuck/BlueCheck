@@ -22,20 +22,19 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     var groupDocumentName = ""
     var currentUserName: String = ""
     var currentUserNickName: String = ""
-    
     var modifyArray = [String]()
-    
     var tag = 0
-    
     var documentID: String = ""
-    
-    
+    private let startDatePicker = UIDatePicker()
+    private let endDatePicker = UIDatePicker()
+    var selectedAssetsArray = [PHAsset]()
+    var userSelectedImages = [UIImage(systemName: "plus")]
+
     
     lazy var completeButton : UIBarButtonItem = {
         let button = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(tapCompleteButton(_:)))
         return button
     }()
-    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -70,21 +69,12 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         return label
     }()
     
-    private let startDatePicker = UIDatePicker()
-    
     let endLabel : UILabel = {
         let label = UILabel()
         label.text = "종료 날짜"
         label.textColor = .systemRed
         return label
     }()
-    
-    private let endDatePicker = UIDatePicker()
-    
-    
-    var selectedAssetsArray = [PHAsset]()
-    var userSelectedImages = [UIImage(systemName: "plus")]
-    
     
     var imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -98,11 +88,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
-    
-    
-    
-    
-    
+
     let titlebarView: UIView = {
         let barview = UIView()
         barview.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
@@ -124,10 +110,8 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         return barview
     }()
     
-    
     var contentTextView: UITextView = {
         let textView = UITextView()
-        
         textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
         textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
@@ -136,8 +120,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         textView.textColor = .darkGray
         return textView
     }()
-    
-    //    let picker = UIImagePickerController()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -155,12 +137,10 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                     }
                 }
             }
-                        
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                 LoadingIndicator.hideLoading()
                 self.imageCollectionView.reloadData()
             }
-            
         }
     }
     
@@ -168,21 +148,15 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = .white
         getFireStoreData()
-        //        imageViewTapGestureAttributes()
         setAttributesDatePicker()
         setLayoutConstraints()
         self.navigationItem.rightBarButtonItem = completeButton
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
-        //        picker.delegate = self
-        
     }
     
     func getFireStoreData(){
-        
         let db = Firestore.firestore()
-        
-        
         db.collection("user").document(currentUserEmail).getDocument{ snapshot, error in
             if let err = error{
                 print("MyAccountView Error:\(err.localizedDescription)")
@@ -194,16 +168,15 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                     self.currentUserNickName = FirestoreData["nickName"] as? String ?? "닉네임 없음"
                 }
             }
-            
         }
     }
+    
     private func setAttributesDatePicker() {
         startDatePicker.preferredDatePickerStyle = .compact
         startDatePicker.datePickerMode = .dateAndTime
         startDatePicker.locale = Locale(identifier: "ko-KR")
         startDatePicker.timeZone  = .autoupdatingCurrent
         startDatePicker.addTarget(self, action: #selector(startValueChangedDatePicker(_:)), for: .valueChanged)
-        
         
         endDatePicker.preferredDatePickerStyle = .automatic
         endDatePicker.datePickerMode = .dateAndTime
@@ -218,8 +191,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             dateFormatter.locale = Locale(identifier:"ko_KR")
             guard let date: Date = dateFormatter.date(from: startDate) else {return}
             startDatePicker.date = date
-            
-            
         }
         if endDate != ""{
             let dateFormatter = DateFormatter()
@@ -228,10 +199,10 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             dateFormatter.locale = Locale(identifier:"ko_KR")
             guard let date: Date = dateFormatter.date(from: endDate) else {return}
             endDatePicker.date = date
-            
         }
         endDatePicker.addTarget(self, action: #selector(endValueChangedDatePicker(_:)), for: .valueChanged)
     }
+    
     var startDate = ""
     var endDate = ""
     
@@ -241,8 +212,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         dateFormatter.locale = Locale(identifier:"ko_KR")
         startDate = dateFormatter.string(from: sender.date)
     }
-    
-    
+
     @objc func endValueChangedDatePicker(_ sender: UIDatePicker){
         //시작날짜 종료날짜 변경필요
         let dateFormatter = DateFormatter()
@@ -252,18 +222,13 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     }
     
     @objc func tapCompleteButton(_ sender: UIButton){
-        
         if titleTextField.text!.isEmpty || contentTextView.text.isEmpty || userSelectedImages.count == 1{
             let alert = UIAlertController(title: "빈곳을 채워주세요!!", message: "제목, 내용, 사진을 꼭 입력해주세요☺️", preferredStyle: .alert)
-            
             let cancel = UIAlertAction(title: "닫기", style: .cancel)
             alert.addAction(cancel)
             present(alert, animated: false)
         }
-        
-        
         else{
-            
             if tag == 0{
                 if startDate == "" {
                     let now = Date()
@@ -280,21 +245,14 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                     endDate = dateFormatter.string(from: now)
                 }
                 
-                
                 //새로운 내용을 만들때 만드는 문서
                 let newDoc = Firestore.firestore().collection(groupDocumentName).document(currentUserEmail).collection("Group").document()
-                
                 var imageDocArray : [String] = []
-                
-                
                 for index in 1..<userSelectedImages.count {
                     let randomNum = newDoc.documentID + String(Float.random(in: 0...10))
                     imageDocArray.append(randomNum)
                     uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
                 }
-                
-                
-                
                 let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : newDoc.documentID, "writerEmail" : currentUserEmail] as [String : Any]
                 
                 newDoc.setData(["DocID" : newDoc.documentID])
@@ -305,7 +263,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             }
             
             if tag == 1{
-                
                 LoadingIndicator.showLoading()
                 // Stroage 이미지 삭제
                 for image in modifyArray{
@@ -318,8 +275,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                         }
                     }
                 }
-                
-                
                 //새로운 내용을 만들때 만드는 문서
                 let doc = Firestore.firestore().collection(groupDocumentName).document("ALL").collection("Record").document(documentID)
                 
@@ -330,8 +285,7 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                     imageDocArray.append(randomNum)
                     uploadImage(img: userSelectedImages[index]!, randomNum: randomNum)
                 }
-                
-                
+                                
                 let data = ["title" : titleTextField.text!, "startDate" : startDate, "endDate" : endDate, "content": contentTextView.text!, "writer": currentUserNickName, "image" : imageDocArray, "documentID" : documentID] as [String : Any]
                 
                 doc.updateData(data){ err in
@@ -355,7 +309,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
     func uploadImage(img: UIImage, randomNum: String){
         var data = Data()
         data = img.jpegData(compressionQuality: 1.0)!
-        
         let metaData = StorageMetadata()
         metaData.contentType = "image/png"
         Storage.storage().reference().child(randomNum).putData(data,metadata: metaData){ (metaData,error) in
@@ -364,32 +317,21 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
                 return
             }
         }
-        
     }
     
     private func setLayoutConstraints(){
         self.view.addSubview(contentScrollView)
         contentScrollView.addSubview(contentView)
-        
         contentView.addSubview(titleTextField)
         contentView.addSubview(titlebarView)
-        
         contentView.addSubview(startLabel)
         contentView.addSubview(startDatePicker)
-        
-        
         contentView.addSubview(endLabel)
         contentView.addSubview(endDatePicker)
-        
         contentView.addSubview(datebarView)
-        
         contentView.addSubview(imageCollectionView)
-        
         contentView.addSubview(recordImagebarView)
-        
         contentView.addSubview(contentTextView)
-        
-        
         
         titleTextField.translatesAutoresizingMaskIntoConstraints = false
         startLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -398,16 +340,12 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
         endDatePicker.translatesAutoresizingMaskIntoConstraints = false
         contentTextView.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        
-        
         NSLayoutConstraint.activate([
             
             contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
             contentScrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             contentScrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             contentScrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            
             
             contentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
@@ -421,7 +359,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             titleTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             titleTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            
             titlebarView.topAnchor.constraint(equalTo: self.titleTextField.bottomAnchor,constant: 5),
             titlebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             titlebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
@@ -434,7 +371,6 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             startLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             startLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
-            
             endDatePicker.topAnchor.constraint(equalTo: self.startDatePicker.bottomAnchor, constant: 5),
             endDatePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
@@ -442,38 +378,28 @@ class CreateEachGroupRecordsContentViewController: UIViewController{
             endLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             endLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 5),
             
-            
-            
             datebarView.topAnchor.constraint(equalTo: self.endDatePicker.bottomAnchor,constant: 5),
             datebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             datebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             datebarView.heightAnchor.constraint(equalToConstant: 2),
             
-            
-      
             imageCollectionView.topAnchor.constraint(equalTo: self.datebarView.bottomAnchor, constant: 5),
             imageCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             imageCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             imageCollectionView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
-
             
             recordImagebarView.topAnchor.constraint(equalTo: self.imageCollectionView.bottomAnchor,constant: 5),
             recordImagebarView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             recordImagebarView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             recordImagebarView.heightAnchor.constraint(equalToConstant: 2),
             
-            
             contentTextView.topAnchor.constraint(equalTo: self.recordImagebarView.bottomAnchor,constant: 5),
             contentTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             contentTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            //            contentTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
             contentTextView.heightAnchor.constraint(equalToConstant: 500)
-            
         ])
-        
     }
 }
-
 
 extension CreateEachGroupRecordsContentViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     
@@ -482,27 +408,11 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         imagePicker.sourceType = .camera
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
-
         present(imagePicker, animated: false)
-
     }
     
     func openLibrary(){
-        //        self.picker.sourceType = .photoLibrary
-        //        present(picker, animated: false)
         pressImageLibrary()
-        
-    }
-    
-    
-    func testLibrary(){
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-
-        imagePicker.modalPresentationStyle = .fullScreen
-        present(imagePicker, animated: false)
-
     }
     
     func pressImageLibrary(){
@@ -517,8 +427,6 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
         }, cancel: {(assets) in
             
         }, finish: {(assets) in
-            //사진을 하나이상 고르면 + 마크 없애기
-            
             for asset in 0..<assets.count{
                 self.selectedAssetsArray.append(assets[asset])
             }
@@ -530,11 +438,8 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
     }
     
     func convertAssetToImages() {
-        
         if selectedAssetsArray.count != 0 {
-            
             for i in 0..<selectedAssetsArray.count {
-                
                 let imageManager = PHImageManager.default()
                 let option = PHImageRequestOptions()
                 option.isSynchronous = true //비동기
@@ -549,7 +454,6 @@ extension CreateEachGroupRecordsContentViewController: UINavigationControllerDel
                 
                 let data = thumbnail.jpegData(compressionQuality: 1.0)
                 let newImage = UIImage(data: data!)
-                
                 self.userSelectedImages.append(newImage! as UIImage)
             }
         }
@@ -579,7 +483,6 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
     
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return userSelectedImages.count
     }
     
@@ -618,12 +521,6 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
         let album = UIAlertAction(title: "앨범", style: .default) { album in
             self.openLibrary()
         }
-//        
-//        let test = UIAlertAction(title: "test", style: .default) { album in
-//            self.testLibrary()
-//        }
-//        
-        
         let cancel = UIAlertAction(title: "취소", style: .cancel) { cancel in
             alert.dismiss(animated: true)
         }
@@ -632,11 +529,7 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
         alert.addAction(album)
         alert.addAction(cancel)
         
-//        alert.addAction(test)
-        
-        
         //MARK: ActionSheet의 모달스타일은 UIModalPresentationPopover라고 설명을 해주면서 UIModalPresentationPopover을 사용 할 때는 barButtonItem 또는 팝업에 대한 위치를 설정해줘야 되어 패드와 아이폰 나눔
-        
         
         if UIDevice.current.userInterfaceIdiom == .pad { //디바이스 타입이 iPad일때
             if let popoverController = alert.popoverPresentationController {
@@ -647,13 +540,8 @@ extension CreateEachGroupRecordsContentViewController: UICollectionViewDelegateF
                 self.present(alert, animated: true, completion: nil)
             }
         }
-
         else {
             present(alert, animated: true)
         }
-        
-        
     }
-    
-    
 }

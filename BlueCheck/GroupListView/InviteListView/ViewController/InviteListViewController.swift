@@ -16,7 +16,6 @@ protocol GettingInvitationList: AnyObject{
     func getEmailAfterTableViewReload()
 }
 
-
 class InviteListViewController: UIViewController, GettingInvitationList{
     
     func getUserNameArray(nameArray: [String]) {
@@ -30,9 +29,6 @@ class InviteListViewController: UIViewController, GettingInvitationList{
     func getEmailAfterTableViewReload() {
         tableView.reloadData()
     }
-    
-
-    
     var userUidArray = [String]()
     var userNameArray = [String]()
     var userEmailArray = [String]()
@@ -68,52 +64,12 @@ class InviteListViewController: UIViewController, GettingInvitationList{
     }()
     
     @objc func tapAddPersonnelButton(_ sender: UIButton){
-//        let alert = UIAlertController(title: "이메일", message: "초대하고 싶은 사람의 이메일을 적어보세요", preferredStyle: .alert)
-//        let add = UIAlertAction(title: "추가", style: .default){ [weak self] _ in
-//            DispatchQueue.global().async {
-//                Firestore.firestore().collection("user").getDocuments{ querySnapshot, error in
-//                    for document in querySnapshot!.documents{
-//                        let data = document.data()
-//                        guard let userEmail = data["email"] as? String else {return}
-//                        if let text = alert.textFields?[0].text{
-//                            if text == userEmail{
-//                                //guard let userName = data["name"] as? String else { return }
-//                                guard let userUID = data["uid"] as? String else { return }
-//                                self?.userUidArray.append(userUID)
-//                            }
-//                        }
-//
-//                    }
-//
-//                }
-//            }
-//            self?.activityIndicator.startAnimating()
-//            self?.activityIndicator.isHidden = false
-//
-//                self?.tableView.reloadData()
-//
-//        }
-//
-//        let cancel = UIAlertAction(title: "취소", style: .cancel){ _ in
-//
-//        }
-//
-//        alert.addTextField{ textField in
-//            textField.placeholder = "이메일을 적어보세요"
-//            textField.textColor = .systemBlue
-//        }
-//
-//        alert.addAction(add)
-//        alert.addAction(cancel)
-//
-//        present(alert, animated: true)
        let vc = InvitePersonalInformationViewController()
         vc.delegate = self
         vc.userEmailArray = userEmailArray
         vc.userNameArray = userNameArray
         self.present(vc, animated: true)
     }
-    
     
     lazy var completeAddPersonnelButton: UIButton = {
         let button = UIButton()
@@ -152,14 +108,11 @@ class InviteListViewController: UIViewController, GettingInvitationList{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .white
-        
         setLayoutConstraints()
     }
-    
     
     private func setLayoutConstraints(){
         self.view.addSubview(topView)
@@ -168,8 +121,6 @@ class InviteListViewController: UIViewController, GettingInvitationList{
         self.view.addSubview(completeAddPersonnelButton)
         self.view.addSubview(tableView)
         self.view.addSubview(activityIndicator)
-        
-        
         
         topView.translatesAutoresizingMaskIntoConstraints = false
         invitePersonnelLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -186,18 +137,14 @@ class InviteListViewController: UIViewController, GettingInvitationList{
             topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             topView.heightAnchor.constraint(equalToConstant: 50),
             
-            
-            
             invitePersonnelLabel.centerXAnchor.constraint(equalTo: self.topView.centerXAnchor),
             invitePersonnelLabel.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
-            
             
             addPersonnelButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
             addPersonnelButton.trailingAnchor.constraint(equalTo: self.topView.trailingAnchor, constant: -15),
             
             completeAddPersonnelButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
             completeAddPersonnelButton.leadingAnchor.constraint(equalTo: self.topView.leadingAnchor, constant: 15),
-            
             
             tableView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -206,19 +153,12 @@ class InviteListViewController: UIViewController, GettingInvitationList{
             
             activityIndicator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-            
         ])
     }
 }
 
 extension InviteListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if userUidArray.isEmpty{
-//            return 0
-//        }
-//        else{
-//            return userUidArray.count
-//        }
         return userEmailArray.count
     }
     
@@ -229,35 +169,10 @@ extension InviteListViewController: UITableViewDelegate, UITableViewDataSource{
         cell.nameLabel.text = userNameArray[indexPath.row]
         cell.removeButton.tag = indexPath.row
         cell.removeButton.addTarget(self, action: #selector(tapRemoveButton( _:)), for: .touchUpInside)
-        
-//        if !userUidArray.isEmpty{
-//
-//            DispatchQueue.global().async {
-//                Firestore.firestore().collection("user").document(self.userUidArray[indexPath.row]).getDocument{ snapshot, error in
-//                    if let error = error{
-//                        print(error,"왜안돼")
-//                    }
-//                    else{
-//                        print(self.userUidArray)
-//                        let data = snapshot?.data()
-//
-//                        DispatchQueue.main.async {
-//                            self.activityIndicator.stopAnimating()
-//                            self.activityIndicator.isHidden = true
-//                            cell.nameLabel.text = data?["name"] as? String
-//                            cell.emailLabel.text = data?["email"] as? String
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
         return cell
     }
     
     @objc func tapRemoveButton(_ sender: UIButton){
-    
-        
         let alert = UIAlertController(title: "\(userNameArray[sender.tag]) 님", message: "\(userNameArray[sender.tag]) 님을 정말 삭제하시겠습니까?", preferredStyle: .alert)
         
         let delete = UIAlertAction(title: "삭제", style: .default){ _ in
@@ -267,16 +182,12 @@ extension InviteListViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
-        
         alert.addAction(delete)
         alert.addAction(cancel)
-        
         self.present(alert, animated: false)
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
-    
 }

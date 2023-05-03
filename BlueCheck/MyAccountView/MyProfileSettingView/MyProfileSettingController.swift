@@ -98,15 +98,11 @@ class MyProfileSettingController: UIViewController{
         appearance.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.systemBlue]
         appearance.backgroundColor = .white
-
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         title = "프로필 관리"
         
     }
-
-    
-    
     
     func getFireStoreUserData(){
         Firestore.firestore().collection("user").document(currentUserEmail).getDocument{ document, err in
@@ -125,8 +121,6 @@ class MyProfileSettingController: UIViewController{
         }
     }
     
-    
-    
     private func setLayoutConstraints(){
         view.addSubview(profileImage)
         view.addSubview(emailLabel)
@@ -134,7 +128,6 @@ class MyProfileSettingController: UIViewController{
         view.addSubview(nickNameTextField)
         view.addSubview(changeNickNameButton)
         view.addSubview(commentChangeNickNameLabel)
-        
         
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         
@@ -169,10 +162,6 @@ class MyProfileSettingController: UIViewController{
         
         commentChangeNickNameLabel.topAnchor.constraint(equalTo: nickNameLabel.bottomAnchor, constant: 10),
         commentChangeNickNameLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
-        
         ])
-    
     }
-    
-    
 }

@@ -30,7 +30,6 @@ class InvitePersonalInformationViewController: UIViewController{
         return label
     }()
     
-    
     let addNameListTitleLabel : UILabel = {
         let label = UILabel()
         label.text = "추가 명단"
@@ -39,14 +38,12 @@ class InvitePersonalInformationViewController: UIViewController{
         return label
     }()
     
-    
     var addNameLabel : UILabel = {
         let label = UILabel()
         label.textColor = .darkGray
         label.font = .systemFont(ofSize: 15)
         return label
     }()
-    
     
     let emailTextField: UITextField = {
         let textField = UITextField()
@@ -61,7 +58,6 @@ class InvitePersonalInformationViewController: UIViewController{
         label.numberOfLines = 0
         return label
     }()
-    
     
     lazy var inviteButton: UIButton = {
         let button = UIButton()
@@ -197,8 +193,6 @@ class InvitePersonalInformationViewController: UIViewController{
         self.view.addSubview(searchUserButton)
         self.view.addSubview(inviteButton)
         
-        
-        
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         addNameListTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -208,9 +202,7 @@ class InvitePersonalInformationViewController: UIViewController{
         searchUserButton.translatesAutoresizingMaskIntoConstraints = false
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
         
-        
         NSLayoutConstraint.activate([
-            
             
             emailLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 30),
             emailLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 20),
@@ -220,10 +212,8 @@ class InvitePersonalInformationViewController: UIViewController{
             emailTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             emailTextField.heightAnchor.constraint(equalToConstant: 44),
             
-            
             userInfoOrWrongLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             userInfoOrWrongLabel.topAnchor.constraint(equalTo: self.emailTextField.bottomAnchor,constant: 10),
-            
             
             searchUserButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             searchUserButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -237,23 +227,15 @@ class InvitePersonalInformationViewController: UIViewController{
             addNameLabel.topAnchor.constraint(equalTo: self.addNameListTitleLabel.bottomAnchor, constant: 20),
             addNameLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             
-            
             addButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             addButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             addButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2 - 25),
             addButton.heightAnchor.constraint(equalToConstant: 44),
             
-            
-            
             inviteButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             inviteButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width / 2 - 25),
             inviteButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             inviteButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            
-            
         ])
-        
-        
     }
 }

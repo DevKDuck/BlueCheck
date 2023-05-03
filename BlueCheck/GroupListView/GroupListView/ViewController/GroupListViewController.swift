@@ -119,30 +119,24 @@ class GroupListViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        
-        
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
-        
         setAutolayoutConstraint()
     }
-    
-    
+
     private func setAutolayoutConstraint(){
         
         self.view.addSubview(topView)
         self.view.addSubview(groupListLabel)
         self.view.addSubview(addGroupButton)
         self.view.addSubview(tableView)
-        
-        
+
         topView.translatesAutoresizingMaskIntoConstraints = false
         groupListLabel.translatesAutoresizingMaskIntoConstraints = false
         addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -155,7 +149,6 @@ class GroupListViewController: UIViewController{
             addGroupButton.centerYAnchor.constraint(equalTo: self.topView.centerYAnchor),
             addGroupButton.trailingAnchor.constraint(equalTo: self.topView.trailingAnchor, constant: -15),
             
-            
             tableView.topAnchor.constraint(equalTo: self.topView.bottomAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -166,7 +159,6 @@ class GroupListViewController: UIViewController{
 
 extension GroupListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return self.groupNameArray.count
     }
     

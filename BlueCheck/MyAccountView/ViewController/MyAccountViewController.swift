@@ -86,7 +86,6 @@ class MyAccountViewController: UIViewController{
     override func viewDidLoad(){
         super.viewDidLoad()
         navigationItem.title = "더보기"
-        
         self.view.backgroundColor = .white
         tableView.backgroundColor = .white
         tableView.delegate = self
@@ -96,7 +95,6 @@ class MyAccountViewController: UIViewController{
     
     func getFireStoreData(){
         let db = Firestore.firestore()
-        
         db.collection("user").document(currentUserEmail).getDocument{ snapshot, error in
             if let err = error{
                 print("MyAccountView Error:\(err.localizedDescription)")
@@ -112,7 +110,6 @@ class MyAccountViewController: UIViewController{
         }
     }
     
-    
     private func setLayoutConstraints(){
         self.view.addSubview(myAccountView)
         self.view.addSubview(nickNameLabel)
@@ -126,24 +123,19 @@ class MyAccountViewController: UIViewController{
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             myAccountView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             myAccountView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             myAccountView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             myAccountView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3 - 50),
             
-            
             myAccountStackView.centerXAnchor.constraint(equalTo: self.myAccountView.centerXAnchor),
             myAccountStackView.centerYAnchor.constraint(equalTo: self.myAccountView.centerYAnchor),
-            
             
             tableView.topAnchor.constraint(equalTo: self.myAccountView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
-        
     }
 }
 
@@ -182,8 +174,6 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         if indexPath.row == 2 {
-//            UserDefaults.standard.removeObject(forKey: "id")
-//            UserDefaults.standard.removeObject(forKey: "pw")
             let firebaseAuth = Auth.auth()
             do {
               try firebaseAuth.signOut()

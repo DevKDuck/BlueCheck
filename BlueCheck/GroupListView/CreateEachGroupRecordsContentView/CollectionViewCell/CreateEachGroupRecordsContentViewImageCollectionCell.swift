@@ -28,9 +28,7 @@ class CreateEachGroupRecordsContentViewImageCollectionCell: UICollectionViewCell
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayoutConstraints()
-
     }
-    
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

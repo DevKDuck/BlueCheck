@@ -81,27 +81,12 @@ class InvitationGroupContentViewController: UIViewController{
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         objectLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-       
-
+  
         NSLayoutConstraint.activate([
-            
-//
-//            self.view.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-//            self.view.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-//            self.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3),
-//            self.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 20),
-            
             scrollView.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 20),
             scrollView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
             scrollView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             scrollView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-            
-//            centerView.widthAnchor.constraint(equalToConstant: self.view.bounds.width - 20),
-//            centerView.heightAnchor.constraint(equalToConstant: self.view.bounds.height / 3),
-//            centerView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-//            centerView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
             
             centerView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             centerView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
@@ -115,9 +100,6 @@ class InvitationGroupContentViewController: UIViewController{
         contentViewHeight.isActive = true
         
         NSLayoutConstraint.activate([
-            
-          
-            
             cancelButton.trailingAnchor.constraint(equalTo: self.centerView.trailingAnchor, constant: -15),
             cancelButton.topAnchor.constraint(equalTo: self.centerView.topAnchor, constant: 15),
             cancelButton.widthAnchor.constraint(equalToConstant: 44),
@@ -127,7 +109,6 @@ class InvitationGroupContentViewController: UIViewController{
             titleLabel.topAnchor.constraint(equalTo: self.centerView.topAnchor, constant: 15),
             titleLabel.trailingAnchor.constraint(equalTo: self.cancelButton.leadingAnchor, constant: -5),
             
-            
             objectLabel.leadingAnchor.constraint(equalTo: self.centerView.leadingAnchor, constant: 15),
             objectLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 10),
             
@@ -136,12 +117,6 @@ class InvitationGroupContentViewController: UIViewController{
             contentLabel.trailingAnchor.constraint(equalTo: self.centerView.trailingAnchor, constant: -15),
             contentLabel.bottomAnchor.constraint(equalTo: self.centerView.bottomAnchor, constant: -10)
             
-            
-        
         ])
-        
-        
-        
     }
-    
 }

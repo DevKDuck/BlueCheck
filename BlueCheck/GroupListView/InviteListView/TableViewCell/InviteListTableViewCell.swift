@@ -23,21 +23,17 @@ class InviteListTableViewCell: UITableViewCell{
         return label
     }()
     
-    
     let removeButton: UIButton = {
         let button = UIButton()
         button.setTitle("삭제", for: .normal)
         button.setTitleColor(UIColor.red, for: .normal)
         return button
     }()
-    
-   
-    
+
     private func setLayoutConstraints(){
         contentView.addSubview(nameLabel)
         contentView.addSubview(emailLabel)
         contentView.addSubview(removeButton)
-        
         contentView.backgroundColor = .white
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -59,24 +55,14 @@ class InviteListTableViewCell: UITableViewCell{
             emailLabel.leadingAnchor.constraint(equalTo: self.nameLabel.trailingAnchor, constant: 20),
             emailLabel.trailingAnchor.constraint(equalTo: self.removeButton.leadingAnchor, constant: -20),
             emailLabel.widthAnchor.constraint(equalToConstant: ratioWidth * 8),
-
-        
         ])
-        
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayoutConstraints()
-    }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
-    
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-        
     }
-    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
