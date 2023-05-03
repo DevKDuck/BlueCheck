@@ -34,7 +34,6 @@ class EachGroupRecordsViewController: UIViewController {
         goVC.currentUserEmail = self.currentUserEmail
         goVC.groupDocumentName = self.groupDocumentName
         goVC.tag = 0
-//        goVC.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(goVC, animated: true)
     }
     
@@ -55,19 +54,12 @@ class EachGroupRecordsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
         groupListTableView.delegate = self
         groupListTableView.dataSource = self
-
         self.navigationItem.rightBarButtonItem = self.addContentButton
         setTableViewLayoutConstraints()
-        
         navigationController?.hidesBarsOnSwipe = true
-        
-        
-        
-        
     }
     
     func setTableViewLayoutConstraints(){

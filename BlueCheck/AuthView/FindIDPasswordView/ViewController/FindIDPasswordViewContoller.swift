@@ -19,10 +19,10 @@ class FindIDPasswordViewContoller: UIViewController{
         button.addTarget(self, action: #selector(tapBackButton(_:)), for: .touchUpInside)
         return button
     }()
+    
     @objc func tapBackButton(_ sender: UIButton){
         self.dismiss(animated: true)
     }
-    
     
     let findIDLabel: UILabel = {
         let label = UILabel()
@@ -196,13 +196,10 @@ class FindIDPasswordViewContoller: UIViewController{
         view.endEditing(true)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .white
         setLayoutConstraints()
-        
     }
     
     
@@ -215,15 +212,12 @@ class FindIDPasswordViewContoller: UIViewController{
         self.view.addSubview(idPartEmailField)
         self.view.addSubview(idPartSearchButton)
         
-        
         self.view.addSubview(findPasswordLabel)
         self.view.addSubview(passwordPartNameTextField)
         self.view.addSubview(passwordPartEmailField)
         self.view.addSubview(passwordPartSearchButton)
         
-       
         dismissButton.translatesAutoresizingMaskIntoConstraints = false
-        
         findIDLabel.translatesAutoresizingMaskIntoConstraints = false
         idPartNameTextField.translatesAutoresizingMaskIntoConstraints = false
         idPartEmailField.translatesAutoresizingMaskIntoConstraints = false
@@ -233,16 +227,12 @@ class FindIDPasswordViewContoller: UIViewController{
         passwordPartEmailField.translatesAutoresizingMaskIntoConstraints = false
         passwordPartSearchButton.translatesAutoresizingMaskIntoConstraints = false
         
-        
         NSLayoutConstraint.activate([
             
             dismissButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 20),
             dismissButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             dismissButton.heightAnchor.constraint(equalToConstant: 44),
             dismissButton.widthAnchor.constraint(equalToConstant: 44),
-            
-            
-            
             
             findIDLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: view.bounds.height / 5),
             findIDLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -251,7 +241,6 @@ class FindIDPasswordViewContoller: UIViewController{
             idPartNameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             idPartNameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             idPartNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            
             
             idPartEmailField.topAnchor.constraint(equalTo: self.idPartNameTextField.bottomAnchor, constant: 10),
             idPartEmailField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -263,7 +252,6 @@ class FindIDPasswordViewContoller: UIViewController{
             idPartSearchButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             idPartSearchButton.heightAnchor.constraint(equalToConstant: 44),
             
-            
             findPasswordLabel.topAnchor.constraint(equalTo: self.idPartSearchButton.bottomAnchor, constant: 30),
             findPasswordLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             
@@ -271,7 +259,6 @@ class FindIDPasswordViewContoller: UIViewController{
             passwordPartNameTextField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             passwordPartNameTextField.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             passwordPartNameTextField.heightAnchor.constraint(equalToConstant: 44),
-            
             
             passwordPartEmailField.topAnchor.constraint(equalTo: self.passwordPartNameTextField.bottomAnchor, constant: 10),
             passwordPartEmailField.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
@@ -282,9 +269,6 @@ class FindIDPasswordViewContoller: UIViewController{
             passwordPartSearchButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             passwordPartSearchButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             passwordPartSearchButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            
-            
         ])
     }
 }

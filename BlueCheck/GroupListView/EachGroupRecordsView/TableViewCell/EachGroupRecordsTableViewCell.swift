@@ -30,37 +30,11 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
     
     lazy var modifyButton: UIButton = {
         let button = UIButton()
-        
         button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.addTarget(self, action: #selector(tapModifyButton(_:)), for: .touchUpInside)
         return button
     }()
     
-//    @objc func tapModifyButton(_ sender: UIButton){
-//        let alert = UIAlertController(title: "글을 관리할 수 있습니다.", message: "글관리 가능", preferredStyle: .actionSheet)
-//        
-//        let delete = UIAlertAction(title: "삭제하기", style: .default){ _ in
-//            print("삭제완료")
-//            
-//        }
-//        
-//        let modify = UIAlertAction(title: "수정하기", style: .default){ _ in
-//            let modifyVC = CreateEachGroupRecordsContentViewController()
-//            
-//            print("수정완료")
-//            
-//        }
-//        
-//        let cancel = UIAlertAction(title: "취소", style: .cancel)
-//        
-//        alert.addAction(delete)
-//        alert.addAction(modify)
-//        alert.addAction(cancel)
-//        
-//        self.present(alert)
-//        
-//    }
     
     let writerLabel: UILabel = {
         let label = UILabel()
@@ -87,15 +61,7 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-//    let contentLabel: UILabel = {
-//        let label = UILabel()
-//
-//        label.textColor = .darkGray
-//        label.font = .systemFont(ofSize: 13, weight: .bold)
-//        label.numberOfLines = 0
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+
     let contentLabel: UITextView = {
         let textView = UITextView()
         
@@ -140,9 +106,6 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         return pageControl
     }()
     
-    
-//    var urlArray: [URL] = []
-//    var itemArray: [StorageReference] = []
     
     var imageDataArray: [String] = []
 
@@ -207,18 +170,13 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         
     }
 
-    
-   
-    
+
     func setLayoutConstraints(){
         contentView.addSubview(titleLabel)
         contentView.addSubview(writerLabel)
         contentView.addSubview(imageScrollView)
         contentView.addSubview(pageControl)
         contentView.addSubview(modifyButton)
-        
-        
-        //        self.addSubview(authImage)
         contentView.addSubview(startDateLabel)
         contentView.addSubview(endDateLabel)
         contentView.addSubview(contentLabel)
@@ -228,11 +186,8 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             titleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 0.7),
             
-            
             writerLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             writerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            
-            
             
             imageScrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 10),
             imageScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

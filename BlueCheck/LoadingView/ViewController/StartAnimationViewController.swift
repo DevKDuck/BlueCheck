@@ -12,15 +12,14 @@ import FirebaseAuth
 class StartAnimationViewController: UIViewController{
     
     private var animationView: LottieAnimationView = .init(name:"BlueCheck.json")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         let time = DispatchTime.now() + 5.0
         DispatchQueue.main.asyncAfter(deadline: time){ [weak self] in
                 self?.goViewController()
         }
-        
         
         self.view.backgroundColor = .white
         self.view.addSubview(animationView)
@@ -34,13 +33,8 @@ class StartAnimationViewController: UIViewController{
     func goViewController()
     {
         let rootVC = LogInViewController()
-        
         let navigation = UINavigationController(rootViewController: rootVC)
         navigation.modalPresentationStyle = .fullScreen
         self.present(navigation, animated: true)
-        
-
     }
-    
-    
 }

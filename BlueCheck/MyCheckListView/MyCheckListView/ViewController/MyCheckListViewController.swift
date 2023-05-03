@@ -146,26 +146,14 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setComponentDate()
-        
-        //MARK: UserDefualt 모두 삭제
-//                for key in UserDefaults.standard.dictionaryRepresentation().keys {
-//                    UserDefaults.standard.removeObject(forKey: key.description)
-//                }
-
-        
         getUserDefaultsTasks()
         self.setCollectionView()
-        
-        
         self.view.backgroundColor = .white
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
-        
         setConstraints()
-        
     }
     
     func        getUserDefaultsTasks(){

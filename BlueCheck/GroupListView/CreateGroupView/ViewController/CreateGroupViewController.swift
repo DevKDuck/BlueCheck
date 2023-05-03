@@ -104,8 +104,17 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         
     }
     
-    let objectiveStackView: UIStackView = {
-        let stackView = UIStackView()
+//    let objectiveStackView: UIStackView = {
+//        let stackView = UIStackView()
+//        stackView.axis = .horizontal
+//        stackView.alignment = .fill
+//        stackView.distribution = .equalSpacing
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        return stackView
+//    }()
+    
+    lazy var objectiveStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [studyButton,exerciseButton,travelButton,restaurantButton,etcButton])
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
@@ -227,16 +236,12 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(userNameArray)
-        print(userEmailArray)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         contentTextView.delegate = self
         setTitleAndImageButtonConfig()
-        
         setLayoutConstraints()
         self.view.backgroundColor = .white
     }
@@ -280,20 +285,11 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         }
         config.title = title
         config.image = UIImage(systemName: imageSystemName)
-//        config.image = UIImage(named: "맛집")
-        
         config.imagePlacement = .bottom
-        
-        //        config.baseForegroundColor = .systemBlue
         config.background.strokeColor = UIColor.systemBlue
         config.background.strokeWidth = 3
-        //        config.background.backgroundColor = UIColor.white
-        
-        
         button.configuration = config
         button.configurationUpdateHandler = handler
-        
-        
     }
     
     
@@ -367,19 +363,16 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
             inviteButton.heightAnchor.constraint(equalToConstant: 44),
             inviteButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             inviteButton.bottomAnchor.constraint(equalTo: self.cancelButton.topAnchor, constant: -30),
-            
-            
-            
+
             contentTextView.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 30),
             contentTextView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             contentTextView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             contentTextView.bottomAnchor.constraint(equalTo: self.inviteButton.topAnchor, constant: -30)
         ])
         
-        
-        [studyButton,exerciseButton,travelButton,restaurantButton,etcButton].map{
-            self.objectiveStackView.addArrangedSubview($0)
-        }
+//        [studyButton,exerciseButton,travelButton,restaurantButton,etcButton].map{
+//            self.objectiveStackView.addArrangedSubview($0)
+//        }
         
     }
     

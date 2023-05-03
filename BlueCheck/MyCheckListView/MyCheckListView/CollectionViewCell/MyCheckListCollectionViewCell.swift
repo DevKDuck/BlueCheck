@@ -11,9 +11,7 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
     
     static let identifier = "MyCheckListCollectionViewCell"
     
-    
     var collectionViewCellTaskArray : [MyCheckListTask]?
-    
     
     private lazy var dayLabel = UILabel()
     
@@ -55,10 +53,6 @@ class MyCheckListCollectionViewCell: UICollectionViewCell{
         
         circleBG.frame = CGRect(x: (contentView.bounds.size.width / 2) -  (contentView.bounds.size.height / 2) , y:0 ,width: contentView.bounds.size.height , height: contentView.bounds.size.height)
         circleBG.layer.cornerRadius = contentView.bounds.size.height / 2
-        
-        
-        
-        
         
         self.dayLabel.text = text
         self.dayLabel.font = .systemFont(ofSize: 12, weight: .bold)

@@ -41,8 +41,6 @@ class MyCheckListTableViewCell: UITableViewCell{
         checkButton.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         
-
-        
         NSLayoutConstraint.activate([
             importLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             importLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
@@ -56,23 +54,15 @@ class MyCheckListTableViewCell: UITableViewCell{
             contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             contentLabel.leadingAnchor.constraint(equalTo: self.importLabel.trailingAnchor, constant: 15),
             contentLabel.widthAnchor.constraint(equalToConstant: contentView.bounds.width - 50 - (contentView.bounds.width / 5))
-//            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -55)
-            
         ])
     }
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setConstraint()
-        
 
-    }//인터페이스 빌더를 사용하지 않아 초기화를 해주어야함
-    
-    
-    
+    }
     required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")

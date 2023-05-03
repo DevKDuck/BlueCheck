@@ -17,7 +17,6 @@ class LogInViewController: UIViewController{
     
     
     var userSession: FirebaseAuth.User?
-//    var currentUser: User?
     
     static let shared = LogInViewController() //싱글톤..... 추후에 구성해보자
     
@@ -64,14 +63,6 @@ class LogInViewController: UIViewController{
         return button
     }()
     
-    //    let autoLogInLabel: UILabel = {
-    //        let label = UILabel()
-    //        label.text = "자동 로그인"
-    //        label.textColor = .black
-    //        label.font = .systemFont(ofSize: 10, weight: .black)
-    //        return label
-    //    }()
-    
     let logInErrorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .systemRed
@@ -105,13 +96,8 @@ class LogInViewController: UIViewController{
                             UserDefaults.standard.set(idText, forKey: "id")
                             UserDefaults.standard.set(passwordText, forKey: "password")
                         }
-                        //MARK: 여기 수정햇음
-                        //                        guard let user = result?.user else {return}
-                        
                         let vc = TabbarViewController()
                         
-                        //MARK: currenUserEmail
-//                        vc.currentUserEmail = idText
                         vc.modalPresentationStyle = .fullScreen
                         self.present(vc, animated: true)
                         
@@ -124,71 +110,21 @@ class LogInViewController: UIViewController{
         }
     }
     
-    func autoLogin(){
-        
-//        if let autoLogInCheck = UserDefaults.standard.string(forKey: "LogIncheck"){
-//            if autoLogInCheck == "check"{
-//                if  Auth.auth().currentUser != nil{
-//
-//                    let tabbarVC = TabbarViewController()
-//                    tabbarVC.modalPresentationStyle = .fullScreen
-//                    self.present(tabbarVC, animated: false)
-//                }
-//            }
-//        }
-//
-//
-//
-//        if let userid = UserDefaults.standard.string(forKey: "id"), let userpw = UserDefaults.standard.string(forKey: "password"){
-//            Auth.auth().signIn(withEmail: userid, password: userpw){ (result, error) in
-//
-//                if result != nil{
-//
-//                    //                    guard let user = result?.user else {return}
-//
-//                    let vc = TabbarViewController()
-//
-//                    //MARK: currenUserEmail
-////                    vc.currentUserEmail = userid
-//                    vc.modalPresentationStyle = .fullScreen
-//                    self.present(vc, animated: true)
-//
-//                }
-//                else{
-//                    self.logInErrorLabel.text = "자동 로그인 실패 - 아이디,비밀번호를 확인해주세요!!"
-//                }
-//            }
-//
-//
-//        }else{
-//            print("AutoLogin failed")
-//        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         navigationController?.navigationBar.isHidden = true
         
-        
         //자동로그인의 값이 체크이고 최근 유저가 있을 경우 tabbar 자동으로 이동
         if let autoLogInCheck = UserDefaults.standard.string(forKey: "LogIncheck"){
             if autoLogInCheck == "check"{
                 if  Auth.auth().currentUser != nil{
-                    
                     let tabbarVC = TabbarViewController()
                     tabbarVC.modalPresentationStyle = .fullScreen
                     self.present(tabbarVC, animated: false)
                 }
             }
         }
-//        if  Auth.auth().currentUser != nil{
-//
-//            let tabbarVC = TabbarViewController()
-//            tabbarVC.modalPresentationStyle = .fullScreen
-//            self.present(tabbarVC, animated: false)
-//        }
-        
     }
     
     lazy var passwordEyebutton : UIButton = {
@@ -199,8 +135,6 @@ class LogInViewController: UIViewController{
         
         return button
     }()
-    
-    
     
     @objc func tapPasswordEyebutton(_ sender: UIButton){
         passwordTextField.isSecureTextEntry.toggle()
@@ -213,9 +147,6 @@ class LogInViewController: UIViewController{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    
-    
     
     lazy var findIDButton:  UIButton = {
         let button = UIButton()
@@ -250,7 +181,6 @@ class LogInViewController: UIViewController{
         presentJoinTheMembershipViewController.modalPresentationStyle = .fullScreen
         
         self.navigationController?.pushViewController(presentJoinTheMembershipViewController, animated: true)
-        //        self.present(presentJoinTheMembershipViewController, animated: true)
     }
     
     let idNextdivideLabel: UILabel = {
@@ -320,16 +250,9 @@ class LogInViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        for key in UserDefaults.standard.dictionaryRepresentation().keys {
-//            UserDefaults.standard.removeObject(forKey: key.description)
-//        }
-
         self.view.backgroundColor = .white
         buttonConfiguration()
         setLayoutConstraints()
-        autoLogin()
-        
-        
     }
     
     func buttonConfiguration(){
@@ -349,8 +272,6 @@ class LogInViewController: UIViewController{
         autoLogInCheckButton.setImage(autoLogInImage, for: .normal)
     }
     
-    
-    
     private func setLayoutConstraints(){
         
         self.view.addSubview(blueCheckMainLabel)
@@ -367,8 +288,6 @@ class LogInViewController: UIViewController{
         self.view.addSubview(sNSRightLineView)
         self.view.addSubview(sNSLogInLable)
         self.view.addSubview(appleButton)
-        
-        
         
         blueCheckMainLabel.translatesAutoresizingMaskIntoConstraints = false
         logInLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -418,10 +337,6 @@ class LogInViewController: UIViewController{
             autoLogInCheckButton.heightAnchor.constraint(equalToConstant: 30),
         
             
-//            logInAnonouncementButton.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
-//            logInAnonouncementButton.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-            
-            
             logInbutton.topAnchor.constraint(equalTo: self.autoLogInCheckButton.bottomAnchor, constant: 10),
             logInbutton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             logInbutton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -458,12 +373,6 @@ class LogInViewController: UIViewController{
             appleButton.topAnchor.constraint(equalTo: self.sNSLogInLable.bottomAnchor,constant: 20),
             appleButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             appleButton.heightAnchor.constraint(equalToConstant: 44),
-                
-//            logInErrorLabel.topAnchor.constraint(equalTo: appleButton.bottomAnchor, constant: 15),
-//            logInErrorLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
-//            logInErrorLabel.heightAnchor.constraint(equalToConstant: 30),
-//
-            
         ])
         
         if view.bounds.width > 415{
@@ -534,7 +443,6 @@ extension LogInViewController: ASAuthorizationControllerDelegate {
                 
                 func goTabbarViewController(){
                     let tabbarViewController = TabbarViewController()
-//                    tabbarViewController.currentUserEmail = authResult?.user.email ?? ""
                     tabbarViewController.modalPresentationStyle = .fullScreen
                     self.present(tabbarViewController, animated: true)
                 }

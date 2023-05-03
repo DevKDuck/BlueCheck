@@ -87,17 +87,8 @@ class BucketListViewController: UIViewController {
         tableView.delegate = self
         tableView.register(BucketListTableViewCell.self, forCellReuseIdentifier: "BucketListTableViewCell")
         
-//        MARK: UserDefualt 모두 삭제
-//                for key in UserDefaults.standard.dictionaryRepresentation().keys {
-//                    UserDefaults.standard.removeObject(forKey: key.description)
-//                }
-        
         getBucketListUserDefaultData()
         setConstraint()
-
-        
-        //크기와 위치 CGRect를 이용하여 지정, 테이블 뷰의 데이터와 화면변화를 VC에서 처리할 것이기 때문에 self 로 지정
-        //register 메서드를 이용하여 재사용할 셀을 등록해줌
     }
     
     func getBucketListUserDefaultData(){
@@ -221,16 +212,9 @@ extension BucketListViewController: UITableViewDelegate, UITableViewDataSource{
         self.tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
-    
-    
-    
-    //Row 선택시
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    //cell 의 높이 설정
-    
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         

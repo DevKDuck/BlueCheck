@@ -21,7 +21,6 @@ class JoinTheMembershipViewController: UIViewController{
         return label
     }()
     
-    
     let joinRequestPhrasesLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.MaplestoryFont(type: .Light, size: 13)
@@ -38,7 +37,6 @@ class JoinTheMembershipViewController: UIViewController{
         label.textColor = .systemRed
         return label
     }()
-    
     
     
     let emailLabel : UILabel = {
@@ -91,8 +89,6 @@ class JoinTheMembershipViewController: UIViewController{
         return textField
     }()
     
-    
-    
     let passwordLabel : UILabel = {
         let label = UILabel()
         label.text = "비밀번호"
@@ -109,7 +105,6 @@ class JoinTheMembershipViewController: UIViewController{
         textField.layer.cornerRadius = 10
         return textField
     }()
-    
     
     let passwordConfirmLabel : UILabel = {
         let label = UILabel()
@@ -262,38 +257,28 @@ class JoinTheMembershipViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        self.view.backgroundColor = UIColor(hue: 0.55, saturation: 0.34, brightness: 1, alpha: 1.0)
         
         setLayoutConstraints()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-        
     }
-    
-    
     
     @objc func keyboardWillShow(_ sender: Notification) {
         self.view.frame.origin.y = -150 // Move view 150 points upward
     }
     
     
-    
     @objc func keyboardWillHide(_ sender: Notification) {
-        
         self.view.frame.origin.y = 0 // Move view to original position
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
         self.view.endEditing(true)
-        
     }
     
     private let contentScrollView: UIScrollView = {
@@ -399,8 +384,6 @@ class JoinTheMembershipViewController: UIViewController{
         
         sendEmailButton.translatesAutoresizingMaskIntoConstraints = false
         
-        //        let contentView = view.safeAreaLayoutGuide
-        
         NSLayoutConstraint.activate([
             
             contentScrollView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -414,9 +397,6 @@ class JoinTheMembershipViewController: UIViewController{
             contentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
             contentView.heightAnchor.constraint(equalToConstant: view.bounds.height * 1.2),
-            
-            
-            
             
             blueCheckLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             blueCheckLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: view.bounds.height / 12),
@@ -493,8 +473,6 @@ class JoinTheMembershipViewController: UIViewController{
             sendEmailButton.widthAnchor.constraint(equalToConstant: 75),
             
         ])
-        
-        
     }
     
 }
