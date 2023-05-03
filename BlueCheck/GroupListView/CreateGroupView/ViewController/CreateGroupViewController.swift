@@ -20,7 +20,7 @@ protocol GetInvitationList: AnyObject{
 class CreateGroupViewController: UIViewController, GetInvitationList{
     
     func getUserNameArray(nameArray: [String]) {
-       userNameArray = nameArray
+        userNameArray = nameArray
     }
     
     func getUserEmailArray(emailArray: [String]) {
@@ -104,14 +104,14 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         
     }
     
-//    let objectiveStackView: UIStackView = {
-//        let stackView = UIStackView()
-//        stackView.axis = .horizontal
-//        stackView.alignment = .fill
-//        stackView.distribution = .equalSpacing
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        return stackView
-//    }()
+    //    let objectiveStackView: UIStackView = {
+    //        let stackView = UIStackView()
+    //        stackView.axis = .horizontal
+    //        stackView.alignment = .fill
+    //        stackView.distribution = .equalSpacing
+    //        stackView.translatesAutoresizingMaskIntoConstraints = false
+    //        return stackView
+    //    }()
     
     lazy var objectiveStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [studyButton,exerciseButton,travelButton,restaurantButton,etcButton])
@@ -181,8 +181,18 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
     
     @objc func tapCreateButton(_ sender: UIButton){
         //MARK: 생성 버튼클릭시 정보들을 GroupList에 reload 해야함
-        firestoreCreateDocuments()
-        self.dismiss(animated: true)
+        guard let titleText = groupTitleTextField.text, let contentText = contentTextView.text else {return}
+        if titleText.isEmpty || contentText == "\n 시기 - ex)일주일에 3번 \n \n \n 내용 - ex)운동 인증과 식단을 올리는 모임입니다.💪"{
+            let alert = UIAlertController(title: "빈칸이 없는지 확인해주세요", message: "제목,내용은 필수적으로 작성해 주셔야해요🙏", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "확인", style: .cancel)
+            
+            alert.addAction(cancel)
+            present(alert, animated: false)
+        }
+        else{
+            firestoreCreateDocuments()
+            self.dismiss(animated: true)
+        }
     }
     
     //MARK: Firebase update
@@ -191,8 +201,8 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
         let data = ["groupName" : titleText, "object" : meetObject, "content" : contentText]
         let randomNum = Float.random(in: 0...10)
         
-//        //uid + 랜덤값 으로 collection 만들기
-//        guard let uID = Auth.auth().currentUser?.uid else {return}
+        //        //uid + 랜덤값 으로 collection 만들기
+        //        guard let uID = Auth.auth().currentUser?.uid else {return}
         
         Firestore.firestore().collection("user").document(currentUserEmail).collection("Group").document(currentUserEmail + "\(randomNum)").setData(data){ error in
             if let error = error{
@@ -208,7 +218,7 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
                 return
             }
         }
-
+        
         //MARK: 초대
         let inviteData = ["groupName": titleText,"object" : meetObject, "content" : contentText, "status": "hold", "groupNumber" : currentUserEmail + "\(randomNum)"]
         userEmailArray.forEach{
@@ -219,6 +229,7 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
                 }
             }
         }
+        
     }
     
     lazy var cancelButton: UIButton = {
@@ -363,35 +374,35 @@ class CreateGroupViewController: UIViewController, GetInvitationList{
             inviteButton.heightAnchor.constraint(equalToConstant: 44),
             inviteButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             inviteButton.bottomAnchor.constraint(equalTo: self.cancelButton.topAnchor, constant: -30),
-
+            
             contentTextView.topAnchor.constraint(equalTo: self.contentLabel.bottomAnchor, constant: 30),
             contentTextView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             contentTextView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             contentTextView.bottomAnchor.constraint(equalTo: self.inviteButton.topAnchor, constant: -30)
         ])
         
-//        [studyButton,exerciseButton,travelButton,restaurantButton,etcButton].map{
-//            self.objectiveStackView.addArrangedSubview($0)
-//        }
+        //        [studyButton,exerciseButton,travelButton,restaurantButton,etcButton].map{
+        //            self.objectiveStackView.addArrangedSubview($0)
+        //        }
         
     }
     
 }
 
 extension CreateGroupViewController: UITextViewDelegate{
-
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.text == textViewPlaceHolder {
-                textView.text = nil
-                textView.textColor = .black
-            }
+        if textView.text == textViewPlaceHolder {
+            textView.text = nil
+            textView.textColor = .black
         }
-
-        func textViewDidEndEditing(_ textView: UITextView) {
-            if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                textView.text = textViewPlaceHolder
-                textView.textColor = .lightGray
-
-            }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = textViewPlaceHolder
+            textView.textColor = .lightGray
+            
         }
+    }
 }
