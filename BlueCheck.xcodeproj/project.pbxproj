@@ -61,7 +61,6 @@
 		8C74C28229D2F03E00267152 /* Maplestory OTF Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C74C28029D2F03E00267152 /* Maplestory OTF Light.otf */; };
 		8C74C28329D2F03E00267152 /* Maplestory OTF Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8C74C28129D2F03E00267152 /* Maplestory OTF Bold.otf */; };
 		8C779725296EEFA800E11294 /* BucketListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C779724296EEFA800E11294 /* BucketListTask.swift */; };
-		8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */; };
 		8C83508C29B3582000C1033F /* BSImagePicker in Frameworks */ = {isa = PBXBuildFile; productRef = 8C83508B29B3582000C1033F /* BSImagePicker */; };
 		8C83508E29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */; };
 		8C9A6B33298A6F820093D90A /* InviteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B32298A6F820093D90A /* InviteListViewController.swift */; };
@@ -70,7 +69,6 @@
 		8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */; };
 		8C9A6B3C2990F08E0093D90A /* InvitationStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */; };
 		8C9A6B3E2990F7F40093D90A /* InvitationsStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */; };
-		8C9A6B422991092E0093D90A /* EachGroupRecordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */; };
 		8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */; };
 		8CB2C62029765DCC004F3022 /* MyCheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */; };
 		8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */; };
@@ -112,7 +110,6 @@
 		8C74C28029D2F03E00267152 /* Maplestory OTF Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Light.otf"; sourceTree = "<group>"; };
 		8C74C28129D2F03E00267152 /* Maplestory OTF Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Maplestory OTF Bold.otf"; sourceTree = "<group>"; };
 		8C779724296EEFA800E11294 /* BucketListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BucketListTask.swift; path = ../MyCheckListView/MyCheckListTaskMadeOfStruct/BucketListTask.swift; sourceTree = "<group>"; };
-		8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		8C83508D29B36B9500C1033F /* CreateEachGroupRecordsContentViewImageCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewImageCollectionCell.swift; sourceTree = "<group>"; };
 		8C9A6B32298A6F820093D90A /* InviteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListViewController.swift; sourceTree = "<group>"; };
 		8C9A6B34298BA7330093D90A /* InviteListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteListTableViewCell.swift; sourceTree = "<group>"; };
@@ -120,7 +117,6 @@
 		8C9A6B392990EA050093D90A /* MyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B3B2990F08E0093D90A /* InvitationStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationStatusViewController.swift; sourceTree = "<group>"; };
 		8C9A6B3D2990F7F40093D90A /* InvitationsStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationsStatusTableViewCell.swift; sourceTree = "<group>"; };
-		8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachGroupRecordTableViewCell.swift; sourceTree = "<group>"; };
 		8C9A6B4329910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEachGroupRecordsContentViewController.swift; sourceTree = "<group>"; };
 		8CB2C61F29765DCC004F3022 /* MyCheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListTableViewCell.swift; sourceTree = "<group>"; };
 		8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCheckListSettingViewController.swift; sourceTree = "<group>"; };
@@ -202,7 +198,6 @@
 		8C23EA87296D2B3F0042248F = {
 			isa = PBXGroup;
 			children = (
-				8C53A51129E7F54800605189 /* LoadingIndicator.swift */,
 				8C164B2629C88A8B00ED7D90 /* Resource */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
@@ -221,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				8C527A9329AF4C990076EA0C /* BlueCheck.entitlements */,
+				8C53A51129E7F54800605189 /* LoadingIndicator.swift */,
 				8C74C24F29CC4CAA00267152 /* LoadingView */,
 				8C74C25229CC4EB300267152 /* TabbarView */,
 				8C74C25329CC4FC400267152 /* AuthView */,
@@ -267,8 +263,6 @@
 				8C74C26729CC69D400267152 /* FirebaseStorageManager */,
 				8C74C26429CC68F100267152 /* CreateEachGroupRecordsContentView */,
 				8C74C26229CC67EB00267152 /* GroupListView */,
-				8C9A6B412991092E0093D90A /* EachGroupRecordTableViewCell.swift */,
-				8C83508829B3498B00C1033F /* GroupListImageCollectionViewCell.swift */,
 				8C9A6B38298BB0780093D90A /* InviteListView */,
 			);
 			path = GroupListView;
@@ -761,11 +755,9 @@
 				8C70CA4529A5DE25005F5A0D /* GroupListTask.swift in Sources */,
 				8C74C27D29D1940D00267152 /* CalendarColelctionLayout.swift in Sources */,
 				8C53A51229E7F54900605189 /* LoadingIndicator.swift in Sources */,
-				8C83508929B3498B00C1033F /* GroupListImageCollectionViewCell.swift in Sources */,
 				8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */,
 				8C23EA94296D2B3F0042248F /* AppDelegate.swift in Sources */,
 				8C70CA4129A5CC6A005F5A0D /* EachGroupRecordsViewController.swift in Sources */,
-				8C9A6B422991092E0093D90A /* EachGroupRecordTableViewCell.swift in Sources */,
 				8C9A6B35298BA7330093D90A /* InviteListTableViewCell.swift in Sources */,
 				8C9A6B3A2990EA050093D90A /* MyAccountTableViewCell.swift in Sources */,
 				8C9A6B4429910CAF0093D90A /* CreateEachGroupRecordsContentViewController.swift in Sources */,
