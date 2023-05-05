@@ -141,17 +141,17 @@ class MyAccountViewController: UIViewController{
 
 extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyAccountTableViewCell") as?
                 MyAccountTableViewCell else {return UITableViewCell()}
         
-        let namingLabelArray = ["초대현황", "프로필 관리", "로그아웃"]
+        let namingLabelArray = ["초대현황", "프로필 관리", "로그아웃", "회원탈퇴"]
         cell.namingLabel.text = namingLabelArray[indexPath.row]
         
-        if indexPath.row == 2{
+        if indexPath.row == 2 || indexPath.row == 3{
             cell.namingLabel.textColor = .systemRed
         }
         return cell
@@ -184,6 +184,32 @@ extension MyAccountViewController: UITableViewDelegate, UITableViewDataSource{
             self.dismiss(animated: true)
             LogInViewController().modalPresentationStyle = .fullScreen
             self.present(LogInViewController(), animated: false)
+        }
+        
+        if indexPath.row == 3 {
+            let alert = UIAlertController(title: "회원탈퇴", message: "정말로 회원을 탈퇴하시겠습니까?", preferredStyle: .alert)
+            
+            let delete = UIAlertAction(title: "탈퇴", style: .default){[weak self]_ in
+                let user = Auth.auth().currentUser
+                
+                user?.delete { error in
+                    if let error = error{
+                        print("Delete User Error: \(error.localizedDescription)")
+                    }
+                    else{
+                        self?.dismiss(animated: true)
+                        LogInViewController().modalPresentationStyle = .fullScreen
+                        self?.present(LogInViewController(), animated: false)
+                    }
+                }
+            }
+            
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            
+            alert.addAction(delete)
+            alert.addAction(cancel)
+            
+            present(alert, animated: false)
         }
     }
     
