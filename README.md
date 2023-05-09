@@ -133,3 +133,5 @@
 <img src="https://user-images.githubusercontent.com/96559947/236414778-305e1142-798b-49b1-9ebf-e44e452ed3ba.png" width="200" height="400"></p>
 
   
+## App Store
+https://apps.apple.com/kr/app/%EB%B8%94%EB%A3%A8%EC%B2%B4%ED%81%AC/id6448659499
