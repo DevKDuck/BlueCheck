@@ -62,18 +62,40 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         return label
     }()
 
-    let contentLabel: UITextView = {
-        let textView = UITextView()
-        
-        textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
-        textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
-        textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
-        textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
-        textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
-        textView.textColor = .darkGray
-        
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
+    //MARK: TextView -> UIView 변경
+//    let contentLabel: UITextView = {
+//        let textView = UITextView()
+//
+//        textView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+//        textView.textInputView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+//        textView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+//        textView.textContainerInset = .init(top: 10, left: 10, bottom: 10, right: 10)
+//        textView.scrollIndicatorInsets = .init(top: 10, left: 10, bottom: 10, right: 10)
+//        textView.textColor = .darkGray
+//
+//        textView.translatesAutoresizingMaskIntoConstraints = false
+//        return textView
+//    }()
+    
+    let contentScrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    let contentLabelBGView: UIView = {
+        let uiView = UIView()
+        uiView.backgroundColor = UIColor(hue: 0.5944, saturation: 0.34, brightness: 1, alpha: 1.0)
+        uiView.translatesAutoresizingMaskIntoConstraints = false
+        return uiView
+    }()
+    
+    let contentLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        return label
     }()
     
     let recorImage: UIImageView = {
@@ -179,7 +201,10 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
         contentView.addSubview(modifyButton)
         contentView.addSubview(startDateLabel)
         contentView.addSubview(endDateLabel)
-        contentView.addSubview(contentLabel)
+//        contentView.addSubview(contentLabel)
+        contentView.addSubview(contentScrollView)
+        contentScrollView.addSubview(contentLabelBGView)
+        contentScrollView.addSubview(contentLabel)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -210,12 +235,33 @@ class EachGroupRecordsTableViewCell: UITableViewCell{
             endDateLabel.topAnchor.constraint(equalTo: self.startDateLabel.bottomAnchor, constant: 10),
             endDateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             
-            contentLabel.topAnchor.constraint(equalTo: self.endDateLabel.bottomAnchor, constant: 10),
-            contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:  -5)
+//            contentLabel.topAnchor.constraint(equalTo: self.endDateLabel.bottomAnchor, constant: 10),
+//            contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+//            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+//            contentLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:  -5)
+            
+            contentScrollView.topAnchor.constraint(equalTo: self.endDateLabel.bottomAnchor, constant: 5),
+            contentScrollView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            contentScrollView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            contentScrollView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant:  -5),
+            
+            contentLabelBGView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+            contentLabelBGView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+            contentLabelBGView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+            contentLabelBGView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
+//            contentLabelBGView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height / 3),
+            
+            contentLabel.topAnchor.constraint(equalTo: contentLabelBGView.topAnchor, constant: 5),
+            contentLabel.leadingAnchor.constraint(equalTo: contentLabelBGView.leadingAnchor, constant: 5),
+            contentLabel.trailingAnchor.constraint(equalTo: contentLabelBGView.trailingAnchor, constant: -5),
+            contentLabel.bottomAnchor.constraint(equalTo: contentLabelBGView.bottomAnchor,constant:  -5)
             
         ])
+        
+        contentLabelBGView.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor).isActive = true
+      
+        
+        
         
         contentView.layer.cornerRadius = 3.0
         contentView.layer.borderWidth = 2
