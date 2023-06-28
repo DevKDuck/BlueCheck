@@ -263,6 +263,10 @@ class LogInViewController: UIViewController{
         config.imagePadding = 5
         config.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         autoLogInCheckButton.configuration = config
+        if let checkStatus = UserDefaults.standard.string(forKey: "LogIncheck"){
+            let image = checkStatus == "check" ? UIImage(systemName: "checkmark.square") : UIImage(systemName: "square")
+            autoLogInCheckButton.setImage(image, for: .normal)
+        }
     }
     
     @objc func tapAutoLogInButton(_ sender: UIButton){
