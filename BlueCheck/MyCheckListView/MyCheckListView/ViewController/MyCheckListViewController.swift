@@ -57,6 +57,8 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
     
     var firstDayGapToday: Int = 0
     
+    var firstCalendarAcccept = true
+    
     lazy var addTaskButton : UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50)
@@ -102,6 +104,9 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
         self.calculation()
         checkUserDefaultsTasks()
         self.collectionView.reloadData()
+        taskArray?.removeAll()
+        firstCalendarAcccept = false
+        self.tableView.reloadData()
     }
     
     @objc func tapNextMonthButton(_ sender: UIButton){
@@ -110,6 +115,9 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
         self.calculation()
         checkUserDefaultsTasks()
         self.collectionView.reloadData()
+        taskArray?.removeAll()
+        firstCalendarAcccept = false
+        self.tableView.reloadData()
     }
     
     private var yearMonthLabel: UILabel = {
@@ -388,7 +396,7 @@ extension MyCheckListViewController: UICollectionViewDelegate, UICollectionViewD
         
         
         //오늘 날짜 default Select
-        if (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
+        if (firstCalendarAcccept == true) && (indexPath.row == firstDayGapToday) && (cal.component(.year, from: now) == components.year) && (cal.component(.month, from: now) == components.month){
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
         
@@ -456,6 +464,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyCheckListTableViewCell", for: indexPath) as?
                 MyCheckListTableViewCell else {return UITableViewCell()}
         if let taskArray = taskArray {
+            
             
             
             cell.contentLabel.text = taskArray[indexPath.row].title
