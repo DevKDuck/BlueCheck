@@ -74,6 +74,7 @@
 		8CB2C62229766544004F3022 /* MyCheckListSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2C62129766544004F3022 /* MyCheckListSettingViewController.swift */; };
 		8CB77EC72979481D00EC6CAC /* MyCheckListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB77EC62979481D00EC6CAC /* MyCheckListTask.swift */; };
 		8CB9D95329B0734300799495 /* MyProfileSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB9D95229B0734300799495 /* MyProfileSettingController.swift */; };
+		8CBFB5262A5297E70002321D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 8CBFB5252A5297E70002321D /* FirebaseMessaging */; };
 		8CBFE934297187FC0093C690 /* MyCheckListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CBFE933297187FC0093C690 /* MyCheckListCollectionViewCell.swift */; };
 		8CD3B60C29A0A0EB008EE1C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8CD3B60B29A0A0EB008EE1C6 /* GoogleService-Info.plist */; };
 		8CFCA3CD29A5FE4E0066579C /* FirebaseStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFCA3CC29A5FE4E0066579C /* FirebaseStorageManager.swift */; };
@@ -158,6 +159,7 @@
 				8C23EAB5296D485C0042248F /* SnapKit in Frameworks */,
 				8C508AD829A30F2800EF29B8 /* FirebaseAuth in Frameworks */,
 				8C508AE229A30F2800EF29B8 /* FirebaseDynamicLinks in Frameworks */,
+				8CBFB5262A5297E70002321D /* FirebaseMessaging in Frameworks */,
 				8C508AE429A30F2800EF29B8 /* FirebaseFirestore in Frameworks */,
 				8C508AFC29A30F2800EF29B8 /* FirebaseRemoteConfigSwift in Frameworks */,
 			);
@@ -201,6 +203,7 @@
 				8C164B2629C88A8B00ED7D90 /* Resource */,
 				8C23EA92296D2B3F0042248F /* BlueCheck */,
 				8C23EA91296D2B3F0042248F /* Products */,
+				8CBFB5242A5297E70002321D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -633,6 +636,13 @@
 			path = InviteListView;
 			sourceTree = "<group>";
 		};
+		8CBFB5242A5297E70002321D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -678,6 +688,7 @@
 				8C4874D829A6194400FD871B /* Kingfisher */,
 				8C83508B29B3582000C1033F /* BSImagePicker */,
 				8C164B2D29CB2A6800ED7D90 /* Lottie */,
+				8CBFB5252A5297E70002321D /* FirebaseMessaging */,
 			);
 			productName = BlueCheck;
 			productReference = 8C23EA90296D2B3F0042248F /* BlueCheck.app */;
@@ -1195,6 +1206,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8C83508A29B3582000C1033F /* XCRemoteSwiftPackageReference "BSImagePicker" */;
 			productName = BSImagePicker;
+		};
+		8CBFB5252A5297E70002321D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C508ACA29A30F2800EF29B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
