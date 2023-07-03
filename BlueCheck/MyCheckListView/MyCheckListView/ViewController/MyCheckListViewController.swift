@@ -63,7 +63,7 @@ class MyCheckListViewController: UIViewController, MyCheckListTableViewDelegate{
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 50)
         button.setImage(UIImage(systemName: "plus.circle.fill", withConfiguration: imageConfig), for: .normal)
-        button.tintColor = .systemBlue
+        button.tintColor = UIColor(hue: 0.5778, saturation: 0.46, brightness: 1, alpha: 1.0)
         button.addTarget(self, action: #selector(tapAddTaskButton(_:)), for: .touchUpInside)
         
         return button
@@ -493,7 +493,7 @@ extension MyCheckListViewController: UITableViewDelegate, UITableViewDataSource{
             case "매우 중요":
                 cell.importLabel.backgroundColor = .yellow
             case "중요":
-                cell.importLabel.backgroundColor = UIColor(hue: 0.5333, saturation: 0.39, brightness: 0.95, alpha: 1.0)
+                cell.importLabel.backgroundColor = UIColor(hue: 0.5778, saturation: 0.46, brightness: 1, alpha: 1.0)
             case "보통":
                 cell.importLabel.backgroundColor = .white
             default:
